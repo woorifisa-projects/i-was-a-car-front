@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: 오류 수정
-title: "[Front]"
+title: "[Front] "
 labels: bug
 assignees: ''
 
