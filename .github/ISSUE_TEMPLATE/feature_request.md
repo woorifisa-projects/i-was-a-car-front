@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: 기능 추가
-title: "[Front] "
+title: "[Frontend] "
 labels: feature
 assignees: ''
 
