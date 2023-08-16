@@ -4,7 +4,5 @@ module.exports = {
     node: true,
   },
   extends: ['plugin:vue/base', 'plugin:vuetify/base'],
-  rules: {
-    'vue/multi-word-component-names': 0,
-  },
+  rules: {},
 };
