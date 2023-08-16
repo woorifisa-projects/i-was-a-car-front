@@ -1,5 +1,7 @@
 <template>
-  <router-view />
+  <v-main>
+    <RouterView />
+  </v-main>
 </template>
 
 <script setup>

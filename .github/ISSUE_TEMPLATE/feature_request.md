@@ -3,8 +3,7 @@ name: Feature request
 about: 기능 추가
 title: "[Frontend] "
 labels: feature
-assignees: ''
-
+assignees: ""
 ---
 
 ## 기능 설명
@@ -13,8 +12,8 @@ assignees: ''
 
 ## 세부 기능 설명
 
-* [ ] To-do 1
-* [ ] To-do 2
+- [ ] To-do 1
+- [ ] To-do 2
 
 ## 참고자료
 

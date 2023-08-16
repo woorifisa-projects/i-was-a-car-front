@@ -3,8 +3,7 @@ name: Bug report
 about: 오류 수정
 title: "[Frontend] "
 labels: bug
-assignees: ''
-
+assignees: ""
 ---
 
 ## 버그 설명
@@ -19,7 +18,6 @@ assignees: ''
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
-
 
 ## 스크린샷
 

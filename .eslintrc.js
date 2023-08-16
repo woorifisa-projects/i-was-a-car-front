@@ -3,8 +3,8 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-  ],
-}
+  extends: ['plugin:vue/base', 'plugin:vuetify/base'],
+  rules: {
+    'vue/multi-word-component-names': 0,
+  },
+};
