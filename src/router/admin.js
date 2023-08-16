@@ -3,13 +3,18 @@ import { createRouter, createWebHistory } from 'vue-router';
 const adminRoutes = [
   {
     path: '/admin',
-    component: () => import('@/layouts/admin/default/Default.vue'),
+    component: () => import('@/layouts/admin/default/TheDefault.vue'),
     meta: { requiresAuth: true, requiredRole: 'admin' },
     children: [
       {
         path: '',
-        name: 'HomeView',
-        component: () => import('@/views/admin/HomeView.vue'),
+        name: 'ProductManagement',
+        component: () => import('@/views/admin/ProductManagementView.vue'),
+      },
+      {
+        path: 'member',
+        name: 'MemberManagement',
+        component: () => import('@/views/admin/MemberManagementView.vue'),
       },
     ],
   },
