@@ -2,8 +2,7 @@
   <v-container class="d-flex justify-center h-screen">
     <v-sheet width="500" height="690" class="mt-5 rounded-xl" :elevation="4">
       <v-card-title class="text-center text-h5 ma-8">로그인</v-card-title>
-
-      <v-sheet width="400" class="mx-auto" max-width="320">
+      <v-sheet width="350" class="mx-auto" max-width="320">
         <v-form @submit.prevent>
           <v-text-field
             density="compact"
@@ -20,16 +19,22 @@
             :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
             variant="underlined"
           ></v-text-field>
-          <v-btn height="56" width="400" color="black" density="compact">
+          <v-btn
+            class="mt-10"
+            height="40"
+            width="400"
+            color="black"
+            density="compact"
+          >
             로그인
           </v-btn>
         </v-form>
 
         <div class="d-flex justify-space-between mt-2 mb-15">
-          <div>회원이 아니신가요?</div>
-          <div>
-            <router-link to="/signup">회원가입</router-link>
-          </div>
+          <div class="text-sm">회원이 아니신가요?</div>
+          <RouterLink class="text-sm text-color-black" to="/signup"
+            >회원가입</RouterLink
+          >
         </div>
         <div class="d-flex justify-center">
           <v-divider
@@ -40,17 +45,33 @@
           ></v-divider>
         </div>
 
-        <div class="d-flex justify-center mt-5 mb-15">
-          <div>다른 방법으로 로그인</div>
+        <div class="d-flex justify-center mt-5 mb-5">
+          <div class="text-sm">다른 방법으로 로그인</div>
         </div>
 
         <v-sheet>
-          <v-btn height="56" width="400" color="black" density="compact">
-            카카오로그인
+          <v-btn
+            prepend-icon="mdi-chat"
+            height="40"
+            width="400"
+            color="yellow"
+            density="compact"
+            class="mb-5"
+          >
+            카카오로 시작하기
           </v-btn>
 
-          <v-btn height="56" width="400" color="black" density="compact">
-            네이버로그인
+          <v-btn
+            prepend-icon="mdi-alpha-n"
+            height="40"
+            width="400"
+            color="green"
+            density="compact"
+          >
+            <template v-slot:prepend>
+              <v-icon size="32"></v-icon>
+            </template>
+            네이버로 시작하기
           </v-btn>
         </v-sheet>
       </v-sheet>
@@ -64,4 +85,12 @@ import { ref } from 'vue';
 const passwordVisible = ref(false);
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.text-sm {
+  font-size: 12px;
+}
+
+.text-color-black {
+  color: black;
+}
+</style>
