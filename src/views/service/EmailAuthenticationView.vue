@@ -27,15 +27,22 @@
             :rules="[rules.required, rules.email]"
           ></v-text-field>
 
-          <v-sheet class="d-flex justify-end">
-            <v-btn
-              :loading="loading"
-              @click="load"
-              variant="text"
-              :disabled="disabled"
-              >인증번호 발송</v-btn
-            >
-          </v-sheet>
+          <v-snackbar :timeout="2000" color="deep-black" class="elevation-24">
+            <template v-slot:activator="{ props }">
+              <v-sheet class="d-flex justify-end">
+                <v-btn
+                  :loading="loading"
+                  @click="load"
+                  variant="text"
+                  :disabled="disabled"
+                  v-bind="props"
+                  >인증번호 발송</v-btn
+                >
+              </v-sheet>
+            </template>
+
+            <strong>인증번호가 전송되었습니다!</strong>
+          </v-snackbar>
 
           <template v-if="isValidEmail">
             <v-text-field
@@ -45,15 +52,24 @@
               variant="underlined"
               class="mt-10"
             ></v-text-field>
+
             <v-sheet class="d-flex justify-end">
-              <v-btn variant="text">인증하기</v-btn>
+              <v-btn @click="verifyAuthentication" variant="text"
+                >인증하기</v-btn
+              >
             </v-sheet>
           </template>
         </v-form>
 
         <v-sheet class="d-flex justify-space-between mt-5">
           <v-btn width="120" height="40">이전</v-btn>
-          <v-btn width="120" height="40" class="bg-black">다음</v-btn>
+          <v-btn
+            :disabled="isVerifyAuthentication"
+            width="120"
+            height="40"
+            class="bg-black"
+            >다음</v-btn
+          >
         </v-sheet>
       </v-sheet>
     </v-sheet>
@@ -67,6 +83,7 @@ const email = ref('');
 const loading = ref(false);
 const isValidEmail = ref(false);
 const disabled = ref(true);
+const isVerifyAuthentication = ref(true);
 
 const rules = {
   required: (value) => !!value || '이메일을 반드시 입력해 주세요.',
@@ -88,6 +105,10 @@ const load = () => {
   loading.value = true;
   isValidEmail.value = true;
   setTimeout(() => (loading.value = false), 1000);
+};
+
+const verifyAuthentication = () => {
+  isVerifyAuthentication.value = false;
 };
 </script>
 
