@@ -12,6 +12,16 @@ const serviceRoutes = [
       },
     ],
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/service/loginView.vue'),
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: () => import('@/views/service/SignupView.vue'),
+  },
 ];
 
 const serviceRouter = createRouter({
