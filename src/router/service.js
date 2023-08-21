@@ -13,18 +13,24 @@ const serviceRoutes = [
     ],
   },
   {
-    path: '/email',
-    name: 'EmailAuthentication',
-    component: () => import('@/views/service/EmailAuthenticationView.vue'),
-  }
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/service/loginView.vue'),
+    component: () => import('@/views/service/LoginView.vue'),
   },
   {
     path: '/signup',
     name: 'Signup',
     component: () => import('@/views/service/SignupView.vue'),
+  },
+  {
+    path: '/email',
+    name: 'EmailAuthentication',
+    component: () => import('@/views/service/EmailAuthenticationView.vue'),
+  },
+  {
+    path: '/signup-consent',
+    name: 'SignupConsent',
+    component: () => import('@/views/service/SignupConsentView.vue'),
   },
 ];
 
