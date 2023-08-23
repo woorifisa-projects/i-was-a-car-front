@@ -2,7 +2,7 @@
   <v-footer class="bg-black">
     <v-container class="text-center d-flex flex-column">
       <div>
-        <v-btn
+        <v-btn 
           v-for="icon in icons"
           :key="icon"
           class="mx-4"
@@ -10,8 +10,8 @@
           stacked
           rounded="xl"
           variant="text"
-          :to="icon.to"
-          >{{ icon.name }}</v-btn
+          :href="icon.to" target="_blank">
+          {{ icon.name }}</v-btn
         >
       </div>
       <div class="pt-0">
