@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column align-center w-22">
-    <img class="w-22" v-bind:src="mainImage.url" alt="자동차 사진들" />
+    <img class="w-22" v-bind:src="mainImage" alt="자동차 사진들" />
     <!-- 자동차 사진들 -->
 
     <div class="w-25-">
@@ -12,8 +12,8 @@
           show-arrows
         >
           <v-slide-group-item
-            v-for="(car, index) in cars"
-            :key="car.url"
+            v-for="(carImage, index) in carImages"
+            :key="index"
             v-slot="{ toggle }"
           >
             <v-card
@@ -26,7 +26,7 @@
               v-on:click="changeImage(index)"
             >
               <div class="d-flex fill-height align-center justify-center">
-                <v-img v-bind:src="car.url"> </v-img>
+                <v-img v-bind:src="carImage"> </v-img>
               </div>
             </v-card>
           </v-slide-group-item>
@@ -40,12 +40,13 @@
 import { ref } from 'vue';
 
 const props = defineProps({
-  cars: Array,
+  carImages: Array,
 });
-const cars = ref(props.cars);
 
-const mainImage = ref(cars.value[0]);
-const changeImage = (index) => (mainImage.value = cars.value[index]);
+const model = ref(null);
+const carImages = ref(props.carImages);
+const mainImage = ref(carImages.value[0]);
+const changeImage = (index) => (mainImage.value = carImages.value[index]);
 </script>
 
 <style lang="scss" scoped>

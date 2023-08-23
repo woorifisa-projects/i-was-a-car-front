@@ -10,59 +10,83 @@
               class="d-flex justify-space-around flex-wrap align-content-stretch"
             >
               <div class="diagnosis-item">
-                <div class="diagnosis-box">1999년식</div>
+                <div class="diagnosis-box">
+                  {{ new Date(Date.parse(carInfo.year)).getFullYear() }}년식
+                </div>
                 연식
               </div>
+
               <div class="diagnosis-item">
-                <div class="diagnosis-box">8170 KM</div>
+                <div class="diagnosis-box">
+                  {{ carInfo.distance.toLocaleString() }} KM
+                </div>
                 주행거리
               </div>
 
               <div class="diagnosis-item">
-                <div class="diagnosis-box">2 건</div>
+                <div class="diagnosis-box">
+                  {{ carInfo.accidentHistory }} 건
+                </div>
                 사고이력
               </div>
 
               <div class="diagnosis-item">
-                <div class="diagnosis-box">YES</div>
+                <div class="diagnosis-box">
+                  {{ carInfo.inundationHistory ? 'YES' : 'NO' }}
+                </div>
                 침수이력
               </div>
             </div>
           </div>
         </v-card-item>
 
-        <v-card-item>
-          <div>
-            <table class="car-info-table">
-              <tr>
-                <td class="font-weight-bold">구동방식</td>
-                <td class="font-weight-thin">구동방식</td>
-              </tr>
-              <tr>
-                <td class="font-weight-bold">변속기</td>
-                <td class="font-weight-thin">변속기</td>
-              </tr>
-              <tr>
-                <td class="font-weight-bold">연료</td>
-                <td class="font-weight-thin">연료</td>
-              </tr>
-              <tr>
-                <td class="font-weight-bold">배기량</td>
-                <td class="font-weight-thin">배기량</td>
-              </tr>
-              <tr>
-                <td class="font-weight-bold">연비</td>
-                <td class="font-weight-thin">연비</td>
-              </tr>
-            </table>
-          </div>
-        </v-card-item>
+        <div>
+          <v-card-item>
+            <div>
+              <table class="car-info-table">
+                <tr>
+                  <td class="font-weight-bold">구동방식</td>
+                  <td class="font-weight-thin">{{ carInfo.drivingMethod }}</td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bold">변속기</td>
+                  <td class="font-weight-thin">{{ carInfo.transmission }}</td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bold">연료</td>
+                  <td class="font-weight-thin">{{ carInfo.fuel }}</td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bold">배기량</td>
+                  <td class="font-weight-thin">{{ carInfo.displacement }}cc</td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bold">연비</td>
+                  <td class="font-weight-thin">
+                    {{ carInfo.fuelEfficiency }} KM/L
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </v-card-item>
+          <v-card>
+            <v-card-item>
+              <div style="font-size: 0.1em">IWC가 보장하는</div>
+              <div style="font-size: 1em">성능 점검표 확인</div>
+            </v-card-item>
+          </v-card>
+        </div>
       </div>
     </v-card-item>
   </v-card>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+
+const props = defineProps(['carInfo']);
+const carInfo = ref(props.carInfo);
+</script>
 
 <style lang="scss" scoped>
 .diagnosis {
