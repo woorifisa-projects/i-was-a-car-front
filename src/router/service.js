@@ -10,6 +10,11 @@ const serviceRoutes = [
         name: 'Home',
         component: () => import('@/views/service/HomeView.vue'),
       },
+      {
+        path: 'products/:productId',
+        name: 'ProductDetail',
+        component: () => import('@/views/service/products/ProductDetails.vue'),
+      },
     ],
   },
   {
