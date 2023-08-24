@@ -41,8 +41,6 @@ const today = new Date();
 
 const carBirth = new Date(Date.parse(carInfo.value.year));
 
-console.log(today + ' ' + carBirth);
-
 lenYear.value = today.getFullYear() - carBirth.getFullYear();
 if (today.getMonth() < carBirth.getMonth()) {
   lenYear.value--;

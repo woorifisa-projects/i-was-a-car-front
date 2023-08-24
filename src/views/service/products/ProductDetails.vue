@@ -12,14 +12,17 @@
       </Suspense>
     </v-sheet>
     <br />
+
     <Suspense>
       <FinancialService :carInfo="carInfo"></FinancialService>
     </Suspense>
     <br />
+
     <Suspense>
       <CarDiagnosis :carInfo="carInfo"></CarDiagnosis>
     </Suspense>
     <br />
+
     <Suspense>
       <MileageAnalysis :carInfo="carInfo"></MileageAnalysis>
     </Suspense>
@@ -37,24 +40,14 @@ import { ref, onBeforeMount, defineAsyncComponent } from 'vue';
 import { findProductDetail } from '@/apis/service/products/productApi.js';
 import { useRoute } from 'vue-router';
 
-const ImageSlider = defineAsyncComponent(() =>
-  import('@/components/products/details/ImageSlider.vue')
-);
-const BasicCarInfo = defineAsyncComponent(() =>
-  import('@/components/products/details/BasicCarInfo.vue')
-);
-const FinancialService = defineAsyncComponent(() =>
-  import('@/components/products/details/FinancialService.vue')
-);
-const CarDiagnosis = defineAsyncComponent(() =>
-  import('@/components/products/details/CarDiagnosis.vue')
-);
-const MileageAnalysis = defineAsyncComponent(() =>
-  import('@/components/products/details/MileageAnalysis.vue')
-);
-
 const carImages = ref([]);
 const carInfo = ref({});
+
+let ImageSlider;
+let BasicCarInfo;
+let FinancialService;
+let CarDiagnosis;
+let MileageAnalysis;
 
 onBeforeMount(async () => {
   try {
@@ -64,6 +57,22 @@ onBeforeMount(async () => {
     console.log(response.data.data);
     carInfo.value = item;
     carImages.value = item.images;
+
+    ImageSlider = defineAsyncComponent(() =>
+      import('@/components/products/details/ImageSlider.vue')
+    );
+    BasicCarInfo = defineAsyncComponent(() =>
+      import('@/components/products/details/BasicCarInfo.vue')
+    );
+    FinancialService = defineAsyncComponent(() =>
+      import('@/components/products/details/FinancialService.vue')
+    );
+    CarDiagnosis = defineAsyncComponent(() =>
+      import('@/components/products/details/CarDiagnosis.vue')
+    );
+    MileageAnalysis = defineAsyncComponent(() =>
+      import('@/components/products/details/MileageAnalysis.vue')
+    );
   } catch (e) {
     console.error(e);
   }
