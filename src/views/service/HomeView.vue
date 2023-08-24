@@ -43,68 +43,42 @@
     </Suspense>
 
     <Suspense>
-      <ProductsList :products="products"></ProductsList>
+      <v-infinite-scroll @load="load">
+        <ProductsList :products="products"></ProductsList>
+        <template v-slot:empty>
+          <v-alert type="warning">마지막 상품입니다.</v-alert>
+        </template>
+        <template v-slot:error="{ props }">
+          <v-alert type="error">
+            <div class="d-flex justify-space-between align-center">
+              문제가 발생했습니다. 다시 시도해주세요.
+              <v-btn
+                color="white"
+                variant="outlined"
+                size="small"
+                v-bind="props"
+              >
+                Retry
+              </v-btn>
+            </div>
+          </v-alert>
+        </template>
+      </v-infinite-scroll>
     </Suspense>
   </v-container>
 </template>
 
 <script setup>
 import { computed, ref, defineAsyncComponent, onBeforeMount } from 'vue';
+import { findProducts } from '@/apis/service/products/productApi.js';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { VInfiniteScroll } from 'vuetify/labs/VInfiniteScroll';
 
 let ProductsList;
 let Search;
+const lastProductId = ref();
 
-const products = ref([
-  {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958',
-    year: '16/08',
-    distance: '210,710',
-    price: '3200',
-  },
-  {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958',
-    year: '16/08',
-    distance: '210,710',
-    price: '3200',
-  },
-  {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958',
-    year: '16/08',
-    distance: '210,710',
-    price: '3200',
-  },
-  {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958',
-    year: '16/08',
-    distance: '210,710',
-    price: '3200',
-  },
-  {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958',
-    year: '16/08',
-    distance: '210,710',
-    price: '3200',
-  },
-  {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958',
-    year: '16/08',
-    distance: '210,710',
-    price: '3200',
-  },
-  {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958',
-    year: '16/08',
-    distance: '210,710',
-    price: '3200',
-  },
-  {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958',
-    year: '16/08',
-    distance: '210,710',
-    price: '3200',
-  },
-]);
+const products = ref([]);
 const { name, smAndDown } = useDisplay();
 
 const btnWidth = computed(() => {
@@ -127,6 +101,7 @@ onBeforeMount(async () => {
     Search = defineAsyncComponent(() =>
       import('@/components/products/Search.vue')
     );
+
     ProductsList = defineAsyncComponent(() =>
       import('@/components/products/ProductsList.vue')
     );
@@ -134,6 +109,25 @@ onBeforeMount(async () => {
     console.error(e);
   }
 });
+
+const load = async ({ done }) => {
+  console.log(lastProductId.value);
+  try {
+    if (lastProductId.value === 1) done('empty');
+    else {
+      const response = await findProducts(lastProductId.value);
+
+      products.value.push(...response.data.data);
+
+      lastProductId.value = products.value[products.value.length - 1].id;
+
+      done('ok');
+    }
+  } catch (e) {
+    done('error');
+    console.error(e);
+  }
+};
 </script>
 
 <style scoped>
