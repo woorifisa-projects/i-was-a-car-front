@@ -36,146 +36,75 @@
       </div>
     </v-container>
   </section>
-  
+
   <v-container>
-    
-    <v-card-text class="d-flex">
-      <v-col
-        cols="2"
-        class="flex-grow-0 flex-shrink-0"
-      >
-        <v-autocomplete 
-          :items="cars"
-          color="grey"
-          theme="light"
-          variant="solo"
-          label="선택"
-          single-line
-        ></v-autocomplete>
-      </v-col>
+    <Suspense>
+      <Search></Search>
+    </Suspense>
 
-      <v-col
-        cols="1"
-        style="min-width: 100px; max-width: 100%;"
-        class="flex-grow-1 flex-shrink-0"
-      >
-        <v-text-field
-          :loading="loading"
-          append-inner-icon="mdi-magnify"
-          color="grey"
-          theme="light"
-          variant="solo"
-          label="원하는 차종 또는 제조사를 입력해주세요."
-          clearable
-          single-line
-          @click:append-inner="onClick"
-        ></v-text-field>
-        
-      </v-col>
-
-    </v-card-text>
-    
-    <v-sheet class="d-flex flex-wrap justify-space-around">
-    <v-card-actions
-      v-for="product in products"
-      :key="product.name"
-      class="ma-2 pa-2"
-    >
-    <v-card-text
-    class="mx-auto"
-    width="450"
-  >
-    <v-img
-      src="https://i-was-a-car.s3.ap-northeast-2.amazonaws.com/main-test.png"
-      cover
-    ></v-img>
-
-    <v-card
-    class="mx-auto"
-    width="450"
-  >
-
-    <v-card-title>
-      {{ product.name }}
-    </v-card-title>
-
-    <v-card-subtitle>
-      연식: {{ product.year }} | 주행거리: {{ product.distance }}
-    </v-card-subtitle>
-
-   
-    <v-card-title class="text-sm-right">
-      {{ product.price }}만원
-    </v-card-title>
-
-  </v-card>
-
-  </v-card-text>
-    </v-card-actions>
-  </v-sheet>
-    
+    <Suspense>
+      <ProductsList :products="products"></ProductsList>
+    </Suspense>
   </v-container>
-
-
-  
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, defineAsyncComponent, onBeforeMount } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 
+let ProductsList;
+let Search;
 
 const products = ref([
-  { 
-    name: '포르쉐 뉴 카이엔3.0 디젤 958', 
+  {
+    name: '포르쉐 뉴 카이엔3.0 디젤 958',
     year: '16/08',
     distance: '210,710',
-    price: '3200'
-
+    price: '3200',
   },
   {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958', 
+    name: '포르쉐 뉴 카이엔3.0 디젤 958',
     year: '16/08',
     distance: '210,710',
-    price: '3200'
+    price: '3200',
   },
   {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958', 
+    name: '포르쉐 뉴 카이엔3.0 디젤 958',
     year: '16/08',
     distance: '210,710',
-    price: '3200'
+    price: '3200',
   },
   {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958', 
+    name: '포르쉐 뉴 카이엔3.0 디젤 958',
     year: '16/08',
     distance: '210,710',
-    price: '3200'
+    price: '3200',
   },
   {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958', 
+    name: '포르쉐 뉴 카이엔3.0 디젤 958',
     year: '16/08',
     distance: '210,710',
-    price: '3200'
+    price: '3200',
   },
   {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958', 
+    name: '포르쉐 뉴 카이엔3.0 디젤 958',
     year: '16/08',
     distance: '210,710',
-    price: '3200'
+    price: '3200',
   },
   {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958', 
+    name: '포르쉐 뉴 카이엔3.0 디젤 958',
     year: '16/08',
     distance: '210,710',
-    price: '3200'
+    price: '3200',
   },
   {
-    name: '포르쉐 뉴 카이엔3.0 디젤 958', 
+    name: '포르쉐 뉴 카이엔3.0 디젤 958',
     year: '16/08',
     distance: '210,710',
-    price: '3200'
+    price: '3200',
   },
-  ])
+]);
 const { name, smAndDown } = useDisplay();
 
 const btnWidth = computed(() => {
@@ -193,18 +122,18 @@ const btnWidth = computed(() => {
   }
 });
 
-const cars = computed(() => ["차종", "제조사"])
-
-const loading = ref(false);
-
-const onClick = () => {
-  loading.value = true
-
-  setTimeout(() => {
-    loading.value = false
-  }, 2000)
-}
-
+onBeforeMount(async () => {
+  try {
+    Search = defineAsyncComponent(() =>
+      import('@/components/products/Search.vue')
+    );
+    ProductsList = defineAsyncComponent(() =>
+      import('@/components/products/ProductsList.vue')
+    );
+  } catch (e) {
+    console.error(e);
+  }
+});
 </script>
 
 <style scoped>
