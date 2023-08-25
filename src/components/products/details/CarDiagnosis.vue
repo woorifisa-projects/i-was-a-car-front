@@ -97,7 +97,6 @@
 <script setup>
 import { ref } from 'vue';
 import PerformanceCheckIcon from './PerformanceCheckIcon.vue';
-import DownloadIcon from './DownloadIcon.vue';
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);

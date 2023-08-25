@@ -42,7 +42,7 @@ import { ref } from 'vue';
 const props = defineProps({
   carImages: Array,
 });
-
+const selectedClass = ref(null);
 const model = ref(null);
 const carImages = ref(props.carImages);
 const mainImage = ref(carImages.value[0]);
