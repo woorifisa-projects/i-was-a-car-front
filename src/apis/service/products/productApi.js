@@ -6,7 +6,6 @@ const findProductDetail = (productId) => {
 
 
 const findProducts = (id) => {
-  console.log("a",id)
   return instance.get(`/products`, {
     params: {
       lastProductId: id,
