@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <v-form @submit.prevent>
+        <v-form @submit.prevent v-model="isVerifyAuthentication">
           <v-divider
             mx-auto
             length="800"
@@ -42,9 +42,8 @@
             id="all-consent"
             class="mb-1 pr-6 d-flex justify-end"
             density="compact"
-            value="true"
             style="height: 40px"
-            @update="toggleAllCheckboxes"
+            @update:model-value="toggleAllCheckboxes"
           >
             <template v-slot:default>
               <div class="d-flex align-center">
@@ -59,7 +58,7 @@
           </v-checkbox>
 
           <v-checkbox
-            v-model="selected[0]"
+            v-model="selected.one"
             density="compact"
             append-icon="mdi-chevron-right"
             class="checkbox-label"
@@ -73,7 +72,7 @@
           </v-checkbox>
 
           <v-checkbox
-            v-model="selected[1]"
+            v-model="selected.two"
             density="compact"
             append-icon="mdi-chevron-right"
             class="checkbox-label"
@@ -87,7 +86,8 @@
           </v-checkbox>
 
           <v-checkbox
-            v-model="selected[2]"
+            v-model="selected.three"
+            :required="false"
             density="compact"
             class="checkbox-label"
             append-icon="mdi-chevron-right"
@@ -108,59 +108,58 @@
           width="120"
           height="40"
           class="bg-black"
+          @click="nagivateToSignup"
           >다음</v-btn
         >
       </v-sheet>
-      {{ selected }}
-      ALL: {{ selectedAll }}
     </v-sheet>
   </v-container>
 </template>
 
 <script setup>
+import router from '@/router';
 import { ref, computed, watch } from 'vue';
+import { useRouter } from 'vue-router';
+const selected = ref({
+  one: false,
+  two: false,
+  three: false,
+});
 
-const selected = ref([false, false, false]);
 const selectedAll = ref(false);
+const isVerifyAuthentication = ref(false);
 
 const toggleAllCheckboxes = () => {
   const newState = selectedAll.value;
-
+  console.log(newState);
   if (newState) {
-    selected.value = [true, true, true];
-  } else
-    for (let i = 0; i < selected.value.length; i++) {
-      selected.value[i] = newState;
-    }
+    selected.value.one = true;
+    selected.value.two = true;
+    selected.value.three = true;
+  } else {
+    selected.value.one = false;
+    selected.value.two = false;
+    selected.value.three = false;
+  }
 };
 
 watch(selected.value, (newState) => {
   console.log(newState);
-  const filterTrue = newState.filter((value) => value);
-  if (filterTrue.length === 3) {
+  const filterTrue = Object.values(newState).filter((state) => state);
+  console.log(filterTrue);
+  if (selected.value.one && selected.value.two) {
+    isVerifyAuthentication.value = false;
+  } else if (filterTrue.length === 3) {
     selectedAll.value = true;
   } else {
+    isVerifyAuthentication.value = true;
     selectedAll.value = false;
   }
 });
 
-// const selected = ref([]);
-
-// const selectedAll = ref(false);
-
-// watch(selectedAll, (newValue) => {
-//   if (newValue) {
-//     selected.value = ['item1', 'item2', 'item3'];
-//   } else {
-//     selected.value = [];
-//   }
-// });
-
-// watch(selected, (newSelected) => {
-//   if (newSelected.length !== 3) {
-//     selectedAll.value = false;
-//   }
-// });
+const nagivateToSignup = () => {
+  router.push('/signup');
+};
 </script>
 
 <style scoped>
