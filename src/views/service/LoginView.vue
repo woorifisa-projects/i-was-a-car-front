@@ -10,7 +10,6 @@
             label="이메일"
             class="mb-2"
             variant="underlined"
-            :rules="[rules.requiredEmail]"
           ></v-text-field>
 
           <v-text-field
@@ -22,13 +21,6 @@
             :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
             variant="underlined"
           ></v-text-field>
-
-          <p
-            v-show="error.loginError"
-            class="text-subtitle-2 text-center text-color-red"
-          >
-            {{ error.loginErrorMsg }}
-          </p>
 
           <v-btn
             class="mt-10"
@@ -94,9 +86,6 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
 
 const passwordVisible = ref(false);
 
@@ -105,36 +94,11 @@ const form = ref({
   password: '',
 });
 
-const error = ref({
-  loginError: false,
-  loginErrorMsg: '',
-});
-
-const rules = {
-  requiredEmail: (value) => !!value || '이메일을 입력해 주세요.',
-  requiredPassword: (value) => !!value || '비밀번호를 입력해 주세요.',
-};
-
 const login = () => {
   axios
-    .post('http://localhost:8080/api/v1/members/login', form.value, {
-      headers: {
-        'Content-Type': `application/json`,
-      },
-    })
-    .then((res) => {
-      if (res.status === '200') {
-        console.log(res.data.data);
-        error.loginError.value = false;
-        router.push({ name: 'Home' });
-      }
-    })
-    .catch((e) => {
-      if (e.response.status === 500 || e.response.status === 401) {
-        error.value.loginError = true;
-        error.value.loginErrorMsg = '이메일 또는 비밀번호를 잘못 입력했습니다.';
-      }
-    });
+    .post('http://localhost:8080/api/v1/members/login', form.value)
+    .then(() => console.log('로그인 완료!'))
+    .catch((e) => console.error(e));
 };
 </script>
 
@@ -145,9 +109,5 @@ const login = () => {
 
 .text-color-black {
   color: black;
-}
-
-.text-color-red {
-  color: tomato;
 }
 </style>
