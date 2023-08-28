@@ -15,6 +15,11 @@ const serviceRoutes = [
         name: 'ProductDetail',
         component: () => import('@/views/service/products/ProductDetails.vue'),
       },
+      {
+        path: 'products/:productId',
+        name: 'ProductDetail',
+        component: () => import('@/views/service/products/ProductDetails.vue'),
+      },
     ],
   },
   {

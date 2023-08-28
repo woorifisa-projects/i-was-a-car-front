@@ -5,8 +5,11 @@
       <div class="d-flex justify-space-around flex-wrap align-content-stretch">
         <div class="w-30">
           <v-card-item>
-            <v-card-text>판매 가격</v-card-text>
-            <v-text-field suffix="만원">
+            <v-card-text class="font-bold"> 판매 가격 </v-card-text>
+            <v-text-field>
+              <template v-slot:append-inner>
+                <span style="width: 3em; font-size: 0.7em">만 원</span>
+              </template>
               {{ (carInfo.price / 10000).toLocaleString() }}
             </v-text-field>
           </v-card-item>
@@ -14,7 +17,7 @@
 
         <div class="w-30">
           <v-card-item>
-            <v-card-text>선수금</v-card-text>
+            <v-card-text class="font-bold">선수금</v-card-text>
             <v-select
               v-model="selected"
               :items="guaranteePercentage"
@@ -24,22 +27,25 @@
       </div>
     </v-card-item>
 
-    <v-card-text
-      >총 할부 신청 금액: {{ installment.toLocaleString() }} 원</v-card-text
-    >
+    <v-card-text class="font-bold">
+      총 할부 신청 금액:
+      <span class="my-highlight">{{ installment.toLocaleString() }} 원</span>
+    </v-card-text>
 
     <div>
       <div>
-        <v-card-text>기간</v-card-text>
+        <v-card-text class="font-bold"> 기간 </v-card-text>
         <v-card-item>
           <div
-            class="d-flex justify-space-between flex-wrap align-content-stretch"
+            class="d-flex justify-space-around flex-wrap align-content-stretch"
           >
             <div v-for="(p, i) in period" :key="i">
               <v-btn
                 @click="onClickPeriod(p)"
                 variant="outlined"
                 :disabled="btnDisable"
+                class="btn-design"
+                :class="month === p ? 'btn-selected' : ''"
               >
                 {{ p }}
               </v-btn>
@@ -48,10 +54,12 @@
         </v-card-item>
       </div>
       <div>
-        <v-card-text
-          >월 납입 예상 금액:
-          {{ monthlyPrice.toLocaleString() }} 원</v-card-text
-        >
+        <v-card-text class="font-bold">
+          월 납입 예상 금액:
+          <span class="my-highlight">
+            {{ monthlyPrice.toLocaleString() }} 원
+          </span>
+        </v-card-text>
 
         <v-card-subtitle>기준금리 3.5%로 계산한 결과입니다.</v-card-subtitle>
         <br />
@@ -98,5 +106,25 @@ watch(month, (m) => {
 <style lang="scss" scoped>
 .w-30 {
   width: 30em;
+}
+
+.font-bold {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.my-highlight {
+  font-size: 1.5em;
+  color: #0057ff;
+}
+
+.btn-design {
+  width: 7em;
+  height: 3.5em;
+  margin: 1em 0;
+}
+
+.btn-selected {
+  border: 5px solid blue;
 }
 </style>

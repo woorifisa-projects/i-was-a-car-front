@@ -30,12 +30,6 @@
 </template>
 
 <script setup>
-// import ImageSlider from '@/components/products/details/ImageSlider.vue';
-// import BasicCarInfo from '@/components/products/details/BasicCarInfo.vue';
-// import FinancialService from '@/components/products/details/FinancialService.vue';
-// import CarDiagnosis from '@/components/products/details/CarDiagnosis.vue';
-// import MileageAnalysis from '@/components/products/details/MileageAnalysis.vue';
-
 import { ref, onBeforeMount, defineAsyncComponent } from 'vue';
 import { findProductDetail } from '@/apis/service/products/productApi.js';
 import { useRoute } from 'vue-router';

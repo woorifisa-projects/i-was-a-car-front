@@ -4,7 +4,6 @@ const findProductDetail = (productId) => {
   return instance.get(`/products/${productId}`);
 };
 
-
 const findProducts = (id) => {
   return instance.get(`/products`, {
     params: {
