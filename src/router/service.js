@@ -13,9 +13,13 @@ const serviceRoutes = [
     ],
   },
   {
-    path: '/signupconsent',
-    name: 'SignupConsent',
+    path: '/singup-consent',
     component: () => import('@/views/service/SignupConsentView.vue'),
+  },
+
+  {
+    path: '/signup',
+    component: () => import('@/views/service/SignupView.vue'),
   },
 ];
 
