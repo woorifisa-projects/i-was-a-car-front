@@ -47,6 +47,7 @@ if (today.getMonth() < carBirth.getMonth()) {
 } else {
   lenMonth.value = today.getMonth() - carBirth.getMonth();
 }
+
 const yd = Math.ceil(carInfo.value.distance / lenYear.value);
 const yearlyDistance = ref(yd);
 

@@ -6,12 +6,14 @@
         <v-form @submit.prevent>
           <v-text-field
             density="compact"
-            v-model="firstName"
+            v-model="form.email"
             label="이메일"
             class="mb-2"
             variant="underlined"
           ></v-text-field>
+
           <v-text-field
+            v-model="form.password"
             :type="passwordVisible ? 'text' : 'password'"
             density="compact"
             label="비밀번호"
@@ -19,12 +21,14 @@
             :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
             variant="underlined"
           ></v-text-field>
+
           <v-btn
             class="mt-10"
             height="40"
             width="400"
             color="black"
             density="compact"
+            @click="login"
           >
             로그인
           </v-btn>
@@ -80,9 +84,22 @@
 </template>
 
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 
 const passwordVisible = ref(false);
+
+const form = ref({
+  email: '',
+  password: '',
+});
+
+const login = () => {
+  axios
+    .post('http://localhost:8080/api/v1/members/login', form.value)
+    .then(() => console.log('로그인 완료!'))
+    .catch((e) => console.error(e));
+};
 </script>
 
 <style scoped>

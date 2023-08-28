@@ -14,7 +14,7 @@
       </v-card-text>
     </v-card-text>
     <br />
-
+		
     <div class="d-flex justify-space-around w-100">
       <v-btn>상담 신청</v-btn>
       <v-btn>

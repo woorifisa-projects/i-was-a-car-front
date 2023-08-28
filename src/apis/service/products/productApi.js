@@ -4,4 +4,12 @@ const findProductDetail = (productId) => {
   return instance.get(`/products/${productId}`);
 };
 
-export { findProductDetail };
+const findProducts = (id) => {
+  return instance.get(`/products`, {
+    params: {
+      lastProductId: id,
+    },
+  });
+};
+
+export { findProductDetail, findProducts };
