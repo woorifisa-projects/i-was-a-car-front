@@ -33,13 +33,17 @@ import ProductsList from '@/components/products/ProductsList.vue';
 
 const lastProductId = ref();
 const products = ref([]);
+const stdProduct = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
 const load = async ({ done }) => {
-  console.log(lastProductId.value);
   try {
-    if (lastProductId.value === 1) done('empty');
+    if (stdProduct.value.length < 10) done('empty');
     else {
       const response = await findProducts(lastProductId.value);
+
+      stdProduct.value.length = 0;
+
+      stdProduct.value.push(...response.data.data);
 
       products.value.push(...response.data.data);
 
