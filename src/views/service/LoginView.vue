@@ -20,7 +20,12 @@
             @click:append-inner="passwordVisible = !passwordVisible"
             :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
             variant="underlined"
+            @keyup.enter="loginHandler"
           ></v-text-field>
+
+          <p v-show="error.loginError" class="text-subtitle-2 error-msg">
+            {{ error.loginErrorMsg }}
+          </p>
 
           <v-btn
             class="mt-10"
@@ -28,7 +33,7 @@
             width="400"
             color="black"
             density="compact"
-            @click="login"
+            @click="loginHandler"
           >
             로그인
           </v-btn>
@@ -84,8 +89,12 @@
 </template>
 
 <script setup>
-import axios from 'axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { loginAPI } from '@/apis/service/auth/authApi';
+import { useAuthStore } from '@/store/auth';
+
+const router = useRouter();
 
 const passwordVisible = ref(false);
 
@@ -94,11 +103,26 @@ const form = ref({
   password: '',
 });
 
-const login = () => {
-  axios
-    .post('http://localhost:8080/api/v1/members/login', form.value)
-    .then(() => console.log('로그인 완료!'))
-    .catch((e) => console.error(e));
+const error = ref({
+  loginError: false,
+  loginErrorMsg: '',
+});
+
+const auth = useAuthStore();
+const { setAuthInfo, login } = auth;
+
+const loginHandler = async () => {
+  try {
+    const { data } = await loginAPI(form.value);
+    setAuthInfo(data);
+    login();
+    router.push({ name: 'Home' });
+  } catch (e) {
+    if (e.response.status === 500 || e.response.status === 401) {
+      error.value.loginError = true;
+      error.value.loginErrorMsg = '이메일 또는 비밀번호를 잘못 입력했습니다.';
+    }
+  }
 };
 </script>
 
@@ -109,5 +133,10 @@ const login = () => {
 
 .text-color-black {
   color: black;
+}
+
+.error-msg {
+  color: tomato;
+  position: absolute;
 }
 </style>
