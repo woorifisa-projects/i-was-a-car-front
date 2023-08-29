@@ -47,6 +47,7 @@ const serviceRoutes = [
     name: 'PurchaseBasicInfo',
     component: () => import('@/views/service/purchase/BasicInfoView.vue'),
   },
+
 ];
 
 const serviceRouter = createRouter({
