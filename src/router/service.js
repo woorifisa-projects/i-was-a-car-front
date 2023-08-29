@@ -44,7 +44,7 @@ const serviceRoutes = [
   },
   {
     path: '/one-click-purchase',
-    name: 'BasicInfo',
+    name: 'PurchaseBasicInfo',
     component: () => import('@/views/service/purchase/BasicInfoView.vue'),
   },
 ];

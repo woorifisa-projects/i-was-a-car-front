@@ -1,5 +1,7 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next"><BasicForm></BasicForm></Card>
+  <Card :cardTitle="cardTitle" :next="next">
+    <BasicForm></BasicForm>
+  </Card>
 </template>
 
 <script setup>

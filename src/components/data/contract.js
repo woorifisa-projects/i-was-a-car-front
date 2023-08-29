@@ -2,7 +2,7 @@
 export const personalContract = [
   {
     id: 1,
-    title: "슈룹 이용약관(필수)",
+    title: "이용약관(필수)",
     contentText:
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente quo quis ab consequatur et mollitia eos! Provident omnis exercitationem fuga, impedit nesciunt fugiat iste in voluptatum quisquam optio! Porro, at!",
   },

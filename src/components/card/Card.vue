@@ -8,7 +8,9 @@
       style="position: relative"
     >
       <CardTitle :cardTitle="cardTitle"></CardTitle>
-      <CardForm><slot></slot></CardForm>
+      <CardForm>
+        <slot></slot>
+      </CardForm>
       <CardBtn :next="next"></CardBtn>
     </v-sheet>
   </v-container>
