@@ -42,6 +42,11 @@ const serviceRoutes = [
     name: 'SignupConsent',
     component: () => import('@/views/service/SignupConsentView.vue'),
   },
+  {
+    path: '/one-click-purchase',
+    name: 'BasicInfo',
+    component: () => import('@/views/service/purchase/BasicInfoView.vue'),
+  },
 ];
 
 const serviceRouter = createRouter({
