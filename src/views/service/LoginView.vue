@@ -118,7 +118,7 @@ const loginHandler = async () => {
     login();
     router.push({ name: 'Home' });
   } catch (e) {
-    if (e.response.status === 500 || e.response.status === 401) {
+    if (e.response.status === 401) {
       error.value.loginError = true;
       error.value.loginErrorMsg = '이메일 또는 비밀번호를 잘못 입력했습니다.';
     }
