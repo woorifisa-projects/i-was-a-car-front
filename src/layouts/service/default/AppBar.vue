@@ -24,11 +24,21 @@
     </v-container>
   </v-app-bar>
 
-  <v-navigation-drawer v-model="drawer" location="top" temporary>
+  <v-navigation-drawer
+    v-model="drawer"
+    location="top"
+    temporary
+    style="max-height: 125px"
+  >
     <v-list nav>
-      <v-list-item v-for="item in navItems" key="item.value" :to="item.to">{{
-        item.title
-      }}</v-list-item>
+      <v-list-item
+        v-for="item in navItems"
+        :key="item.value"
+        :to="item.to"
+        @click="logoutHandler(item)"
+      >
+        {{ item.title }}
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -47,18 +57,22 @@ const drawer = ref(false);
 const toggleDrawer = () => (drawer.value = !drawer.value);
 
 const navItems = computed(() => {
-  return isLogin ? loginNavItems.value : notLoginNavItems.value;
+  return isLogin.value ? loginNavItems.value : notLoginNavItems.value;
 });
+
+const logoutHandler = (item) => {
+  if (item.title === '로그아웃') logout();
+};
 
 const notLoginNavItems = ref([
   {
     title: '가입하기',
-    value: 'signup',
+    name: 'signup',
     to: '/signup',
   },
   {
     title: '로그인하기',
-    value: 'login',
+    name: 'login',
     to: '/login',
   },
 ]);
@@ -66,13 +80,13 @@ const notLoginNavItems = ref([
 const loginNavItems = ref([
   {
     title: '마이페이지',
-    value: 'mypage',
+    name: 'mypage',
     to: '/mypage',
   },
   {
     title: '로그아웃',
-    value: 'login',
-    to: '/login',
+    name: 'logout',
+    to: '/',
   },
 ]);
 </script>
