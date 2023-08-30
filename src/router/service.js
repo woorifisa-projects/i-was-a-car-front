@@ -42,6 +42,11 @@ const serviceRoutes = [
     name: 'SignupConsent',
     component: () => import('@/views/service/SignupConsentView.vue'),
   },
+  {
+    path: '/:catchAll(.*)*',
+    name: 'NotFound',
+    component: () => import('@/views/common/NotFoundView.vue'),
+  },
 ];
 
 const serviceRouter = createRouter({
