@@ -20,6 +20,16 @@ const serviceRoutes = [
         name: 'ProductDetail',
         component: () => import('@/views/service/products/ProductDetails.vue'),
       },
+      {
+        path: 'sales/meeting',
+        name: 'MeeingLocation',
+        component: () => import('@/views/service/sales/MeetingLocation.vue'),
+      },
+      {
+        path: 'sales/car-retrieve',
+        name: 'CarRetrieve',
+        component: () => import('@/views/service/sales/CarRetrieve.vue'),
+      },
     ],
   },
   {
