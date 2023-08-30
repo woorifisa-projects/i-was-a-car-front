@@ -16,19 +16,19 @@ const serviceRoutes = [
         component: () => import('@/views/service/products/ProductDetails.vue'),
       },
       {
-        path: 'products/:productId',
-        name: 'ProductDetail',
-        component: () => import('@/views/service/products/ProductDetails.vue'),
-      },
-      {
         path: 'sales/meeting',
         name: 'MeeingLocation',
         component: () => import('@/views/service/sales/MeetingLocation.vue'),
       },
       {
-        path: 'sales/car-retrieve',
+        path: 'sales/car-info',
         name: 'CarRetrieve',
         component: () => import('@/views/service/sales/CarRetrieve.vue'),
+      },
+      {
+        path: 'sales/car',
+        name: 'CarInfo',
+        component: () => import('@/views/service/sales/CarInfo.vue'),
       },
     ],
   },
@@ -54,10 +54,9 @@ const serviceRoutes = [
   },
   {
     path: '/one-click-purchase',
-    name: 'PurchaseBasicInfo',
+    name: 'BasicInfo',
     component: () => import('@/views/service/purchase/BasicInfoView.vue'),
   },
-
 ];
 
 const serviceRouter = createRouter({

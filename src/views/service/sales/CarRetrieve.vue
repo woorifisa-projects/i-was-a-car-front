@@ -1,30 +1,44 @@
 <template>
-  <div>
-    <v-container class="d-flex justify-center h-screen">
-      <v-sheet class="mt-5 rounded-xl" :elevation="4" width="500" height="690">
-        <v-card-title
-          class="text-center text-h5 font-weight-bold ma-15 mb-16 my-15"
-        >
-          차종 선택
-        </v-card-title>
-        <v-sheet width="350" class="mx-auto">
-          <v-form @submit.prevent>
-            
-            <PrevNextBtn :next="next"></PrevNextBtn>
-          </v-form>
-        </v-sheet>
-      </v-sheet>
-    </v-container>
-  </div>
+  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
+    <v-text-field
+      label="성명"
+      density="compact"
+      variant="underlined"
+      class="my-10"
+      v-model="name"
+    >
+    </v-text-field>
+
+    <v-text-field
+      label="차량번호"
+      density="compact"
+      variant="underlined"
+      class="my-10"
+      v-model="carNumber"
+    >
+    </v-text-field>
+  </Card>
 </template>
 
 <script setup>
-import FindAddress from '@/components/FindAddress.vue';
-import PrevNextBtn from '@/components/common/PrevNextBtn.vue';
+import Card from '@/components/card/Card.vue';
+import { useRetrieveCarStore } from '@/store/retrieveCar/retrieveCar.js';
+import { ref, watch } from 'vue';
 
-import { ref } from 'vue';
+const name = ref('');
+const carNumber = ref('');
 
+const cardTitle = ref('차량 정보 조회');
+const next = ref('조회하기');
+const nextUrl = ref('car');
 
+const store = useRetrieveCarStore();
+const {setName, setCarNumber} = store;
+
+watch([name, carNumber], ([name, carNumber]) => {
+  setName(name);
+  setCarNumber(carNumber);
+});
 </script>
 
 <style lang="scss" scoped></style>

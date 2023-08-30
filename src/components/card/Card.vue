@@ -11,21 +11,23 @@
       <CardForm>
         <slot></slot>
       </CardForm>
-      <CardBtn :next="next"></CardBtn>
+      <CardBtn :next="next" :nextUrl="nextUrl"></CardBtn>
     </v-sheet>
   </v-container>
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 
 import CardTitle from '@/components/card/CardTitle.vue';
 import CardBtn from '@/components/card/CardBtn.vue';
 import CardForm from '@/components/card/CardForm.vue';
 
-const props = defineProps(['cardTitle', 'next']);
+const props = defineProps(['cardTitle', 'next', 'nextUrl']);
 const cardTitle = ref(props.cardTitle);
 const next = ref(props.next);
+const nextUrl = ref(props.nextUrl);
+
 </script>
 
 <style lang="scss" scoped></style>
