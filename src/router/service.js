@@ -30,6 +30,16 @@ const serviceRoutes = [
         name: 'CarInfo',
         component: () => import('@/views/service/sales/CarInfo.vue'),
       },
+      {
+        path: 'sales/images',
+        name: 'ImageInput',
+        component: () => import('@/views/service/sales/ImageInput.vue'),
+      },
+      {
+        path: 'sales/finace',
+        name: 'PriceAndAccount',
+        component: () => import('@/views/service/sales/PriceAndAccount.vue'),
+      },
     ],
   },
   {

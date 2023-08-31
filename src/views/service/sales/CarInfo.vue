@@ -7,31 +7,47 @@
         {{ carNumber }}
       </div>
       <div>
-        <v-sheet class="mx-auto" elevation="0" color="rgba(0,0,0,0)">
-        <v-slide-group
-          v-model="model"
-          class="pa-1"
-          selected-class="bg-success"
-          show-arrows
+        <v-sheet
+          class="mx-auto"
+          elevation="0"
+          color="rgba(0,0,0,0)"
+          max-width="450"
         >
-          <v-slide-group-item
-            v-for="(item, index) in items"
-            :key="index"
-            v-slot="{ toggle }"
+          <v-slide-group
+            v-model="model"
+            class="pa-1"
+            selected-class="bg-success"
+            show-arrows
           >
-            <v-card
-              color="rgba(0, 0, 0, 0)"
-              :class="['ma-3', selectedClass]"
-              height="100"
-              width="100"
-              elevation="0"
-              @click="toggle"
+            <v-slide-group-item
+              v-for="(item, index) in infos"
+              :key="index"
+              v-slot="{ toggle }"
             >
-              {{ item }}
-            </v-card>
-          </v-slide-group-item>
-        </v-slide-group>
-      </v-sheet>
+              <div class="d-flex flex-column align-center">
+                <v-card
+                  color="grey-lighten-1"
+                  :class="['ma-3']"
+                  height="100"
+                  width="100"
+                  elevation="0"
+                  @click="toggle"
+                >
+                  <div
+                    class="d-flex fill-height align-center justify-center"
+                  >
+                  {{ item.content }}
+                  </div>
+                </v-card>
+                <div>
+                  <v-card-subtitle>
+                    {{ item.contentName }}
+                  </v-card-subtitle>
+                </div>
+              </div>
+            </v-slide-group-item>
+          </v-slide-group>
+        </v-sheet>
       </div>
     </div>
   </Card>
@@ -44,12 +60,29 @@ import Card from '@/components/card/Card.vue';
 const cardTitle = ref('차량정보');
 const next = ref('다음');
 const nextUrl = ref('images');
-const items = ref([1,2,3,4,5]);
 
 const imgUrl = ref(
   'https://i-was-a-car.s3.ap-northeast-2.amazonaws.com/k8Image.jpeg'
 );
 const carNumber = ref('99양0817');
+const infos = ref([
+  {
+    contentName: "소유자",
+    content: "양선주"
+  },
+  {
+    contentName: "차명",
+    content: "K8"
+  },
+  {
+    contentName: "연식",
+    content: "1997년식"
+  },
+  {
+    contentName: "주행거리",
+    content: 300000
+  },
+])
 </script>
 
 <style lang="scss" scoped>
