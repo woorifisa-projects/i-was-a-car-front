@@ -23,6 +23,17 @@ const serviceRoutes = [
     ],
   },
   {
+    path: '/mypage',
+    component: () => import('@/layouts/service/myPage/Default.vue'),
+    children: [
+      {
+        path: '/',
+        name: 'MyPage',
+        component: () => import('@/views/service/'),
+      },
+    ],
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/service/LoginView.vue'),
@@ -36,11 +47,6 @@ const serviceRoutes = [
     path: '/email',
     name: 'EmailAuthentication',
     component: () => import('@/views/service/EmailAuthenticationView.vue'),
-  },
-  {
-    path: '/signup-consent',
-    name: 'SignupConsent',
-    component: () => import('@/views/service/SignupConsentView.vue'),
   },
 ];
 
