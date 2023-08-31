@@ -40,9 +40,8 @@
           <v-checkbox
             v-model="selectedAll"
             id="all-consent"
-            class="mb-1 pr-6 d-flex justify-end"
+            class="mb-1 pr-6 d-flex justify-end checkbox-label"
             density="compact"
-            style="height: 40px"
             @update:model-value="toggleAllCheckboxes"
           >
             <template v-slot:default>
@@ -62,7 +61,6 @@
             density="compact"
             append-icon="mdi-chevron-right"
             class="checkbox-label"
-            style="height: 40px"
           >
             <template v-slot:label>
               <span class="custom-font-size">
@@ -76,7 +74,6 @@
             density="compact"
             append-icon="mdi-chevron-right"
             class="checkbox-label"
-            style="height: 40px"
           >
             <template v-slot:label>
               <span class="custom-font-size">
@@ -131,7 +128,7 @@ const isVerifyAuthentication = ref(false);
 
 const toggleAllCheckboxes = () => {
   const newState = selectedAll.value;
-  console.log(newState);
+
   if (newState) {
     selected.value.one = true;
     selected.value.two = true;
@@ -144,9 +141,7 @@ const toggleAllCheckboxes = () => {
 };
 
 watch(selected.value, (newState) => {
-  console.log(newState);
   const filterTrue = Object.values(newState).filter((state) => state);
-  console.log(filterTrue);
   if (selected.value.one && selected.value.two) {
     isVerifyAuthentication.value = false;
   } else if (filterTrue.length === 3) {
@@ -174,5 +169,8 @@ const nagivateToSignup = () => {
 
 .custom-font-size {
   font-size: 13px;
+}
+.checkbox-label {
+  height: 40px;
 }
 </style>
