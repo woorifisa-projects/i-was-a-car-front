@@ -17,7 +17,7 @@
       density="compact"
       variant="underlined"
       class="my-10"
-      v-mode="accountHolder"
+      v-model="accountHolder"
     >
     </v-text-field>
     <div class="d-flex align-center">
