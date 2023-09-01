@@ -43,10 +43,15 @@ const serviceRoutes = [
     component: () => import('@/views/service/SignupConsentView.vue'),
   },
   {
+    path: '/one-click-purchase',
+    name: 'PurchaseBasicInfo',
+    component: () => import('@/views/service/purchase/BasicInfoView.vue'),
+  },
+  {
     path: '/:catchAll(.*)*',
     name: 'NotFound',
     component: () => import('@/views/common/NotFoundView.vue'),
-  },
+  }
 ];
 
 const serviceRouter = createRouter({
