@@ -8,7 +8,7 @@
       :elevation="2"
       width="120"
       height="40"
-      @click="onClickNextBtn"
+      @click="[onClickNextBtn, $emit('onClickNextBtnEmit')]"
     >
       {{ next }}
     </v-btn>
@@ -16,9 +16,10 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import { useRouter } from 'vue-router';
 
+const emit = defineEmits(['onClickNextBtnEmit']);
 const router = useRouter();
 const props = defineProps(['next', 'nextUrl']);
 const nextUrl = props.nextUrl;

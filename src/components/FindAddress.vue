@@ -6,9 +6,10 @@
       append-inner-icon="mdi-magnify"
       variant="underlined"
       class="my-10"
-      :readonly=true
+      :readonly="true"
       v-model="zipCode"
       @click="findAddress"
+      @change="$emit('changeZipCode', zipCode)"
     >
     </v-text-field>
 
@@ -17,8 +18,9 @@
       density="compact"
       variant="underlined"
       class="my-10"
-      :readonly=true
+      :readonly="true"
       v-model="address"
+      @change="$emit('changeAddress', address)"
     >
     </v-text-field>
 
@@ -29,28 +31,37 @@
       variant="underlined"
       class="my-10"
       v-model="addressDetail"
+      @change="$emit('changeAddressDetail', addressDetail)"
     >
     </v-text-field>
-
-
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, defineEmits } from 'vue';
 
-const myTrue = ref('true');
+const emit = defineEmits([
+  'changeMeetingDate',
+  'changeZipCode',
+  'changeAddress',
+  'changeAddressDetail',
+]);
+
+const meetingDate = ref('');
 const zipCode = ref('');
 const address = ref('');
 const addressDetail = ref('');
+
+watch(meetingDate, (meetingDate) => emit('changeMeetingDate', meetingDate));
+watch(zipCode, (zipCode) => emit('changeZipCode', zipCode));
+watch(address, (address) => emit('changeAddress', address));
+watch(addressDetail, (ad) => emit('changeAddressDetail', ad));
 
 const findAddress = () => {
   new daum.Postcode({
     oncomplete: (data) => {
       zipCode.value = data.zonecode;
       address.value = data.address;
-
-      console.log(zipCode.value, address.value);
     },
   }).open();
 };
