@@ -18,7 +18,7 @@ import ImageAttach from '@/components/common/ImageAttach.vue';
 
 const cardTitle = ref('사진 정보 입력');
 const next = ref('다음');
-const nextUrl = ref('images');
+const nextUrl = ref('finance');
 const imageRef = ref(null);
 const images = ref([]);
 const imageData = ref({});

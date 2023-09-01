@@ -36,7 +36,7 @@ const serviceRoutes = [
         component: () => import('@/views/service/sales/ImageInput.vue'),
       },
       {
-        path: 'sales/finace',
+        path: 'sales/finance',
         name: 'PriceAndAccount',
         component: () => import('@/views/service/sales/PriceAndAccount.vue'),
       },
