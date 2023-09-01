@@ -5,15 +5,22 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     authInfo: {},
     isLogin: JSON.parse(localStorage.getItem('isLogin')) === true || false,
+    email: '',
+    // signupForm: {
+    //   email: '',
+    //   password: '',
+    //   name: '',
+    //   birth: '', // 1997-09-03
+    //   tel: '010-3598-1748',
+    //   gender: '남자',
+    //   hasLicense: true,
+    // },
   }),
 
-  getters: {
-    isAdmin: ({ authInfo }) => authInfo.roles.includes('ADMIN'),
-  },
+  getters: {},
 
   actions: {
     setAuthInfo(value) {
-      console.log('setAuthInfo: ', { ...value });
       this.authInfo = { ...value };
     },
 
@@ -25,6 +32,12 @@ export const useAuthStore = defineStore('auth', {
     logout() {
       this.isLogin = false;
       localStorage.removeItem('isLogin');
+    },
+
+    // checkIsLogin(){}
+
+    setEmail(value) {
+      this.email = value;
     },
   },
 });

@@ -52,7 +52,6 @@
               variant="underlined"
               class="mt-10"
             ></v-text-field>
-
             <v-sheet class="d-flex justify-end">
               <v-btn @click="verifyAuthentication" variant="text"
                 >인증하기</v-btn
@@ -62,12 +61,14 @@
         </v-form>
 
         <v-sheet class="d-flex justify-space-between mt-5">
-          <v-btn width="120" height="40">이전</v-btn>
+          <v-btn width="120" height="40" to="/">이전</v-btn>
           <v-btn
             :disabled="isVerifyAuthentication"
             width="120"
             height="40"
             class="bg-black"
+            to="signup"
+            @click="setEmailHandler"
             >다음</v-btn
           >
         </v-sheet>
@@ -77,6 +78,7 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '@/store/auth';
 import { ref } from 'vue';
 
 const email = ref('');
@@ -84,6 +86,13 @@ const loading = ref(false);
 const isValidEmail = ref(false);
 const disabled = ref(true);
 const isVerifyAuthentication = ref(true);
+
+const auth = useAuthStore();
+const { setEmail } = auth;
+
+const setEmailHandler = () => {
+  setEmail(email.value);
+};
 
 const rules = {
   required: (value) => !!value || '이메일을 반드시 입력해 주세요.',

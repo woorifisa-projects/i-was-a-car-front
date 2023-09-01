@@ -5,8 +5,9 @@ const loginAPI = async (body) => {
   return data;
 };
 
-const signup = async (body) => {
-  return await instance.post('/members/signup', body);
+const signupAPI = async (body) => {
+  const { data } = await instance.post('/members/signup', body);
+  return data;
 };
 
-export { loginAPI };
+export { loginAPI, signupAPI };
