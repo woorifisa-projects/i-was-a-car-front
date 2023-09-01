@@ -8,10 +8,50 @@ const serviceRoutes = [
       {
         path: '',
         name: 'Home',
-        component: () => import('@/views/service/Home.vue'),
+        component: () => import('@/views/service/HomeView.vue'),
+      },
+      {
+        path: 'products/:productId',
+        name: 'ProductDetail',
+        component: () => import('@/views/service/products/ProductDetails.vue'),
+      },
+      {
+        path: 'products/:productId',
+        name: 'ProductDetail',
+        component: () => import('@/views/service/products/ProductDetails.vue'),
       },
     ],
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/service/LoginView.vue'),
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: () => import('@/views/service/SignupView.vue'),
+  },
+  {
+    path: '/email',
+    name: 'EmailAuthentication',
+    component: () => import('@/views/service/EmailAuthenticationView.vue'),
+  },
+  {
+    path: '/signup-consent',
+    name: 'SignupConsent',
+    component: () => import('@/views/service/SignupConsentView.vue'),
+  },
+  {
+    path: '/one-click-purchase',
+    name: 'PurchaseBasicInfo',
+    component: () => import('@/views/service/purchase/BasicInfoView.vue'),
+  },
+  {
+    path: '/:catchAll(.*)*',
+    name: 'NotFound',
+    component: () => import('@/views/common/NotFoundView.vue'),
+  }
 ];
 
 const serviceRouter = createRouter({
