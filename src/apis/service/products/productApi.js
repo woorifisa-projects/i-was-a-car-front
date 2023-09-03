@@ -12,4 +12,13 @@ const findProducts = (id) => {
   });
 };
 
-export { findProductDetail, findProducts };
+const findProductByNameAndCarNumber = (name, carNumber) => {
+  return instance.get('/sales/car-info', {
+    params: {
+      name: name,
+      carNumber: carNumber,
+    },
+  });
+};
+
+export { findProductDetail, findProducts, findProductByNameAndCarNumber };

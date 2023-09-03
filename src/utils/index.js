@@ -1,2 +1,7 @@
-export { changeFiles } from "./changeFiles.js";
-export { deleteImage } from "./deleteImage.js";
+export { changeFiles } from './images/changeFiles.js';
+export { deleteImage } from './images/deleteImage.js';
+export {
+  multipartFormDataFileList,
+  multipartFormDataFile,
+  multipartFormDataJson,
+} from './formdata/multipart.js';

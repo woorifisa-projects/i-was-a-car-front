@@ -1,5 +1,10 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
+  <Card
+    :cardTitle="cardTitle"
+    :next="next"
+    :nextUrl="nextUrl"
+    @onClickNextBtnEmit="onClickNextBtnEmit"
+  >
     <v-text-field
       label="원하는 판매 가격"
       density="compact"
@@ -24,16 +29,20 @@
       <v-select
         label="은행명"
         :items="bankList"
+        item-title="name"
+        item-value="id"
         variant="underlined"
-        style="width: 30%; margin-right: 1em;"
+        style="width: 30%; margin-right: 1em"
         density="compact"
+        v-model="selectedBank"
       ></v-select>
       <v-text-field
         label="계좌번호"
         density="compact"
         variant="underlined"
-        style="width: 70%;"
+        style="width: 70%"
         type="number"
+        v-model="accountNumber"
       >
       </v-text-field>
     </div>
@@ -42,7 +51,12 @@
 
 <script setup>
 import Card from '@/components/card/Card.vue';
-import { ref } from 'vue';
+import { getBanks } from '@/apis/service/histories/saleApi';
+import { useSaleStore } from '@/store/sales/saleStore.js';
+import { onBeforeMount, ref } from 'vue';
+
+const saleStore = useSaleStore();
+const { setFinanceInfo } = saleStore;
 
 const cardTitle = ref('가격 및 계좌정보 입력');
 const next = ref('다음');
@@ -50,13 +64,23 @@ const nextUrl = ref('contract');
 
 const price = ref();
 const accountHolder = ref('');
-const bankList = ref([
-    '우리은행',
-    '국민은행',
-    '신한은행',
-    '하나은행',
-    '농협은행'
-]);
+const bankList = ref([]);
+const selectedBank = ref();
+const accountNumber = ref('');
+
+onBeforeMount(async () => {
+  const resp = await getBanks();
+  const banks = resp.data.data;
+  bankList.value.push(...banks);
+});
+
+const onClickNextBtnEmit = () =>
+  setFinanceInfo(
+    price.value,
+    accountHolder.value,
+    selectedBank.value,
+    accountNumber.value
+  );
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,6 +1,12 @@
 <template>
   <v-card-actions class="d-flex justify-space-around position">
-    <v-btn class="text-none ma-0" :elevation="2" width="120" height="40">
+    <v-btn
+      class="text-none ma-0"
+      :elevation="2"
+      width="120"
+      height="40"
+      @click="toPrev"
+    >
       이전</v-btn
     >
     <v-btn
@@ -8,7 +14,7 @@
       :elevation="2"
       width="120"
       height="40"
-      @click="[onClickNextBtn, $emit('onClickNextBtnEmit')]"
+      @click="onClickNextBtn(), $emit('onClickNextBtnEmit')"
     >
       {{ next }}
     </v-btn>
@@ -25,9 +31,8 @@ const props = defineProps(['next', 'nextUrl']);
 const nextUrl = props.nextUrl;
 const next = ref(props.next);
 
-const onClickNextBtn = () => {
-  router.push(nextUrl);
-};
+const onClickNextBtn = () => router.push(nextUrl);
+const toPrev = () => router.go(-1);
 </script>
 
 <style lang="scss" scoped>

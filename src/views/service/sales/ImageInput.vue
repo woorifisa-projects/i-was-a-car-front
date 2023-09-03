@@ -1,5 +1,10 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
+  <Card
+    :cardTitle="cardTitle"
+    :next="next"
+    :nextUrl="nextUrl"
+    @onClickNextBtnEmit="onClickNextBtnEmit"
+  >
     <ImageAttach
       ref="imageRef"
       :images="images"
@@ -13,8 +18,12 @@
 <script setup>
 import { ref } from 'vue';
 import { changeFiles, deleteImage } from '@/utils';
+import { useSaleStore } from '@/store/sales/saleStore';
 import Card from '@/components/card/Card.vue';
 import ImageAttach from '@/components/common/ImageAttach.vue';
+
+const store = useSaleStore();
+const { addStoreImages } = store;
 
 const cardTitle = ref('사진 정보 입력');
 const next = ref('다음');
@@ -24,13 +33,12 @@ const images = ref([]);
 const imageData = ref({});
 const attachName = ref('hello');
 
-const addImages = (files) => {
-  changeFiles(files, imageRef, images, imageData);
-};
+const addImages = (files) => changeFiles(files, imageRef, images, imageData);
 
-const deleteProductImage = (idx) => {
+const deleteProductImage = (idx) =>
   deleteImage(idx, imageRef, images, imageData);
-};
+
+const onClickNextBtnEmit = () => addStoreImages(images.value);
 </script>
 
 <style lang="scss" scoped></style>

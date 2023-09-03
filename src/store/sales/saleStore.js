@@ -2,26 +2,47 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useSaleStore = defineStore('saleStore', () => {
-  const request = {};
 
-  const name = ref('');
-  const carNumber = ref('');
-  const setName = (name) => (name.value = name);
-  const setCarNumber = (carNumber) => (carNumber.value = carNumber);
+  const request = ref({});
+  const distance = ref(0);
+  const performanceCheck = ref();
+  const images = ref([]);
 
   const setMeetingInfo = (date, zipCode, address, addressDetail) => {
-    request.meetingDate = date;
-    request.zipCode = zipCode;
-    request.address = address;
-    request.addressDetail = addressDetail;
-    console.log(request);
-  }
+    request.value.meetingDate = date;
+    request.value.zipCode = zipCode;
+    request.value.address = address;
+    request.value.addressDetail = addressDetail;
+  };
+  const setPerformanceCheck = (p) => (performanceCheck.value = p);
+  const setDistance = (d) => {
+    request.value.distance = d;
+    distance.value = d;
+  };
+
+  const combineResponse = (carInfo) => Object.assign(request.value, carInfo);
+  const addStoreImages = (imgs) => images.value.push(...imgs);
+
+  const setFinanceInfo = (price, accountHolder, bankId, accountNumber) => {
+    request.value.price = price;
+    request.value.accountHolder = accountHolder;
+    request.value.bankId = bankId;
+    request.value.accountNumber = accountNumber;
+  };
+
+  const getRequestBody = () => {};
 
   return {
-    name,
-    carNumber,
-    setName,
-    setCarNumber,
+    request,
+    performanceCheck,
+    images,
     setMeetingInfo,
+    setDistance,
+    setPerformanceCheck,
+    distance,
+    combineResponse,
+    addStoreImages,
+    setFinanceInfo,
+    getRequestBody,
   };
 });

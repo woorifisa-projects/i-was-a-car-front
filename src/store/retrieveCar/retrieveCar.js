@@ -4,8 +4,14 @@ import { ref } from 'vue';
 export const useRetrieveCarStore = defineStore('retrieveCar', () => {
   const name = ref('');
   const carNumber = ref('');
-  const setName = (name) => (name.value = name);
-  const setCarNumber = (carNumber) => (carNumber.value = carNumber);
+  const setNameAndCarNumber = (n, c) => {
+    name.value = n;
+    carNumber.value = c;
+  };
 
-  return { name, carNumber, setName, setCarNumber };
+  const getCarInfo = () => {
+    return { name, carNumber };
+  };
+
+  return { name, carNumber, setNameAndCarNumber, getCarInfo };
 });

@@ -1,5 +1,10 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl" @onClickNextBtnEmit="onClickNextBtnEmit">
+  <Card
+    :cardTitle="cardTitle"
+    :next="next"
+    :nextUrl="nextUrl"
+    @onClickNextBtnEmit="onClickNextBtnEmit"
+  >
     <v-text-field
       label="미팅 날짜 선택"
       density="compact"
