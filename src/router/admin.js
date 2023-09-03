@@ -12,9 +12,19 @@ const adminRoutes = [
         component: () => import('@/views/admin/ProductManagementView.vue'),
       },
       {
+        path: 'judge',
+        name: 'ProductJudgeManagement',
+        component: () => import('@/views/admin/ProductJudgeManagementView.vue'),
+      },
+      {
         path: 'member',
         name: 'MemberManagement',
         component: () => import('@/views/admin/MemberManagementView.vue'),
+      },
+      {
+        path: 'log',
+        name: 'LogManagemnet',
+        component: () => import('@/views/admin/LogManagementView.vue'),
       },
     ],
   },
