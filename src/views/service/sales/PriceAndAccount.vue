@@ -13,7 +13,7 @@
       v-model="price"
     >
       <template v-slot:append-inner>
-        <span style="width: 3em; font-size: 0.7em">만 원</span>
+        <span style="width: 3em; font-size: 1em">만 원</span>
       </template>
     </v-text-field>
 
