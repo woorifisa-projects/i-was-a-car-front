@@ -1,12 +1,17 @@
 <template>
-  <v-app-bar flat density="comfortable" elevation="1">
+  <v-app-bar flat density="comfortable" elevation="2">
     <v-app-bar-nav-icon
       class="d-sm-none"
       @click="toggleDrawer"
     ></v-app-bar-nav-icon>
 
     <v-container class="d-flex justify-space-between align-center">
-      <v-app-bar-title> I was a car </v-app-bar-title>
+      <RouterLink
+        to="/"
+        class="nav-title font-weight-black text-sm-h6 text-md-h5"
+      >
+        I was a car
+      </RouterLink>
 
       <template v-if="isLogin">
         <div class="d-none d-sm-block">
@@ -28,6 +33,7 @@
     v-model="drawer"
     location="top"
     temporary
+    elevation="0"
     style="max-height: 125px"
   >
     <v-list nav>
@@ -92,6 +98,11 @@ const loginNavItems = ref([
 </script>
 
 <style scoped>
+.nav-title {
+  text-decoration: none;
+  color: black;
+}
+
 .nav-item {
   color: black;
   text-decoration: none;
