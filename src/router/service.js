@@ -16,9 +16,29 @@ const serviceRoutes = [
         component: () => import('@/views/service/products/ProductDetails.vue'),
       },
       {
-        path: 'products/:productId',
-        name: 'ProductDetail',
-        component: () => import('@/views/service/products/ProductDetails.vue'),
+        path: 'sales/meeting',
+        name: 'MeeingLocation',
+        component: () => import('@/views/service/sales/MeetingLocation.vue'),
+      },
+      {
+        path: 'sales/car-info',
+        name: 'CarRetrieve',
+        component: () => import('@/views/service/sales/CarRetrieve.vue'),
+      },
+      {
+        path: 'sales/car',
+        name: 'CarInfo',
+        component: () => import('@/views/service/sales/CarInfo.vue'),
+      },
+      {
+        path: 'sales/images',
+        name: 'ImageInput',
+        component: () => import('@/views/service/sales/ImageInput.vue'),
+      },
+      {
+        path: 'sales/finance',
+        name: 'PriceAndAccount',
+        component: () => import('@/views/service/sales/PriceAndAccount.vue'),
       },
     ],
   },
@@ -44,7 +64,7 @@ const serviceRoutes = [
   },
   {
     path: '/one-click-purchase',
-    name: 'PurchaseBasicInfo',
+    name: 'BasicInfo',
     component: () => import('@/views/service/purchase/BasicInfoView.vue'),
   },
   {
