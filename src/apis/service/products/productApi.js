@@ -23,7 +23,8 @@ const RecommendationProducts = (carType, myMoney, wantMoney, id) => {
       capital: myMoney,
       loan: wantMoney,
       lastProductId: id,
-        });
+    }
+  });
 };
                       
 const findProductByNameAndCarNumber = (name, carNumber) => {
@@ -31,7 +32,8 @@ const findProductByNameAndCarNumber = (name, carNumber) => {
     params: {
       name: name,
       carNumber: carNumber,
-    });
+    }
+  });
 };
 
 export { findProductDetail, findProducts, RecommendationProducts, findCarTpyes, findProductByNameAndCarNumber };
