@@ -4,6 +4,10 @@ const findProductDetail = (productId) => {
   return instance.get(`/products/${productId}`);
 };
 
+const findCarTpyes = () => {
+  return instance.get(`/car-type`);
+};
+
 const findProducts = (id) => {
   return instance.get(`/products`, {
     params: {
@@ -23,4 +27,4 @@ const RecommendationProducts = (carType, myMoney, wantMoney, id) => {
   });
 };
 
-export { findProductDetail, findProducts, RecommendationProducts };
+export { findProductDetail, findProducts, RecommendationProducts, findCarTpyes };

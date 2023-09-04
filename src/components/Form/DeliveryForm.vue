@@ -5,7 +5,7 @@
     variant="underlined"
     v-model="meetingDate"
     type="datetime-local"
-    class="mb-3"
+    class="mb-2"
   >
   </v-text-field>
   <FindAddress
@@ -18,7 +18,7 @@
     label="예금주"
     density="compact"
     variant="underlined"
-    class="my-1"
+    class="mt-2"
     v-model="accountHolder"
   >
   </v-text-field>
