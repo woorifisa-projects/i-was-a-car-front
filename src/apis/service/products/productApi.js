@@ -12,4 +12,15 @@ const findProducts = (id) => {
   });
 };
 
-export { findProductDetail, findProducts };
+const RecommendationProducts = (carType, myMoney, wantMoney, id) => {
+  return instance.get(`/products/recommendation`, {
+    params: {
+      carType: carType,
+      capital: myMoney,
+      loan: wantMoney,
+      lastProductId: id,
+    },
+  });
+};
+
+export { findProductDetail, findProducts, RecommendationProducts };

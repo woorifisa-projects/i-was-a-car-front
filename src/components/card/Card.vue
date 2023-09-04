@@ -26,6 +26,7 @@ import CardForm from '@/components/card/CardForm.vue';
 const props = defineProps(['cardTitle', 'next']);
 const cardTitle = ref(props.cardTitle);
 const next = ref(props.next);
+const nextUrl = ref(props.nextUrl);
 </script>
 
 <style lang="scss" scoped></style>
