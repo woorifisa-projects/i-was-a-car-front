@@ -63,14 +63,14 @@ const serviceRoutes = [
     component: () => import('@/views/service/SignupConsentView.vue'),
   },
   {
-    path: '/one-click-purchase',
-    name: 'BasicInfo',
-    component: () => import('@/views/service/purchase/BasicInfoView.vue'),
+    path: '/one-click-purchase/:id',
+    name: 'OneClickPurchase',
+    component: () => import('@/views/service/OneClickPurchaseView.vue'),
   },
   {
-    path: '/:catchAll(.*)*',
-    name: 'NotFound',
-    component: () => import('@/views/common/NotFoundView.vue'),
+     path: '/:catchAll(.*)*',
+     name: 'NotFound',
+     component: () => import('@/views/common/NotFoundView.vue'),
   }
 ];
 

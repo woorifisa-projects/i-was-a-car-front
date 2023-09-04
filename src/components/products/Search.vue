@@ -2,12 +2,15 @@
   <v-card-text class="d-flex">
     <v-col cols="2" class="flex-grow-0 flex-shrink-0">
       <v-autocomplete
-        :items="cars"
+        label="선택"
+        :items="category"
+        :item-title="title"
+        :item-value="id"
         color="grey"
         theme="light"
         variant="solo"
-        label="선택"
         single-line
+        v-model="selectedCategory"
       ></v-autocomplete>
     </v-col>
 
@@ -33,10 +36,10 @@
 
 <script setup>
 import { ref } from 'vue';
-
-const cars = ref(['차종', '제조사']);
+import { category } from '@/components/data/searchCategory.js';
 
 const loading = ref(false);
+const selectedCategory = ref();
 
 const onClick = () => {
   loading.value = true;

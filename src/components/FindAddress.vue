@@ -5,7 +5,6 @@
       density="compact"
       append-inner-icon="mdi-magnify"
       variant="underlined"
-      class="my-10"
       :readonly="true"
       v-model="zipCode"
       @click="findAddress"
@@ -17,7 +16,7 @@
       label="주소"
       density="compact"
       variant="underlined"
-      class="my-10"
+      class="my-1"
       :readonly="true"
       v-model="address"
       @change="$emit('changeAddress', address)"
@@ -29,7 +28,8 @@
       density="compact"
       clearable
       variant="underlined"
-      class="my-10"
+      class="mb-3"
+      v-model="addressDetail"
       v-model="addressDetail"
       @change="$emit('changeAddressDetail', addressDetail)"
     >
@@ -39,6 +39,8 @@
 
 <script setup>
 import { ref, watch, defineEmits } from 'vue';
+
+const myTrue = ref('true');
 
 const emit = defineEmits([
   'changeMeetingDate',
