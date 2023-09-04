@@ -10,7 +10,7 @@ import { ref } from 'vue';
 import Card from '@/components/card/Card.vue';
 import SearchCarForm from '@/components/Form/SearchCarForm.vue';
 
-const cardTitle = ref('기본 정보 입력');
+const cardTitle = ref('자동차 대출 정보 입력');
 const next = ref('다음');
 </script>
 

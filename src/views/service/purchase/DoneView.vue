@@ -1,6 +1,6 @@
 <template>
   <Card :cardTitle="cardTitle" :next="next">
-    <DoneForm></DoneForm>
+    <CompleteForm></CompleteForm>
   </Card>
 </template>
 
@@ -8,7 +8,7 @@
 import { ref } from 'vue';
 
 import Card from '@/components/card/Card.vue';
-import DoneForm from '@/components/Form/DoneForm.vue';
+import CompleteForm from '@/components/Form/CompleteForm.vue';
 
 const cardTitle = ref('원클릭 차량 접수 완료');
 const next = ref('거래 상세');

@@ -30,7 +30,6 @@
       variant="underlined"
       class="mb-3"
       v-model="addressDetail"
-      v-model="addressDetail"
       @change="$emit('changeAddressDetail', addressDetail)"
     >
     </v-text-field>
