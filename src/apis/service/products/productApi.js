@@ -23,8 +23,15 @@ const RecommendationProducts = (carType, myMoney, wantMoney, id) => {
       capital: myMoney,
       loan: wantMoney,
       lastProductId: id,
-    },
-  });
+        });
+};
+                      
+const findProductByNameAndCarNumber = (name, carNumber) => {
+  return instance.get('/sales/car-info', {
+    params: {
+      name: name,
+      carNumber: carNumber,
+    });
 };
 
-export { findProductDetail, findProducts, RecommendationProducts, findCarTpyes };
+export { findProductDetail, findProducts, RecommendationProducts, findCarTpyes, findProductByNameAndCarNumber };
