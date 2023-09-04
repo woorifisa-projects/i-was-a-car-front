@@ -6,22 +6,19 @@
     ></v-app-bar-nav-icon>
 
     <v-container class="d-flex justify-space-between align-center">
-      <RouterLink
-        to="/"
-        class="nav-title font-weight-black text-sm-h6 text-md-h5"
-      >
+      <RouterLink to="/" class="nav-title font-weight-black text-sm-h5">
         I was a car
       </RouterLink>
 
       <template v-if="isLogin">
-        <div class="d-none d-sm-block">
+        <div class="d-none d-sm-block font-weight-medium">
           <RouterLink class="nav-item" to="/email">마이페이지</RouterLink>
           <span class="logout-btn" @click="logout">로그아웃</span>
         </div>
       </template>
 
       <template v-else>
-        <div class="d-none d-sm-block">
+        <div class="d-none d-sm-block font-weight-medium">
           <RouterLink class="nav-item" to="/email">가입하기</RouterLink>
           <RouterLink class="nav-item" to="/login">로그인하기</RouterLink>
         </div>
