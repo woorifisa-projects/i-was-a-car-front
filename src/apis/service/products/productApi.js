@@ -5,7 +5,7 @@ const findProductDetail = (productId) => {
 };
 
 const findCarTpyes = () => {
-  return instance.get(`/car-type`);
+  return instance.get(`/car-types`);
 };
 
 const findProducts = (category, keyword, id) => {
