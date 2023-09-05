@@ -2,7 +2,7 @@
   <v-container style="height: 50vh" class="h-screen">
     <div class="d-flex justify-space-around">
       <div class="mr-5">
-        <h2 style="text-align: center; margin-bottom: 1.5rem">탁송정보</h2>
+        <h2 style="text-align: center; margin-bottom: 1.5rem">미팅 정보</h2>
 
         <v-table style="width: 600px" class="mx-auto">
           <thead>
@@ -14,34 +14,34 @@
 
           <tbody>
             <tr>
-              <th>수령인</th>
+              <th>판매인</th>
 
               <th style="text-align: left">
-                {{ deliveryData.memberName }}
+                {{ meetingData.sellerName }}
               </th>
             </tr>
 
             <tr>
               <th>연락처</th>
               <th style="text-align: left">
-                {{ deliveryData.memberTel }}
+                {{ meetingData.sellerTel }}
               </th>
             </tr>
 
             <tr>
               <th>우편번호</th>
-              <th style="text-align: left">{{ deliveryData.zipCode }}</th>
+              <th style="text-align: left">{{ meetingData.zipCode }}</th>
             </tr>
 
             <tr>
-              <th>탁송 주소</th>
-              <th style="text-align: left">{{ deliveryData.address }}</th>
+              <th>미팅 주소</th>
+              <th style="text-align: left">{{ meetingData.address }}</th>
             </tr>
 
             <tr>
-              <th>탁송 예정일</th>
+              <th>미팅 예정일</th>
               <th style="text-align: left">
-                {{ deliveryData.deliverySchedule }}
+                {{ meetingData.meetingSchedule }}
               </th>
             </tr>
           </tbody>
@@ -96,21 +96,14 @@
             <tr>
               <th>계좌번호</th>
               <th style="text-align: left">
-                {{ contractData.accountNumber }}
+                {{ contractData.accountNum }}
               </th>
             </tr>
 
             <tr>
-              <th>대출 정보</th>
+              <th>차량 심사 상태</th>
               <th style="text-align: left">
-                {{ contractData.loanName }}
-              </th>
-            </tr>
-
-            <tr>
-              <th>보험 정보</th>
-              <th style="text-align: left">
-                {{ contractData.insuranceName }}
+                {{ contractData.labelName }}
               </th>
             </tr>
           </tbody>
@@ -123,7 +116,7 @@
         :width="120"
         size="x-large"
         class="bg-black font-weight-black my-2"
-        @click="goToPurchase"
+        @click="$router.push('/mypage')"
       >
         목록으로 가기
       </v-btn>
@@ -133,32 +126,27 @@
 
 <script setup>
 import { ref, onBeforeMount } from 'vue';
-import { purchaseHistoryDetailAPI } from '@/apis/service/histories/historyApi';
-import { useRoute, useRouter } from 'vue-router';
+import { saleHistoryDetailAPI } from '@/apis/service/histories/historyApi';
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const router = useRouter();
 
-const purchaseHistoryNo = route.params.id;
+const saleHistoryNo = route.params.id;
 
-const deliveryData = ref({});
+const meetingData = ref({});
 const contractData = ref({});
-
-const goToPurchase = () => {
-  router.push({ name: 'MyPagePurchase' });
-};
 
 const fetchData = async () => {
   try {
     const memberId = 1; // 예시로 memberId 설정
-    const res = await purchaseHistoryDetailAPI(memberId, purchaseHistoryNo);
+    const res = await saleHistoryDetailAPI(memberId, saleHistoryNo);
 
-    deliveryData.value = {
-      memberName: res.data.data.memberName,
-      memberTel: res.data.data.memberTel,
+    meetingData.value = {
+      sellerName: res.data.data.sellerName,
+      sellerTel: res.data.data.sellerTel,
       zipCode: res.data.data.zipCode,
       address: res.data.data.address,
-      deliverySchedule: res.data.data.deliverySchedule,
+      meetingSchedule: res.data.data.meetingSchedule,
     };
     contractData.value = {
       productName: res.data.data.productName,
@@ -166,9 +154,8 @@ const fetchData = async () => {
       productPrice: res.data.data.productPrice,
       bankName: res.data.data.bankName,
       accountHolder: res.data.data.accountHolder,
-      accountNumber: res.data.data.accountNumber,
-      loanName: res.data.data.loanName,
-      insuranceName: res.data.data.insuranceName,
+      accountNum: res.data.data.accountNum,
+      labelName: res.data.data.labelName,
     };
   } catch (error) {
     console.error('Error fetching data:', error);

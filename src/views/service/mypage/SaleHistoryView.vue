@@ -8,6 +8,7 @@
     :items-per-page="itemsPerPage"
     hide-default-footer
     class="mt-6"
+    @click:row="goToDetail"
   >
     <template v-slot:bottom>
       <div class="text-center pt-2">
@@ -23,8 +24,15 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, defineEmits } from 'vue';
 import { saleHistoryAPI } from '@/apis/service/histories/historyApi.js';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const emit = defineEmits(['historyNo']);
+const goToDetail = (e, item) => {
+  emit('historyNo', item.item.columns.saleHistoryNo);
+};
 
 const page = ref(1);
 const itemsPerPage = 8;

@@ -24,18 +24,15 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, defineEmits } from 'vue';
 import { purchaseHistoryAPI } from '@/apis/service/histories/historyApi.js';
 import { useRouter } from 'vue-router';
 
+const emit = defineEmits(['historyNo']);
+
 const router = useRouter();
 const goToDetail = (e, item) => {
-  console.log(item.item.columns.purchaseHistoryNo);
-  //  router.push()를 사용하여 PurchaseHistoryDetailView로 이동
-  router.push({
-    name: 'PurchaseHistoryDetail',
-    params: { id: item.item.columns.purchaseHistoryNo },
-  });
+  emit('historyNo', item.item.columns.purchaseHistoryNo);
 };
 const page = ref(1);
 const itemsPerPage = 8;

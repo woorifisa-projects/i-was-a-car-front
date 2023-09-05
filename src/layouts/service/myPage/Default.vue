@@ -13,14 +13,15 @@
         :key="item"
         :value="item"
         style="font-size: 20px"
+        :is="selectedComponent"
+        @click="changeFlag"
       >
         {{ item }}
       </v-tab>
     </v-tabs>
     <v-container>
-      <component :is="selectedComponent"></component>
+      <router-view @historyNo="goDetail" />
     </v-container>
-    <!-- <default-view /> -->
   </v-app>
 </template>
 
@@ -29,20 +30,47 @@ import DefaultBar from './AppBar.vue';
 import DefaultView from './View.vue';
 import { ref, computed, defineAsyncComponent } from 'vue';
 import { useRouter } from 'vue-router';
-import PurchaseHistoryView from '@/views/service/mypage/PurchaseHistoryView.vue';
-import SaleHistoryView from '@/views/service/mypage/SaleHistoryView.vue';
-import MemberInfoView from '@/views/service/mypage/MemberInfoView.vue';
+
+const router = useRouter();
 
 const tab = ref('구매이력');
 const items = ['구매이력', '판매이력', '회원정보'];
+const flag = ref('TRUE');
+const paramsId = ref();
+
+const path = ref('/purchase');
 const selectedComponent = computed(() => {
-  if (tab.value === '구매이력') {
-    return PurchaseHistoryView;
-  } else if (tab.value === '판매이력') {
-    return SaleHistoryView;
+  if (flag.value === 'TRUE') {
+    if (tab.value === '구매이력') {
+      router.push('/purchase');
+    } else if (tab.value === '판매이력') {
+      router.push('/sale');
+    } else {
+      console.log(tab.value);
+      path.value = '/member';
+    }
   } else {
-    console.log(tab.value);
-    return MemberInfoView;
+    if (tab.value === '구매이력') {
+      router.push({
+        name: 'PurchaseHistoryDetail',
+        params: { id: paramsId.value },
+      });
+    } else if (tab.value === '판매이력') {
+      router.push('/sale');
+    } else {
+      console.log(tab.value);
+      path.value = '/member';
+    }
   }
 });
+
+const goDetail = (child) => {
+  console.log(child);
+  flag.value = 'FALSE';
+  id.value = child;
+};
+
+const changeFlag = () => {
+  flag.value = 'TRUE';
+};
 </script>
