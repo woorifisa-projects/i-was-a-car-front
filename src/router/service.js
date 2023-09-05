@@ -72,13 +72,6 @@ const serviceRoutes = [
      name: 'NotFound',
      component: () => import('@/views/common/NotFoundView.vue'),
   },
-  {
-     path: '/test',
-     name: 'tabTest',
-    component: () => import('@/views/tabTest/Default.vue'),
-
-  }
-
 ];
 
 const serviceRouter = createRouter({
