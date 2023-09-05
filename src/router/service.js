@@ -43,6 +43,40 @@ const serviceRoutes = [
     ],
   },
   {
+    path: '/mypage',
+    component: () => import('@/layouts/service/myPage/Default.vue'),
+    children: [
+      {
+        path: '/purchase',
+        name: 'MyPagePurchase',
+        component: () =>
+          import('@/views/service/mypage/PurchaseHistoryView.vue'),
+      },
+      {
+        path: '/sale',
+        name: 'MyPageSale',
+        component: () => import('@/views/service/mypage/SaleHistoryView.vue'),
+      },
+      {
+        path: '/member',
+        name: 'MyPageMember',
+        component: () => import('@/views/service/mypage/MemberInfoView.vue'),
+      },
+      {
+        path: '/purchase/:id',
+        name: 'PurchaseHistoryDetail',
+        component: () =>
+          import('@/views/service/mypage/PurchaseHistoryDetailView.vue'),
+      },
+      {
+        path: '/sale/:id',
+        name: 'SaleHistoryDetail',
+        component: () =>
+          import('@/views/service/mypage/SaleHistoryDetailView.vue'),
+      },
+    ],
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/service/LoginView.vue'),
