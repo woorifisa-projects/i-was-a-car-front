@@ -17,17 +17,18 @@
         {{ item }}
       </v-tab>
     </v-tabs>
-    <default-view />
     <v-container>
-      <component :is="selectedComponent" />
+      <component :is="selectedComponent"></component>
     </v-container>
+    <!-- <default-view /> -->
   </v-app>
 </template>
 
 <script setup>
 import DefaultBar from './AppBar.vue';
 import DefaultView from './View.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, defineAsyncComponent } from 'vue';
+import { useRouter } from 'vue-router';
 import PurchaseHistoryView from '@/views/service/mypage/PurchaseHistoryView.vue';
 import SaleHistoryView from '@/views/service/mypage/SaleHistoryView.vue';
 import MemberInfoView from '@/views/service/mypage/MemberInfoView.vue';

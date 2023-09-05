@@ -48,6 +48,12 @@ const serviceRoutes = [
     name: 'EmailAuthentication',
     component: () => import('@/views/service/EmailAuthenticationView.vue'),
   },
+  {
+    path: '/purchase-detail/:id',
+    name: 'PurchaseHistoryDetail',
+    component: () =>
+      import('@/views/service/mypage/PurchaseHistoryDetailView.vue'),
+  },
 ];
 
 const serviceRouter = createRouter({

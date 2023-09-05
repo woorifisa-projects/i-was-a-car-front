@@ -1,28 +1,44 @@
 <template>
   <v-data-table
     v-if="orderData.length"
-    v-model:page="page"
+    height="500"
+    :page.sync="page"
     :headers="headers"
     :items="orderData"
     :items-per-page="itemsPerPage"
     hide-default-footer
-    class="elevation-1"
+    class="mt-6"
+    @click:row="goToDetail"
   >
     <template v-slot:bottom>
       <div class="text-center pt-2">
-        <v-pagination v-model="page" :length="pageCount"></v-pagination>
+        <v-pagination
+          v-model="page"
+          :length="pageCount"
+          :total-visible="5"
+          @click="changePage(page)"
+        ></v-pagination>
       </div>
     </template>
   </v-data-table>
-  {{ orderData }}
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { } from '@/apis/service/';
+import { ref, onBeforeMount } from 'vue';
+import { purchaseHistoryAPI } from '@/apis/service/histories/historyApi.js';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const goToDetail = (e, item) => {
+  console.log(item.item.columns.purchaseHistoryNo);
+  //  router.push()를 사용하여 PurchaseHistoryDetailView로 이동
+  router.push({
+    name: 'PurchaseHistoryDetail',
+    params: { id: item.item.columns.purchaseHistoryNo },
+  });
+};
 const page = ref(1);
-const itemsPerPage = 10;
+const itemsPerPage = 8;
 
 const headers = ref([
   {
@@ -35,38 +51,30 @@ const headers = ref([
   { title: '주문번호', key: 'purchaseHistoryNo' },
   { title: '주문상태', key: 'label' },
 ]);
-const orderData = ref([]);
 
-async function fetchData() {
+const orderData = ref([]);
+const pageCount = ref(1);
+
+const fetchData = async () => {
   try {
     const memberId = 1; // 예시로 memberId 설정
-    const response = await instance.get(
-      `/${memberId}/purchase-histories?page=${page.valueu}&size=${itemsPerPage}`
-    );
+    const res = await purchaseHistoryAPI(memberId, page.value, itemsPerPage);
 
-    const data = response.data.data.content;
-    orderData.value = data;
+    orderData.value = res.data.data.items;
+    pageCount.value = res.data.data.totalPage;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
-}
+};
 
-onMounted(() => {
+onBeforeMount(() => {
   fetchData();
 });
 
-// const orderData = ref([
-//   { name: '아반떼', createdAt: '2023-08-12', purchaseNo: 159, label: '탁송중' },
-//   { name: '쏘나타', createdAt: '2023-08-12', purchaseNo: 237, label: '탁송중' },
-//   { name: 'G80', createdAt: '2023-08-12', purchaseNo: 262, label: '탁송완료' },
-//   { name: '그랜절', createdAt: '2023-08-12', purchaseNo: 305, label: '탁송중' },
-//   { name: '싼타페', createdAt: '2023-08-12', purchaseNo: 356, label: '탁송중' },
-//   { name: 'K5', createdAt: '2023-08-12', purchaseNo: 375, label: '탁송중' },
-//   { name: 'K3', createdAt: '2023-08-12', purchaseNo: 392, label: '탁송중' },
-//   { name: 'K9', createdAt: '2023-08-12', purchaseNo: 408, label: '탁송중' },
-//   { name: '황마', createdAt: '2023-08-12', purchaseNo: 518, label: '탁송중' },
-//   { name: '아반떼', createdAt: '2023-08-12', purchaseNo: 452, label: '탁송중' },
-// ]);
+const changePage = (newPage) => {
+  page.value = newPage;
+  fetchData();
+};
 </script>
 
 <style lang="scss" scoped></style>
