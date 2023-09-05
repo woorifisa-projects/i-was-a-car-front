@@ -1,5 +1,5 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next">
+  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
     <Suspense>
       <FinanceForm :finance="finance" :dataType="dataType"></FinanceForm>
     </Suspense>
@@ -14,6 +14,7 @@ import { findSpecificinsurance } from '@/apis/service/contracts/contractApi.js';
 
 const cardTitle = ref('보험 선택');
 const next = ref('다음');
+const nextUrl = ref('7');
 
 const finance = ref([]);
 const dataType = 'insurance';

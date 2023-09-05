@@ -31,7 +31,9 @@ const props = defineProps(['next', 'nextUrl']);
 const nextUrl = props.nextUrl;
 const next = ref(props.next);
 
-const onClickNextBtn = () => router.push(nextUrl);
+const onClickNextBtn = () => {
+  router.push(nextUrl);
+};
 const toPrev = () => router.go(-1);
 </script>
 

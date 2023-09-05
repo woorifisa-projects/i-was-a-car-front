@@ -14,6 +14,7 @@
       <CardBtn
         :next="next"
         :nextUrl="nextUrl"
+        :id="paramsId"
         @onClickNextBtnEmit="onClickNextBtnEmit"
       ></CardBtn>
     </v-sheet>

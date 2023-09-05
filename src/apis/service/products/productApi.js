@@ -8,9 +8,11 @@ const findCarTpyes = () => {
   return instance.get(`/car-type`);
 };
 
-const findProducts = (id) => {
+const findProducts = (category, keyword, id) => {
   return instance.get(`/products`, {
     params: {
+      category: category,
+      keyword: keyword,
       lastProductId: id,
     },
   });

@@ -1,5 +1,5 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next">
+  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
     <ContractForm></ContractForm>
   </Card>
 </template>
@@ -12,6 +12,7 @@ import ContractForm from '@/components/Form/ContractForm.vue';
 
 const cardTitle = ref('자동차 매매 계약서 작성');
 const next = ref('다음');
+const nextUrl = ref('8');
 </script>
 
 <style lang="scss" scoped></style>
