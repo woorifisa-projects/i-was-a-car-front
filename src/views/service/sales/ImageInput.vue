@@ -27,7 +27,7 @@ const { addStoreImages } = store;
 
 const cardTitle = ref('사진 정보 입력');
 const next = ref('다음');
-const nextUrl = ref('finance');
+const nextUrl = ref('6');
 const imageRef = ref(null);
 const images = ref([]);
 const imageData = ref({});

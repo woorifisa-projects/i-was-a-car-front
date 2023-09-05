@@ -84,7 +84,7 @@ const { distance } = storeToRefs(saleStore);
 const model = ref();
 const cardTitle = ref('차량정보');
 const next = ref('다음');
-const nextUrl = ref('images');
+const nextUrl = ref('5');
 const isLoaded = ref(false);
 const carInfo = ref({});
 const carNumber = ref('');
@@ -114,7 +114,7 @@ findProductByNameAndCarNumber(info.name.value, info.carNumber.value)
         },
         {
           contentName: '주행거리',
-          content: distance.value.toLocaleString(),
+          content: `${parseInt(distance.value).toLocaleString()} KM`,
         },
       ]
     );

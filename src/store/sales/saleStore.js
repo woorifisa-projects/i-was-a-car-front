@@ -14,13 +14,13 @@ export const useSaleStore = defineStore('saleStore', () => {
     request.value.address = address;
     request.value.addressDetail = addressDetail;
   };
-  const setPerformanceCheck = (p) => (performanceCheck.value = p);
+
   const setDistance = (d) => {
     request.value.distance = d;
     distance.value = d;
   };
 
-  const combineResponse = (carInfo) => Object.assign(request.value, carInfo);
+  const combineResponse = (carInfo) => Object.assign(request.value, carInfo)
   const addStoreImages = (imgs) => images.value.push(...imgs);
 
   const setFinanceInfo = (price, accountHolder, bankId, accountNumber) => {
@@ -38,7 +38,6 @@ export const useSaleStore = defineStore('saleStore', () => {
     images,
     setMeetingInfo,
     setDistance,
-    setPerformanceCheck,
     distance,
     combineResponse,
     addStoreImages,

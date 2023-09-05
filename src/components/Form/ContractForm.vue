@@ -15,24 +15,24 @@
     <table id="contract_table" style="width: 100%">
       <tr>
         <td class="contract-td-title">자동차 번호</td>
-        <td class="change" style="font-size: 0.9rem">112가 3478</td>
+        <td class="change" style="font-size: 0.9rem">{{ carNumber }}</td>
         <td class="contract-td-title">차종</td>
-        <td class="change">SUV</td>
+        <td class="change">{{ carType }}</td>
       </tr>
       <tr>
         <td class="contract-td-title">차명</td>
-        <td class="change">에쿠스</td>
+        <td class="change">{{ carName }}</td>
         <td class="contract-td-title">연료</td>
-        <td class="change">휘발유</td>
+        <td class="change">{{ fuel }}</td>
       </tr>
     </table>
     <br />
 
     <div style="text-align: center">
       본 자동차의 매매 금액: 총
-      <span class="change" style="font-size: large">{{
-        carPrice.toLocaleString()
-      }}</span>
+      <span class="change" style="font-size: large">
+        {{ (price / 10000).toLocaleString() }}
+      </span>
       (만원)<br />「을」이 「갑」에게 다음과 같이 지급한다
     </div>
 
@@ -141,8 +141,17 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
-
 import AgreementCheck from '@/components/contract/AgreementCheck.vue';
+
+const props = defineProps([
+  'seller',
+  'buyer',
+  'price',
+  'carNumber',
+  'carName',
+  'carType',
+  'fuel',
+]);
 
 const tradingContractId = 8;
 const refundContractId = 7;
@@ -152,10 +161,16 @@ const tradeDialog = ref(false);
 
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
+const showDialog = ref();
 
-const seller = 'IWC';
-const buyer = '김민수';
-const carPrice = 20000000;
+/***** Props *****/
+const seller = ref(props.seller);
+const buyer = ref(props.buyer);
+const price = ref(props.price);
+const carNumber = ref(props.carNumber);
+const carName = ref(props.carName);
+const carType = ref(props.carType);
+const fuel = ref(props.fuel);
 
 const tradeContract = ref([]);
 const refundContract = ref([]);

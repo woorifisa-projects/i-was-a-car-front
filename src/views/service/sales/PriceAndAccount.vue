@@ -10,6 +10,7 @@
       density="compact"
       variant="underlined"
       class="my-10"
+      type="number"
       v-model="price"
     >
       <template v-slot:append-inner>
@@ -36,6 +37,7 @@
         density="compact"
         v-model="selectedBank"
       ></v-select>
+      
       <v-text-field
         label="계좌번호"
         density="compact"
@@ -51,7 +53,7 @@
 
 <script setup>
 import Card from '@/components/card/Card.vue';
-import { getBanks } from '@/apis/service/histories/saleApi';
+import { getBanks } from '@/apis/service/histories/sales/saleApi';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { onBeforeMount, ref } from 'vue';
 
@@ -60,7 +62,7 @@ const { setFinanceInfo } = saleStore;
 
 const cardTitle = ref('가격 및 계좌정보 입력');
 const next = ref('다음');
-const nextUrl = ref('contract');
+const nextUrl = ref('7');
 
 const price = ref();
 const accountHolder = ref('');
@@ -76,7 +78,7 @@ onBeforeMount(async () => {
 
 const onClickNextBtnEmit = () =>
   setFinanceInfo(
-    price.value,
+    (price.value * 10000),
     accountHolder.value,
     selectedBank.value,
     accountNumber.value
