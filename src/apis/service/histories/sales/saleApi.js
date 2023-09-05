@@ -1,8 +1,5 @@
 import { instance } from '@/apis/index.js';
-import {
-  multipartFormDataFileList,
-  multipartFormDataJson,
-} from '@/utils';
+import { multipartFormDataFileList, multipartFormDataJson } from '@/utils';
 import { useSaleStore } from '@/store/sales/saleStore';
 import { storeToRefs } from 'pinia';
 
@@ -19,20 +16,26 @@ const getCarInfo = (carNumber, name) => {
   });
 };
 
-const createProduct = () => {
+const createProduct = async () => {
   const store = useSaleStore();
   const { request, images } = storeToRefs(store);
   const formData = new FormData();
 
+  console.log("===" + images.value);
+
   multipartFormDataFileList(formData, images.value, 'carImages');
   multipartFormDataJson(formData, request.value, 'productCreateRequest');
 
-  return instance.post({
+  for (const key of formData.keys()) {
+    console.log(key);
+  }
+
+  return await instance({
     method: 'POST',
     url: '/sales',
     data: formData,
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'multipart/form-data; charset: UTF-8;',
     },
   });
 };

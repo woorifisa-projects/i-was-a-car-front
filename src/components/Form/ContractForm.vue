@@ -151,6 +151,7 @@ const props = defineProps([
   'carName',
   'carType',
   'fuel',
+  'enctype',
 ]);
 
 const tradingContractId = 8;
@@ -162,6 +163,7 @@ const tradeDialog = ref(false);
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
 const showDialog = ref();
+// const enctype = ref(props.enctype == null ? 'application/x-www-form-urlencoded' : props.enctype);
 
 /***** Props *****/
 const seller = ref(props.seller);

@@ -7,7 +7,7 @@
   >
     <ImageAttach
       ref="imageRef"
-      :images="images"
+      :images="imageList"
       :attachName="attachName"
       @changeFiles="addImages"
       @deleteImage="deleteProductImage"
@@ -21,24 +21,37 @@ import { changeFiles, deleteImage } from '@/utils';
 import { useSaleStore } from '@/store/sales/saleStore';
 import Card from '@/components/card/Card.vue';
 import ImageAttach from '@/components/common/ImageAttach.vue';
+import { storeToRefs } from 'pinia';
 
 const store = useSaleStore();
 const { addStoreImages } = store;
+const { images } = storeToRefs(store);
 
 const cardTitle = ref('사진 정보 입력');
 const next = ref('다음');
 const nextUrl = ref('6');
-const imageRef = ref(null);
-const images = ref([]);
+const imageRef = ref([]);
+const imageList = ref([]);
 const imageData = ref({});
 const attachName = ref('hello');
 
-const addImages = (files) => changeFiles(files, imageRef, images, imageData);
+console.log("=====");
+console.log(imageRef.value.input);
+console.log(imageRef.value.input.files);
+console.log("=====");
+
+// if (images != null) {
+//   imageList.value.push(...images.value);
+//   imageRef.value.input.files = images.value;
+// }
+
+const addImages = (files) => changeFiles(files, imageRef, imageList, imageData);
 
 const deleteProductImage = (idx) =>
-  deleteImage(idx, imageRef, images, imageData);
+  deleteImage(idx, imageRef, imageList, imageData);
 
-const onClickNextBtnEmit = () => addStoreImages(images.value);
+const onClickNextBtnEmit = () =>
+  addStoreImages(Array.from(imageRef.value.input.files));
 </script>
 
 <style lang="scss" scoped></style>

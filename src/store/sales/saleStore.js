@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useSaleStore = defineStore('saleStore', () => {
-
   const request = ref({});
   const distance = ref(0);
   const performanceCheck = ref();
@@ -20,8 +19,11 @@ export const useSaleStore = defineStore('saleStore', () => {
     distance.value = d;
   };
 
-  const combineResponse = (carInfo) => Object.assign(request.value, carInfo)
-  const addStoreImages = (imgs) => images.value.push(...imgs);
+  const combineResponse = (carInfo) => Object.assign(request.value, carInfo);
+  const addStoreImages = (imgs) => {
+    console.log(imgs);
+    images.value.push(...imgs);
+  };
 
   const setFinanceInfo = (price, accountHolder, bankId, accountNumber) => {
     request.value.price = price;

@@ -1,6 +1,7 @@
 import { changeImageToData } from './changeImageToData.js';
 
 export const changeFiles = (filesList, ref, images, data, isDelete = false) => {
+  console.log(filesList);
   if (filesList) {
     const dataTransfer = new DataTransfer();
     const newFiles = Array.from(filesList);

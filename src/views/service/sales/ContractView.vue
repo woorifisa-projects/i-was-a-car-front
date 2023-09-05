@@ -1,20 +1,19 @@
 <template>
   <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
-    <ContractForm 
-    :seller="iwc"
-    :buyer="request.memberName" 
-    :price="request.price"
-    :carNumber="request.info"
-    :carName="request.carName"
-    :carType="request.carType"
-    :fuel="request.fuel"
-    > </ContractForm>
-
-    <button
-    @click="test"
+    <ContractForm
+      :seller="iwc"
+      :buyer="request.memberName"
+      :price="request.price"
+      :carNumber="request.info"
+      :carName="request.carName"
+      :carType="request.carType"
+      :fuel="request.fuel"
     >
-      test
-    </button>
+    </ContractForm>
+
+    <form @submit.prevent enctype="multipart/form-data">
+      <button @click="test">test</button>
+    </form>
   </Card>
 </template>
 
@@ -30,12 +29,12 @@ import { storeToRefs } from 'pinia';
 const store = useSaleStore();
 const { request } = storeToRefs(store);
 
-const iwc= ref("IWC");
+const iwc = ref('IWC');
 const cardTitle = ref('자동차 매매 계약서 작성');
 const next = ref('다음');
 const nextUrl = ref('test');
 
-const test = () => createProduct();
+const test = async () => await createProduct();
 </script>
 
 <style lang="scss" scoped></style>
