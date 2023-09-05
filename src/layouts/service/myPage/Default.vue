@@ -14,7 +14,7 @@
         :value="item"
         style="font-size: 20px"
         :is="selectedComponent"
-        @click="chageFlag"
+        @click="changeFlag"
       >
         {{ item }}
       </v-tab>
@@ -72,7 +72,7 @@ const goList = () => {
   flag.value = 'TRUE';
 };
 
-const chageFlag = () => {
+const changeFlag = () => {
   flag.value = 'TRUE';
 };
 </script>
