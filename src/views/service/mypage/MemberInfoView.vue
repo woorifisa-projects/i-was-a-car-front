@@ -30,12 +30,29 @@
 
           <tr>
             <th>패스워드</th>
-            <th style="text-align: left"><input :readonly="!editable" /></th>
+            <th style="text-align: left">
+              <input
+                type="password"
+                v-model="password"
+                @input="checkPasswordMatch"
+                :readonly="!editable"
+              />
+            </th>
           </tr>
 
           <tr>
             <th>패스워드확인</th>
-            <th style="text-align: left"><input :readonly="!editable" /></th>
+            <th style="text-align: left">
+              <input
+                type="password"
+                v-model="confirmPassword"
+                @input="checkPasswordMatch"
+                :readonly="!editable"
+              />
+              <div v-if="passwordMismatch" style="color: red; font-size: 10px">
+                비밀번호가 일치하지 않습니다.
+              </div>
+            </th>
           </tr>
 
           <tr>
@@ -49,7 +66,7 @@
             <th>면허 유무</th>
             <th style="text-align: left">
               <span v-if="!editable">{{
-                orderData.hasLicense === 'true' ? '있음' : '없음'
+                orderData.hasLicense ? '있음' : '없음'
               }}</span>
 
               <div v-else>
@@ -63,7 +80,6 @@
                 <input
                   type="radio"
                   id="license-no"
-                  value="false"
                   v-model="orderData.hasLicense"
                 />
                 <label for="license-no">없음</label>
@@ -115,12 +131,18 @@
     </div>
 
     <div style="display: flex; justify-content: center">
-      <v-btn :width="120" size="x-large" class="font-weight-black my-2">
+      <v-btn
+        @click="cancelEditing"
+        :width="120"
+        size="x-large"
+        class="font-weight-black my-2"
+      >
         취소
       </v-btn>
 
       <div style="width: 30px"></div>
       <v-btn
+        :disabled="passwordMismatch"
         :width="120"
         size="x-large"
         class="bg-black font-weight-black my-2"
@@ -142,6 +164,10 @@ const firstInput = ref(null);
 
 const editable = ref(false);
 
+const password = ref();
+
+const confirmPassword = ref();
+
 const fetchData = async () => {
   try {
     const memberId = 1; // 예시로 memberId 설정
@@ -153,19 +179,30 @@ const fetchData = async () => {
   }
 };
 
+const cancelEditing = () => {
+  fetchData();
+  editable.value = false;
+};
+
 const toggleEditing = () => {
   if (editable.value) {
-    // 저장 로직 추가...
-
-    // 저장 후 편집 불가능 상태로 전환
     editable.value = false;
   } else {
-    // 편집 가능 상태로 전환 후 첫 번째 입력 필드에 포커스
     editable.value = true;
 
     nextTick(() => {
       firstInput.value.focus();
     });
+  }
+};
+
+const passwordMismatch = ref(false);
+
+const checkPasswordMatch = () => {
+  if (password.value !== confirmPassword.value) {
+    passwordMismatch.value = true;
+  } else {
+    passwordMismatch.value = false;
   }
 };
 
