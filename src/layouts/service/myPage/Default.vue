@@ -14,7 +14,6 @@
         :value="item"
         style="font-size: 20px"
         :is="selectedComponent"
-        @click="changeFlag"
       >
         {{ item }}
       </v-tab>
@@ -28,7 +27,7 @@
 <script setup>
 import DefaultBar from './AppBar.vue';
 import DefaultView from './View.vue';
-import { ref, computed, defineAsyncComponent } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -64,16 +63,11 @@ const selectedComponent = computed(() => {
 });
 
 const goDetail = (child) => {
-  console.log(child);
   flag.value = 'FALSE';
   paramsId.value = child;
 };
 
 const goList = () => {
-  flag.value = 'TRUE';
-};
-
-const changeFlag = () => {
   flag.value = 'TRUE';
 };
 </script>
