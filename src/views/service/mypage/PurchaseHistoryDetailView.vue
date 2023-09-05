@@ -123,7 +123,7 @@
         :width="120"
         size="x-large"
         class="bg-black font-weight-black my-2"
-        @click="goToPurchase"
+        @click="$emit('historyList')"
       >
         목록으로 가기
       </v-btn>
@@ -132,9 +132,11 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, defineEmits } from 'vue';
 import { purchaseHistoryDetailAPI } from '@/apis/service/histories/historyApi';
 import { useRoute, useRouter } from 'vue-router';
+
+const emit = defineEmits(['historyList']);
 
 const route = useRoute();
 const router = useRouter();
@@ -143,10 +145,6 @@ const purchaseHistoryNo = route.params.id;
 
 const deliveryData = ref({});
 const contractData = ref({});
-
-const goToPurchase = () => {
-  router.push({ name: 'MyPagePurchase' });
-};
 
 const fetchData = async () => {
   try {

@@ -116,7 +116,7 @@
         :width="120"
         size="x-large"
         class="bg-black font-weight-black my-2"
-        @click="$router.push('/mypage')"
+        @click="$emit('historyList')"
       >
         목록으로 가기
       </v-btn>
@@ -125,11 +125,12 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, defineEmits } from 'vue';
 import { saleHistoryDetailAPI } from '@/apis/service/histories/historyApi';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
+const emit = defineEmits(['historyList']);
 
 const saleHistoryNo = route.params.id;
 

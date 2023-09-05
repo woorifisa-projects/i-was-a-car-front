@@ -27,4 +27,17 @@ const purchaseHistoryDetailAPI = async (memberId, purchaseHistoryNo) => {
   );
   return res;
 };
-export { purchaseHistoryAPI, saleHistoryAPI, purchaseHistoryDetailAPI };
+
+const saleHistoryDetailAPI = async (memberId, saleHistoryNo) => {
+  const res = await instance.get(
+    `sales/${memberId}/sale-histories/${saleHistoryNo}`
+  );
+  return res;
+};
+
+export {
+  purchaseHistoryAPI,
+  saleHistoryAPI,
+  purchaseHistoryDetailAPI,
+  saleHistoryDetailAPI,
+};

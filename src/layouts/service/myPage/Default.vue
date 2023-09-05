@@ -20,7 +20,7 @@
       </v-tab>
     </v-tabs>
     <v-container>
-      <router-view @historyNo="goDetail" />
+      <router-view @historyNo="goDetail" @historyList="goList" />
     </v-container>
   </v-app>
 </template>
@@ -46,8 +46,7 @@ const selectedComponent = computed(() => {
     } else if (tab.value === '판매이력') {
       router.push('/sale');
     } else {
-      console.log(tab.value);
-      path.value = '/member';
+      router.push('/member');
     }
   } else {
     if (tab.value === '구매이력') {
@@ -56,10 +55,10 @@ const selectedComponent = computed(() => {
         params: { id: paramsId.value },
       });
     } else if (tab.value === '판매이력') {
-      router.push('/sale');
-    } else {
-      console.log(tab.value);
-      path.value = '/member';
+      router.push({
+        name: 'SaleHistoryDetail',
+        params: { id: paramsId.value },
+      });
     }
   }
 });
@@ -67,7 +66,11 @@ const selectedComponent = computed(() => {
 const goDetail = (child) => {
   console.log(child);
   flag.value = 'FALSE';
-  id.value = child;
+  paramsId.value = child;
+};
+
+const goList = () => {
+  flag.value = 'TRUE';
 };
 
 const changeFlag = () => {
