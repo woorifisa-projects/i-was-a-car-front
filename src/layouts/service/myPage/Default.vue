@@ -14,6 +14,7 @@
         :value="item"
         style="font-size: 20px"
         :is="selectedComponent"
+        @click="chageFlag"
       >
         {{ item }}
       </v-tab>
@@ -27,7 +28,7 @@
 <script setup>
 import DefaultBar from './AppBar.vue';
 import DefaultView from './View.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, defineAsyncComponent } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -68,6 +69,10 @@ const goDetail = (child) => {
 };
 
 const goList = () => {
+  flag.value = 'TRUE';
+};
+
+const chageFlag = () => {
   flag.value = 'TRUE';
 };
 </script>
