@@ -7,14 +7,16 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, defineAsyncComponent } from 'vue';
+import { ref, onBeforeMount, defineAsyncComponent, defineProps } from 'vue';
 
 import Card from '@/components/card/Card.vue';
 import { findSpecificinsurance } from '@/apis/service/contracts/contractApi.js';
 
+const props = defineProps(['nextUrl']);
+
 const cardTitle = ref('보험 선택');
 const next = ref('다음');
-const nextUrl = ref('7');
+const nextUrl = ref(props.nextUrl);
 
 const finance = ref([]);
 const dataType = 'insurance';

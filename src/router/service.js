@@ -96,6 +96,11 @@ const serviceRoutes = [
     name: 'SignupConsent',
     component: () => import('@/views/service/SignupConsentView.vue'),
   },
+    {
+    path: '/normal-purchase/:id',
+    name: 'purchase',
+    component: () => import('@/views/service/PurchaseView.vue'),
+  },
   {
     path: '/one-click-purchase/:id',
     name: 'OneClickPurchase',

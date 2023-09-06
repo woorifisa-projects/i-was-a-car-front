@@ -14,10 +14,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch, defineProps } from 'vue';
+const props = defineProps(['done', 'info']);
 
-const done = ref('원클릭 접수가 완료되었습니다');
-const info = ref('구매 이력은 마이 페이지에서 확인 가능합니다');
+const done = ref(props.done);
+const info = ref(props.info);
 
 const value = ref(0);
 const bufferValue = ref(20);
