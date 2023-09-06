@@ -21,11 +21,9 @@ import { changeFiles, deleteImage } from '@/utils';
 import { useSaleStore } from '@/store/sales/saleStore';
 import Card from '@/components/card/Card.vue';
 import ImageAttach from '@/components/common/ImageAttach.vue';
-import { storeToRefs } from 'pinia';
 
 const store = useSaleStore();
 const { addStoreImages } = store;
-const { images } = storeToRefs(store);
 
 const cardTitle = ref('사진 정보 입력');
 const next = ref('다음');
@@ -34,16 +32,6 @@ const imageRef = ref([]);
 const imageList = ref([]);
 const imageData = ref({});
 const attachName = ref('hello');
-
-console.log("=====");
-console.log(imageRef.value.input);
-console.log(imageRef.value.input.files);
-console.log("=====");
-
-// if (images != null) {
-//   imageList.value.push(...images.value);
-//   imageRef.value.input.files = images.value;
-// }
 
 const addImages = (files) => changeFiles(files, imageRef, imageList, imageData);
 

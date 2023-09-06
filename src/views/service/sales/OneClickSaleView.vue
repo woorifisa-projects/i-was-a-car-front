@@ -6,6 +6,7 @@
     <ImageInput v-else-if="route.params.id === '5'"></ImageInput>
     <PriceAndAccount v-else-if="route.params.id === '6'"></PriceAndAccount>
     <ContractForm v-else-if="route.params.id === '7'"></ContractForm>
+    <DoneView v-else-if="route.params.id === '8'"></DoneView>
 </template>
 
 <script setup>
@@ -17,6 +18,7 @@ import CarInfo from './CarInfo.vue';
 import ImageInput from './ImageInput.vue';
 import PriceAndAccount from './PriceAndAccount.vue';
 import ContractForm from './ContractView.vue';
+import DoneView from './DoneView.vue';
 
 const route = useRoute();
 

@@ -7,7 +7,7 @@
       height="40"
       @click="toPrev"
     >
-      이전</v-btn
+      {{ prev }}</v-btn
     >
     <v-btn
       class="text-none bg-black ma-0"
@@ -27,12 +27,18 @@ import { useRouter } from 'vue-router';
 
 const emit = defineEmits(['onClickNextBtnEmit']);
 const router = useRouter();
-const props = defineProps(['next', 'nextUrl']);
+const props = defineProps(['prev', 'prevUrl', 'next', 'nextUrl']);
 const nextUrl = props.nextUrl;
 const next = ref(props.next);
+const prevUrl = ref(props.prevUrl == null ? -1 : props.prevUrl);
+const prev = ref(props.prev == null ? '이전' : props.prev);
 
-const onClickNextBtn = () => router.push(nextUrl);
-const toPrev = () => router.go(-1);
+const onClickNextBtn = () => {
+  if (nextUrl !== 'block') {
+    router.push(nextUrl);
+  }
+};
+const toPrev = () => router.go(prevUrl.value);
 </script>
 
 <style lang="scss" scoped>

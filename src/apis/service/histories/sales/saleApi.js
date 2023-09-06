@@ -21,14 +21,8 @@ const createProduct = async () => {
   const { request, images } = storeToRefs(store);
   const formData = new FormData();
 
-  console.log("===" + images.value);
-
   multipartFormDataFileList(formData, images.value, 'carImages');
   multipartFormDataJson(formData, request.value, 'productCreateRequest');
-
-  for (const key of formData.keys()) {
-    console.log(key);
-  }
 
   return await instance({
     method: 'POST',
