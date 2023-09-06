@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :key="renderKey">
     <div class="mx-auto mt-10" style="max-width: 800px; font-size: 1.1em">
       <v-table density="compact">
         <thead>
@@ -14,10 +14,14 @@
 
             <th style="text-align: left">
               <input
-                v-model="orderData.name"
+                type="text"
+                v-model="changeName"
                 ref="firstInput"
                 :readonly="!editable"
               />
+              <div v-if="!isNameValid" style="color: red; font-size: 10px">
+                한글 문자만 입력해주세요.
+              </div>
             </th>
           </tr>
 
@@ -34,9 +38,13 @@
               <input
                 type="password"
                 v-model="password"
-                @input="checkPasswordMatch"
+                @input="validatePassword"
                 :readonly="!editable"
               />
+              <div v-if="!isPasswordValid" style="color: red; font-size: 10px">
+                비밀번호는 영문 대소문자와 숫자, 특수기호를 각각 적어도 1개 이상
+                포함하고, 길이는 8자 ~ 20자여야 합니다.
+              </div>
             </th>
           </tr>
 
@@ -58,7 +66,7 @@
           <tr>
             <th>전화번호</th>
             <th style="text-align: left">
-              <input v-model="orderData.tel" :readonly="!editable" />
+              <input v-model="changeTel" :readonly="!editable" />
             </th>
           </tr>
 
@@ -66,7 +74,7 @@
             <th>면허 유무</th>
             <th style="text-align: left">
               <span v-if="!editable">{{
-                orderData.hasLicense ? '있음' : '없음'
+                changeHasLicense ? '있음' : '없음'
               }}</span>
 
               <div v-else>
@@ -74,13 +82,14 @@
                   type="radio"
                   id="license-yes"
                   value="true"
-                  v-model="orderData.hasLicense"
+                  v-model="changeHasLicense"
                 />
-                <label for="license-yes">있음</label>
+                <label for="license-yes" style="margin-right: 1rem">있음</label>
                 <input
                   type="radio"
                   id="license-no"
-                  v-model="orderData.hasLicense"
+                  value="false"
+                  v-model="changeHasLicense"
                 />
                 <label for="license-no">없음</label>
               </div>
@@ -91,7 +100,7 @@
             <th>성별</th>
             <th style="text-align: left">
               <span v-if="!editable">{{
-                orderData.gender === '남자' ? '남자' : '여자'
+                changeGender === '남자' ? '남자' : '여자'
               }}</span>
 
               <div v-else>
@@ -99,16 +108,17 @@
                   type="radio"
                   id="man"
                   value="남자"
-                  v-model="orderData.gender"
+                  v-model="changeGender"
                 />
-                <label for="man">남자</label>
+                <label for="man" style="margin-right: 1rem">남자</label>
+
                 <input
                   type="radio"
                   id="woman"
                   value="여자"
-                  v-model="orderData.gender"
+                  v-model="changeGender"
                 />
-                <label for="license-no">여자</label>
+                <label for="woman">여자</label>
               </div>
             </th>
           </tr>
@@ -132,6 +142,7 @@
 
     <div style="display: flex; justify-content: center">
       <v-btn
+        v-if="editable"
         @click="cancelEditing"
         :width="120"
         size="x-large"
@@ -142,7 +153,7 @@
 
       <div style="width: 30px"></div>
       <v-btn
-        :disabled="passwordMismatch"
+        :disabled="isdiable"
         :width="120"
         size="x-large"
         class="bg-black font-weight-black my-2"
@@ -155,18 +166,98 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onMounted, nextTick } from 'vue';
+import {
+  ref,
+  onBeforeMount,
+  nextTick,
+  defineProps,
+  watch,
+  computed,
+} from 'vue';
 import { memberDetailApi } from '@/apis/service/histories/memberInfoApi.js';
+
+const props = defineProps(['clickMember']);
+
+const changeName = ref();
+const changeTel = ref();
+const changeHasLicense = ref();
+const changeGender = ref();
+
+const renderKey = ref(true);
+const isdiable = ref(false);
+
+const password = ref();
+const confirmPassword = ref();
+
+watch(
+  () => props.clickMember,
+  () => {
+    cancelEditing();
+  }
+);
 
 const orderData = ref([]);
 
 const firstInput = ref(null);
 
+const isNameValid = ref(true);
+
+const validateNameInput = () => {
+  const regex = /^[가-힣]+$/; // 정규식으로 한글 문자만 허용
+
+  if (!regex.test(changeName.value)) {
+    isNameValid.value = false;
+    isdiable.value = true;
+  } else {
+    isNameValid.value = true;
+  }
+};
+
+const isPasswordValid = ref(true);
+
+const validatePassword = () => {
+  const regex = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}/;
+
+  if (!regex.test(password.value)) {
+    isPasswordValid.value = false;
+    isdiable.value = true;
+  } else {
+    isPasswordValid.value = true;
+  }
+};
+
 const editable = ref(false);
+watch(editable, () => {
+  if (editable.value) {
+    isdiable.value = true;
+  }
+});
 
-const password = ref();
+watch([changeName, changeTel, changeHasLicense, changeGender], () => {
+  const regex = /^[가-힣]+$/; // 정규식으로 한글 문자만 허용
 
-const confirmPassword = ref();
+  if (
+    orderData.value.name === changeName.value &&
+    orderData.value.tel === changeTel.value &&
+    orderData.value.hasLicense.toString() === changeHasLicense.value &&
+    orderData.value.gender === changeGender.value
+  ) {
+    isdiable.value = true;
+  } else {
+    isdiable.value = false;
+    if (!regex.test(changeName.value)) {
+      isNameValid.value = false;
+      isdiable.value = true;
+      return;
+    } else {
+      isNameValid.value = true;
+      if (orderData.value.name === changeName.value) {
+        isdiable.value = true;
+        return;
+      }
+    }
+  }
+});
 
 const fetchData = async () => {
   try {
@@ -174,6 +265,11 @@ const fetchData = async () => {
     const res = await memberDetailApi(memberId);
 
     orderData.value = res.data.data;
+
+    changeName.value = res.data.data.name;
+    changeTel.value = res.data.data.tel;
+    changeHasLicense.value = res.data.data.hasLicense;
+    changeGender.value = res.data.data.gender;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -181,7 +277,12 @@ const fetchData = async () => {
 
 const cancelEditing = () => {
   fetchData();
+  renderKey.value = !renderKey.value;
   editable.value = false;
+  isdiable.value = false;
+  isNameValid.value = true;
+  password.value = '';
+  confirmPassword.value = '';
 };
 
 const toggleEditing = () => {
@@ -199,15 +300,23 @@ const toggleEditing = () => {
 const passwordMismatch = ref(false);
 
 const checkPasswordMatch = () => {
-  if (password.value !== confirmPassword.value) {
-    passwordMismatch.value = true;
-  } else {
+  if (password.value === '' && confirmPassword.value === '') {
+    isdiable.value = true;
     passwordMismatch.value = false;
+  } else {
+    if (password.value != confirmPassword.value) {
+      isdiable.value = true;
+      passwordMismatch.value = true;
+    } else {
+      isdiable.value = false;
+      passwordMismatch.value = false;
+    }
   }
 };
 
 onBeforeMount(() => {
   fetchData();
+  isdiable.value = false;
 });
 </script>
 
