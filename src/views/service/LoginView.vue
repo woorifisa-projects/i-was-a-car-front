@@ -117,7 +117,11 @@ const loginHandler = async () => {
 
     verifiedAuth(data);
 
-    router.push({ name: 'Home' });
+    if (data.roles.find((el) => el === 'ADMIN')) {
+      router.push('/admin');
+    } else {
+      router.push({ name: 'Home' });
+    }
   } catch (e) {
     if (e.response.status === 401) {
       error.value.loginError = true;

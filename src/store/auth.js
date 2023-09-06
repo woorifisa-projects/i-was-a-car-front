@@ -9,12 +9,18 @@ export const useAuthStore = defineStore('auth', () => {
     email: '',
   });
 
-  const isLogin = ref(false);
+  const isLogin = ref('default');
+
+  const initAuthInfo = () => {
+    authInfo.value = {};
+
+    isLogin.value = 'NO';
+  };
 
   const verifiedAuth = (value) => {
     authInfo.value = { ...value };
 
-    isLogin.value = true;
+    isLogin.value = 'YES';
   };
 
   const setEmailAuthInfo = (code, email) => {
@@ -23,7 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const setLogout = () => {
-    isLogin.value = false;
+    isLogin.value = 'NO';
   };
 
   return {
@@ -32,6 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
     isLogin,
     setLogout,
     verifiedAuth,
+    initAuthInfo,
     setEmailAuthInfo,
   };
 });

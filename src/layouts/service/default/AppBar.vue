@@ -10,18 +10,22 @@
         I was a car
       </RouterLink>
 
-      <template v-if="isLogin">
+      <template v-if="isLogin === 'YES'">
         <div class="d-none d-sm-block font-weight-medium">
           <RouterLink class="nav-item" to="/email">마이페이지</RouterLink>
           <span class="logout-btn" @click="logoutHandler">로그아웃</span>
         </div>
       </template>
 
-      <template v-else>
+      <template v-else-if="isLogin === 'NO'">
         <div class="d-none d-sm-block font-weight-medium">
           <RouterLink class="nav-item" to="/email">가입하기</RouterLink>
           <RouterLink class="nav-item" to="/login">로그인하기</RouterLink>
         </div>
+      </template>
+
+      <template v-else>
+        <div></div>
       </template>
     </v-container>
   </v-app-bar>
@@ -53,14 +57,14 @@ import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 
 const auth = useAuthStore();
-const { setLogout } = auth;
+const { setLogout, initAuthInfo } = auth;
 const { isLogin } = storeToRefs(auth);
 
 const drawer = ref(false);
 const toggleDrawer = () => (drawer.value = !drawer.value);
 
 const navItems = computed(() => {
-  return isLogin.value ? loginNavItems.value : notLoginNavItems.value;
+  return isLogin.value === 'YES' ? loginNavItems.value : notLoginNavItems.value;
 });
 
 const logoutHandler = async (e, item) => {
@@ -69,6 +73,7 @@ const logoutHandler = async (e, item) => {
       const data = await logoutAPI();
       if (data === 204) {
         console.log('[로그아웃 완료]');
+        initAuthInfo();
       }
       setLogout();
     } catch (e) {
