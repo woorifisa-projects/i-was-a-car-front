@@ -1,9 +1,4 @@
 import { instance } from '@/apis/index.js';
-import { useAuthStore } from '@/store/auth';
-import { storeToRefs } from 'pinia';
-
-const auth = useAuthStore();
-const { authInfo } = storeToRefs(auth);
 
 // 로그인 검증
 const authAPI = async () => {
@@ -36,9 +31,8 @@ const updateMemberAPI = async (body) => {
 };
 
 // 회원탈퇴
-const deleteMemberAPI = async (body) => {
-  console.log('deleteMemberAPI: ', authInfo.value.id);
-  const { data } = await instance.delete(`/members/${authInfo.value.id}`, body);
+const deleteMemberAPI = async () => {
+  const data = await instance.delete('/members');
   return data;
 };
 
