@@ -1,5 +1,5 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next">
+  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
     <Suspense>
       <FinanceForm
         :finance="finance"
@@ -19,6 +19,7 @@ import { findSpecificLoan } from '@/apis/service/contracts/contractApi.js';
 
 const cardTitle = ref('대출 선택');
 const next = ref('다음');
+const nextUrl = ref('6');
 
 const myMoney = ref(500);
 const wantMoney = ref(10000000);

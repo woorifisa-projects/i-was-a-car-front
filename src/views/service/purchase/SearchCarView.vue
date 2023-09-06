@@ -1,5 +1,5 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next">
+  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
     <SearchCarForm></SearchCarForm>
   </Card>
 </template>
@@ -12,6 +12,7 @@ import SearchCarForm from '@/components/Form/SearchCarForm.vue';
 
 const cardTitle = ref('자동차 대출 정보 입력');
 const next = ref('다음');
+const nextUrl = ref('4');
 </script>
 
 <style lang="scss" scoped></style>

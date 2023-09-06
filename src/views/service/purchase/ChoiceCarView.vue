@@ -1,5 +1,5 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next">
+  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
     <ChoiceCarForm></ChoiceCarForm>
   </Card>
 </template>
@@ -12,6 +12,7 @@ import ChoiceCarForm from '@/components/Form/ChoiceCarForm.vue';
 
 const cardTitle = ref('차량 선택');
 const next = ref('다음');
+const nextUrl = ref('5');
 </script>
 
 <style lang="scss" scoped></style>

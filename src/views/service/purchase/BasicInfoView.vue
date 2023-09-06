@@ -1,5 +1,5 @@
 <template>
-  <Card :cardTitle="cardTitle" :next="next">
+  <Card :cardTitle="cardTitle" :next="next" :nextUrl="nextUrl">
     <BasicForm></BasicForm>
   </Card>
 </template>
@@ -12,6 +12,7 @@ import BasicForm from '@/components/Form/BasicForm.vue';
 
 const cardTitle = ref('기본 정보 입력');
 const next = ref('다음');
+const nextUrl = ref('2');
 </script>
 
 <style lang="scss" scoped></style>
