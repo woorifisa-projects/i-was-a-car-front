@@ -10,7 +10,7 @@
             density="compact"
             variant="underlined"
           >
-            {{ email ? email : router.push('/email') }}
+            {{ form.email ? form.email : router.push('/email') }}
           </v-text-field>
 
           <v-text-field
@@ -86,7 +86,7 @@
               height="40"
               class="bg-black"
               @click="signupHandler"
-              >다음</v-btn
+              >완료</v-btn
             >
           </v-sheet>
         </v-form>
@@ -105,11 +105,12 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const auth = useAuthStore();
-const { email } = storeToRefs(auth);
-const { setAuthInfo, login } = auth;
+const { emailAuthInfo } = storeToRefs(auth);
+const { verifiedAuth } = auth;
 
 const form = ref({
-  email: email.value,
+  email: emailAuthInfo.value.email,
+  code: emailAuthInfo.value.code,
   password: '',
   name: '',
   birth: '',
@@ -123,15 +124,16 @@ const passwordVisible = ref(false);
 const signupHandler = async () => {
   try {
     const { data } = await signupAPI(form.value);
-    setAuthInfo(data);
-    login();
+
+    verifiedAuth(data);
+
     router.push({ name: 'Home' });
   } catch (e) {
     if (e.response.status === 401) {
-      console.error('회원가입 실패: ', e);
+      console.error('signupHandler: ', e);
     }
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
