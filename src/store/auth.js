@@ -1,43 +1,37 @@
-// Utilities
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    authInfo: {},
-    isLogin: JSON.parse(localStorage.getItem('isLogin')) === true || false,
+export const useAuthStore = defineStore('auth', () => {
+  const authInfo = ref({});
+
+  const emailAuthInfo = ref({
+    code: '',
     email: '',
-    // signupForm: {
-    //   email: '',
-    //   password: '',
-    //   name: '',
-    //   birth: '', // 1997-09-03
-    //   tel: '010-3598-1748',
-    //   gender: '남자',
-    //   hasLicense: true,
-    // },
-  }),
+  });
 
-  getters: {},
+  const isLogin = ref(false);
 
-  actions: {
-    setAuthInfo(value) {
-      this.authInfo = { ...value };
-    },
+  const verifiedAuth = (value) => {
+    authInfo.value = { ...value };
 
-    login() {
-      this.isLogin = true;
-      localStorage.setItem('isLogin', true);
-    },
+    isLogin.value = true;
+  };
 
-    logout() {
-      this.isLogin = false;
-      localStorage.removeItem('isLogin');
-    },
+  const setEmailAuthInfo = (code, email) => {
+    emailAuthInfo.value.code = code;
+    emailAuthInfo.value.email = email;
+  };
 
-    // checkIsLogin(){}
+  const setLogout = () => {
+    isLogin.value = false;
+  };
 
-    setEmail(value) {
-      this.email = value;
-    },
-  },
+  return {
+    authInfo,
+    emailAuthInfo,
+    isLogin,
+    setLogout,
+    verifiedAuth,
+    setEmailAuthInfo,
+  };
 });

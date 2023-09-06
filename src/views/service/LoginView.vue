@@ -109,17 +109,19 @@ const error = ref({
 });
 
 const auth = useAuthStore();
-const { setAuthInfo, login } = auth;
+const { verifiedAuth } = auth;
 
 const loginHandler = async () => {
   try {
     const { data } = await loginAPI(form.value);
-    setAuthInfo(data);
-    login();
+
+    verifiedAuth(data);
+
     router.push({ name: 'Home' });
   } catch (e) {
     if (e.response.status === 401) {
       error.value.loginError = true;
+
       error.value.loginErrorMsg = '이메일 또는 비밀번호를 잘못 입력했습니다.';
     }
   }

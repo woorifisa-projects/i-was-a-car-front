@@ -13,7 +13,7 @@
       <template v-if="isLogin">
         <div class="d-none d-sm-block font-weight-medium">
           <RouterLink class="nav-item" to="/email">마이페이지</RouterLink>
-          <span class="logout-btn" @click="logout">로그아웃</span>
+          <span class="logout-btn" @click="logoutHandler">로그아웃</span>
         </div>
       </template>
 
@@ -38,7 +38,7 @@
         v-for="item in navItems"
         :key="item.value"
         :to="item.to"
-        @click="logoutHandler(item)"
+        @click="logoutHandler($event, item)"
       >
         {{ item.title }}
       </v-list-item>
@@ -47,14 +47,14 @@
 </template>
 
 <script setup>
+import { logoutAPI } from '@/apis/service/auth/authApi';
 import { useAuthStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const auth = useAuthStore();
+const { setLogout } = auth;
 const { isLogin } = storeToRefs(auth);
-const { logout } = auth;
 
 const drawer = ref(false);
 const toggleDrawer = () => (drawer.value = !drawer.value);
@@ -63,8 +63,18 @@ const navItems = computed(() => {
   return isLogin.value ? loginNavItems.value : notLoginNavItems.value;
 });
 
-const logoutHandler = (item) => {
-  if (item.title === '로그아웃') logout();
+const logoutHandler = async (e, item) => {
+  if (e.target.textContent === '로그아웃' || item.title === '로그아웃') {
+    try {
+      const data = await logoutAPI();
+      if (data === 204) {
+        console.log('[로그아웃 완료]');
+      }
+      setLogout();
+    } catch (e) {
+      console.error('logoutHandler: ', e);
+    }
+  }
 };
 
 const notLoginNavItems = ref([
