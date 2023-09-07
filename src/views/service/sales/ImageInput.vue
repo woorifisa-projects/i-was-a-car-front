@@ -7,7 +7,7 @@
   >
     <ImageAttach
       ref="imageRef"
-      :images="images"
+      :images="imageList"
       :attachName="attachName"
       @changeFiles="addImages"
       @deleteImage="deleteProductImage"
@@ -27,18 +27,19 @@ const { addStoreImages } = store;
 
 const cardTitle = ref('사진 정보 입력');
 const next = ref('다음');
-const nextUrl = ref('finance');
-const imageRef = ref(null);
-const images = ref([]);
+const nextUrl = ref('6');
+const imageRef = ref([]);
+const imageList = ref([]);
 const imageData = ref({});
 const attachName = ref('hello');
 
-const addImages = (files) => changeFiles(files, imageRef, images, imageData);
+const addImages = (files) => changeFiles(files, imageRef, imageList, imageData);
 
 const deleteProductImage = (idx) =>
-  deleteImage(idx, imageRef, images, imageData);
+  deleteImage(idx, imageRef, imageList, imageData);
 
-const onClickNextBtnEmit = () => addStoreImages(images.value);
+const onClickNextBtnEmit = () =>
+  addStoreImages(Array.from(imageRef.value.input.files));
 </script>
 
 <style lang="scss" scoped></style>

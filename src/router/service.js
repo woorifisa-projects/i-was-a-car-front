@@ -15,31 +15,6 @@ const serviceRoutes = [
         name: 'ProductDetail',
         component: () => import('@/views/service/products/ProductDetails.vue'),
       },
-      {
-        path: 'sales/meeting',
-        name: 'MeeingLocation',
-        component: () => import('@/views/service/sales/MeetingLocation.vue'),
-      },
-      {
-        path: 'sales/car-info',
-        name: 'CarRetrieve',
-        component: () => import('@/views/service/sales/CarRetrieve.vue'),
-      },
-      {
-        path: 'sales/car',
-        name: 'CarInfo',
-        component: () => import('@/views/service/sales/CarInfo.vue'),
-      },
-      {
-        path: 'sales/images',
-        name: 'ImageInput',
-        component: () => import('@/views/service/sales/ImageInput.vue'),
-      },
-      {
-        path: 'sales/finance',
-        name: 'PriceAndAccount',
-        component: () => import('@/views/service/sales/PriceAndAccount.vue'),
-      },
     ],
   },
   {
@@ -96,7 +71,7 @@ const serviceRoutes = [
     name: 'SignupConsent',
     component: () => import('@/views/service/SignupConsentView.vue'),
   },
-    {
+  {
     path: '/normal-purchase/:id',
     name: 'purchase',
     component: () => import('@/views/service/PurchaseView.vue'),
@@ -107,9 +82,14 @@ const serviceRoutes = [
     component: () => import('@/views/service/OneClickPurchaseView.vue'),
   },
   {
-     path: '/:catchAll(.*)*',
-     name: 'NotFound',
-     component: () => import('@/views/common/NotFoundView.vue'),
+    path: '/one-click-sale/:id',
+    name: 'OneClickSale',
+    component: () => import('@/views/service/sales/OneClickSaleView.vue'),
+  },
+  {
+    path: '/:catchAll(.*)*',
+    name: 'NotFound',
+    component: () => import('@/views/common/NotFoundView.vue'),
   },
 ];
 

@@ -29,7 +29,7 @@ import { useSaleStore } from '@/store/sales/saleStore.js';
 
 const cardTitle = ref('미팅 장소 입력');
 const next = ref('다음');
-const nextUrl = ref('car-info');
+const nextUrl = ref('3');
 const meetingDate = ref('');
 const zipCode = ref('');
 const address = ref('');

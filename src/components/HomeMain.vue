@@ -24,7 +24,7 @@
           :class="{ 'custom-sm-width': smAndDown }"
         >
           <BtnBlack :msg="btnB"> </BtnBlack>
-          <BtnWhite :msg="btnW"></BtnWhite>
+          <BtnWhite :destination="sales" :msg="btnW"></BtnWhite>
         </div>
       </div>
     </v-container>
@@ -32,6 +32,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 import BtnBlack from './common/BtnBlack.vue';
 import BtnWhite from './common/BtnWhite.vue';
@@ -40,6 +41,8 @@ const { smAndDown } = useDisplay();
 
 const btnB = '내 차 사기';
 const btnW = '내 차 팔기';
+
+const sales = ref('/sales/basic-info');
 </script>
 
 <style lang="scss" scoped>
