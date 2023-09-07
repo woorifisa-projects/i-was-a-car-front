@@ -4,8 +4,8 @@
       <v-autocomplete
         label="선택"
         :items="category"
-        :item-title="title"
-        :item-value="id"
+        item-title="title"
+        item-value="id"
         color="grey"
         theme="light"
         variant="solo"
@@ -29,20 +29,24 @@
         clearable
         single-line
         @click:append-inner="onClick"
+        v-model="keyword"
       ></v-text-field>
     </v-col>
   </v-card-text>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import { category } from '@/components/data/searchCategory.js';
+const emit = defineEmits(['search']);
 
 const loading = ref(false);
 const selectedCategory = ref();
+const keyword = ref();
 
 const onClick = () => {
   loading.value = true;
+  emit('search', { category: selectedCategory.value, keyword: keyword.value });
 
   setTimeout(() => {
     loading.value = false;

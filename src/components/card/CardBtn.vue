@@ -39,6 +39,7 @@ const onClickNextBtn = () => {
   }
 };
 const toPrev = () => router.go(prevUrl.value);
+
 </script>
 
 <style lang="scss" scoped>

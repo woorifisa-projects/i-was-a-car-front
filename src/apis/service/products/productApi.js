@@ -5,12 +5,14 @@ const findProductDetail = (productId) => {
 };
 
 const findCarTpyes = () => {
-  return instance.get(`/car-type`);
+  return instance.get(`/car-types`);
 };
 
-const findProducts = (id) => {
+const findProducts = (category, keyword, id) => {
   return instance.get(`/products`, {
     params: {
+      category: category,
+      keyword: keyword,
       lastProductId: id,
     },
   });
