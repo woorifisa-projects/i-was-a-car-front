@@ -15,7 +15,7 @@ import { storeToRefs } from 'pinia';
 const store = useSaleStore();
 const { response } = storeToRefs(store);
 
-const cardTitle = ref('원클릭 차량 접수 완료');
+const cardTitle = ref('원클릭 차량 판매 접수 완료');
 const next = ref('거래 상세');
 const nextUrl = ref(`/mypage/sale/${response.value.saleId}`);
 </script>

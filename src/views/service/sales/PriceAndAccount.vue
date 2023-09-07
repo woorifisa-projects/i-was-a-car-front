@@ -37,7 +37,7 @@
         density="compact"
         v-model="selectedBank"
       ></v-select>
-      
+
       <v-text-field
         label="계좌번호"
         density="compact"
@@ -53,7 +53,7 @@
 
 <script setup>
 import Card from '@/components/card/Card.vue';
-import { getBanks } from '@/apis/service/histories/sales/saleApi';
+import { getBanks } from '@/apis/service/contracts/contractApi';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { onBeforeMount, ref } from 'vue';
 
@@ -78,7 +78,7 @@ onBeforeMount(async () => {
 
 const onClickNextBtnEmit = () =>
   setFinanceInfo(
-    (price.value * 10000),
+    price.value * 10000,
     accountHolder.value,
     selectedBank.value,
     accountNumber.value

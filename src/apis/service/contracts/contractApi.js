@@ -18,4 +18,8 @@ const findSpecificinsurance = () => {
     return instance.get(`/insurances`);
 }
 
-export { findContractById, findSpecificLoan, findSpecificinsurance };
+const getBanks = () => {
+  return instance.get('/banks');
+};
+
+export { findContractById, findSpecificLoan, findSpecificinsurance, getBanks };
