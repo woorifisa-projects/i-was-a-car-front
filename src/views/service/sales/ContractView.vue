@@ -29,19 +29,26 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useSaleStore } from '@/store/sales/saleStore';
 import { createProduct } from '@/apis/service/histories/sales/saleApi';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
+import { useBtnStore } from '@/store/btnStore';
 
 import Card from '@/components/card/Card.vue';
 import ContractForm from '@/components/Form/ContractForm.vue';
 
+const router = useRouter();
 const store = useSaleStore();
 const { setResponse } = store;
 const { request } = storeToRefs(store);
-const router = useRouter();
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
+
+onBeforeMount(() => {
+  setBtnCondition(true);
+});
 
 const iwc = ref('IWC');
 const cardTitle = ref('자동차 매매 계약서 작성');
@@ -50,16 +57,19 @@ const nextUrl = ref('block');
 const isLoading = ref(false);
 
 const onClickNextBtnEmit = async () => {
-  isLoading.value = true;
+  // isLoading.value = true;
   await createProduct()
     .then((resp) => {
       console.log(resp);
       const response = resp.data.data;
       setResponse(response);
       router.push('8');
+      isLoading.value = false;
     })
     .catch((e) => console.error(e));
 };
+
+
 </script>
 
 <style lang="scss" scoped></style>

@@ -42,7 +42,7 @@ const { smAndDown } = useDisplay();
 const btnB = '내 차 사기';
 const btnW = '내 차 팔기';
 
-const sales = ref('/sales/basic-info');
+const sales = ref('/one-click-sale/1');
 </script>
 
 <style lang="scss" scoped>

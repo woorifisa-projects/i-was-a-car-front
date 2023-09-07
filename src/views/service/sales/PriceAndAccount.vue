@@ -37,13 +37,14 @@
         density="compact"
         v-model="selectedBank"
       ></v-select>
-      
+
       <v-text-field
         label="계좌번호"
         density="compact"
         variant="underlined"
         style="width: 70%"
         type="number"
+        placeholder="10~14 자리 숫자만"
         v-model="accountNumber"
       >
       </v-text-field>
@@ -55,8 +56,11 @@
 import Card from '@/components/card/Card.vue';
 import { getBanks } from '@/apis/service/histories/sales/saleApi';
 import { useSaleStore } from '@/store/sales/saleStore.js';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
+import { useBtnStore } from '@/store/btnStore';
 
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
 const saleStore = useSaleStore();
 const { setFinanceInfo } = saleStore;
 
@@ -74,15 +78,31 @@ onBeforeMount(async () => {
   const resp = await getBanks();
   const banks = resp.data.data;
   bankList.value.push(...banks);
+  setBtnCondition(false);
 });
 
 const onClickNextBtnEmit = () =>
   setFinanceInfo(
-    (price.value * 10000),
+    price.value * 10000,
     accountHolder.value,
     selectedBank.value,
     accountNumber.value
   );
+
+watch(
+  [price, accountHolder,  selectedBank, accountNumber],
+  ([p, ah,  sb, an]) => {
+    const accountHolderRegex = /[가-힣]{2,10}$/;
+    const accountNumberRegex = /[0-9]{10,14}$/;
+    const value = 
+    (p != null && p > 10) &&
+    (ah != null && accountHolderRegex.test(ah)) &&
+    (an != null && accountNumberRegex.test(an)) &&
+    (sb != null);
+    setBtnCondition(value);
+    setFinanceInfo(value);
+  }
+);
 </script>
 
 <style lang="scss" scoped></style>

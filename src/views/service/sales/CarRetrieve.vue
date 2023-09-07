@@ -39,15 +39,24 @@
 import Card from '@/components/card/Card.vue';
 import { useRetrieveCarStore } from '@/store/retrieveCar/retrieveCar.js';
 import { useSaleStore } from '@/store/sales/saleStore';
-import { ref } from 'vue';
+import { useValidateSaleStore } from '@/store/sales/saleValidateStore';
+import { useBtnStore } from '@/store/btnStore';
+import { onBeforeMount, ref, watch } from 'vue';
 
-const name = ref('');
-const carNumber = ref('');
-const distance = ref();
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
+const saleValidateStore = useValidateSaleStore();
+const { setCarInfoCheck } = saleValidateStore;
+
+onBeforeMount(() => setBtnCondition(false));
 
 const cardTitle = ref('차량 정보 조회');
 const next = ref('조회하기');
 const nextUrl = ref('4');
+
+const name = ref('');
+const carNumber = ref('');
+const distance = ref('');
 
 const carStore = useRetrieveCarStore();
 const { setNameAndCarNumber } = carStore;
@@ -58,6 +67,20 @@ const onClickNextBtnEmit = () => {
   setNameAndCarNumber(name.value, carNumber.value);
   setDistance(distance.value);
 };
+
+watch([name, carNumber, distance], ([n, c, d]) => {
+  const nameRegex = /[가-힣]{2,10}$/;
+  const carNumberRegex = /[0-9]{2,3}[가-힣][0-9]{4}$/;
+  const value =
+    n != null &&
+    nameRegex.test(n) &&
+    c != null &&
+    carNumberRegex.test(c) &&
+    d != null &&
+    d > 0;
+  setBtnCondition(value);
+  setCarInfoCheck(value);
+});
 </script>
 
 <style lang="scss" scoped></style>

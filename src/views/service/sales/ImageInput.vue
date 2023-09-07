@@ -16,14 +16,23 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import { changeFiles, deleteImage } from '@/utils';
-import { useSaleStore } from '@/store/sales/saleStore';
+import { useSaleStore } from '@/store/sales/saleStore.js';
+import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
+
 import Card from '@/components/card/Card.vue';
 import ImageAttach from '@/components/common/ImageAttach.vue';
+import { useBtnStore } from '@/store/btnStore';
+
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
+onBeforeMount(() => setBtnCondition(false));
 
 const store = useSaleStore();
 const { addStoreImages } = store;
+const validateStore = useValidateSaleStore();
+const { setImageInfoCheck } = validateStore;
 
 const cardTitle = ref('사진 정보 입력');
 const next = ref('다음');
@@ -40,6 +49,14 @@ const deleteProductImage = (idx) =>
 
 const onClickNextBtnEmit = () =>
   addStoreImages(Array.from(imageRef.value.input.files));
+
+watch(imageList, (i) => {
+  const value =
+    imageRef.value.input.files != null &&
+    Array.from(imageRef.value.input.files).length > 0;
+  setImageInfoCheck(value);
+  setBtnCondition(value);
+});
 </script>
 
 <style lang="scss" scoped></style>

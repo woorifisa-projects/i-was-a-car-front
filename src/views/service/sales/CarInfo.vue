@@ -66,11 +66,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useRetrieveCarStore } from '@/store/retrieveCar/retrieveCar.js';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { findProductByNameAndCarNumber } from '@/apis/service/products/productApi.js';
 import { storeToRefs } from 'pinia';
+import { useBtnStore } from '@/store/btnStore';
+
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
+onBeforeMount(() => setBtnCondition(false));
+
 import Card from '@/components/card/Card.vue';
 
 const carStore = useRetrieveCarStore();
@@ -92,6 +98,7 @@ const imgUrl = ref();
 
 findProductByNameAndCarNumber(info.name.value, info.carNumber.value)
   .then((resp) => {
+    setBtnCondition(true);
     isLoaded.value = true;
     carInfo.value = resp.data.data;
 
