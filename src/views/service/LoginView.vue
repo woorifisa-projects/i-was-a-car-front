@@ -109,6 +109,7 @@ const error = ref({
 });
 
 const auth = useAuthStore();
+
 const { verifiedAuth } = auth;
 
 const loginHandler = async () => {

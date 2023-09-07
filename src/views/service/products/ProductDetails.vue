@@ -48,7 +48,7 @@ onBeforeMount(async () => {
     const route = useRoute();
     const response = await findProductDetail(route.params.productId);
     const item = response.data.data;
-    console.log(response.data.data);
+
     carInfo.value = item;
     carImages.value = item.images;
 

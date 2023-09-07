@@ -2,12 +2,15 @@
   <v-card-text class="d-flex">
     <v-col cols="2" class="flex-grow-0 flex-shrink-0">
       <v-autocomplete
-        :items="cars"
+        label="선택"
+        :items="category"
+        item-title="title"
+        item-value="id"
         color="grey"
         theme="light"
         variant="solo"
-        label="선택"
         single-line
+        v-model="selectedCategory"
       ></v-autocomplete>
     </v-col>
 
@@ -26,20 +29,24 @@
         clearable
         single-line
         @click:append-inner="onClick"
+        v-model="keyword"
       ></v-text-field>
     </v-col>
   </v-card-text>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-const cars = ref(['차종', '제조사']);
+import { ref, defineEmits } from 'vue';
+import { category } from '@/components/data/searchCategory.js';
+const emit = defineEmits(['search']);
 
 const loading = ref(false);
+const selectedCategory = ref();
+const keyword = ref();
 
 const onClick = () => {
   loading.value = true;
+  emit('search', { category: selectedCategory.value, keyword: keyword.value });
 
   setTimeout(() => {
     loading.value = false;
