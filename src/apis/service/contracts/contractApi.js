@@ -33,4 +33,8 @@ const getIdentification = (name, rrnf, rrnb) => {
 }
 
 export { findContractById, findSpecificLoan, findSpecificinsurance, getBanks, getIdentification };
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 5860fef (feat:구매 로직 연결[#3])
