@@ -15,9 +15,9 @@ export const multipartFormDataFile = (formData, file, dataName) => {
   return formData;
 };
 
-export const multipartFormDataJson = (formData, dto, data) => {
+export const multipartFormDataJson = (formData, data, dtoName) => {
   formData.append(
-    dto,
+    dtoName,
     new Blob([JSON.stringify(data)], {
       type: 'application/json',
     })

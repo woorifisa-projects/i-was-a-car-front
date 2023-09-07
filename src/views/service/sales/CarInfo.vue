@@ -79,12 +79,11 @@ const info = storeToRefs(getCarInfo());
 
 const saleStore = useSaleStore();
 const { combineResponse } = saleStore;
-const { distance } = storeToRefs(saleStore);
 
 const model = ref();
 const cardTitle = ref('차량정보');
 const next = ref('다음');
-const nextUrl = ref('images');
+const nextUrl = ref('5');
 const isLoaded = ref(false);
 const carInfo = ref({});
 const carNumber = ref('');
@@ -111,10 +110,6 @@ findProductByNameAndCarNumber(info.name.value, info.carNumber.value)
         {
           contentName: '연식',
           content: `${carInfo.value.year.split('-')[0]}년식`,
-        },
-        {
-          contentName: '주행거리',
-          content: distance.value.toLocaleString(),
         },
       ]
     );
