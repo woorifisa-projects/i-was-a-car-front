@@ -9,7 +9,7 @@
     title="본인 인증에 실패하였습니다"
     @click:close="alertClose"
   >
-    주민등록번호가 올바른지 다시 한번 체크 하여주시길 바랍니다.
+    주민등록번호 뒷자리를 다시 한번 확인해주세요.
   </v-alert>
   <Card
     :cardTitle="cardTitle"

@@ -141,10 +141,9 @@
 <script setup>
 import { ref, onBeforeMount, watch } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
-import { useContractStore } from '@/store/contractStore';
+import { useBtnStore } from '@/store/btnStore';
 
 import AgreementCheck from '@/components/contract/AgreementCheck.vue';
-import { useBtnStore } from '@/store/btnStore.js';
 import { storeToRefs } from 'pinia';
 
 const props = defineProps([
