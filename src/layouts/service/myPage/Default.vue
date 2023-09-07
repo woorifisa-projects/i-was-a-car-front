@@ -20,16 +20,22 @@
       </v-tab>
     </v-tabs>
     <v-container>
-      <router-view @historyNo="goDetail" @historyList="goList" />
+      <router-view
+        @historyNo="goDetail"
+        @historyList="goList"
+        :clickMember="clickMember"
+      />
     </v-container>
   </v-app>
 </template>
 
 <script setup>
 import DefaultBar from './AppBar.vue';
-import DefaultView from './View.vue';
-import { ref, computed, defineAsyncComponent } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { memberDetailApi } from '@/apis/service/histories/memberInfoApi.js';
+
+const clickMember = ref(true);
 
 const router = useRouter();
 
@@ -42,11 +48,14 @@ const path = ref('/purchase');
 const selectedComponent = computed(() => {
   if (flag.value === 'TRUE') {
     if (tab.value === '구매이력') {
-      router.push('/purchase');
+      path.value = '/purchase';
+      router.push(path.value);
     } else if (tab.value === '판매이력') {
-      router.push('/sale');
+      path.value = '/sale';
+      router.push(path.value);
     } else {
-      router.push('/member');
+      path.value = '/member';
+      router.push(path.value);
     }
   } else {
     if (tab.value === '구매이력') {
@@ -74,5 +83,8 @@ const goList = () => {
 
 const changeFlag = () => {
   flag.value = 'TRUE';
+  if (tab.value === '회원정보') {
+    clickMember.value = !clickMember.value;
+  }
 };
 </script>
