@@ -76,7 +76,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, defineEmits } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
 import Dialog from '@/components/service/Dialog.vue';
 

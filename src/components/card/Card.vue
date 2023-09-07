@@ -35,7 +35,6 @@ const { xs } = useDisplay();
 
 const props = defineProps(['cardTitle', 'next', 'nextUrl', 'prev', 'prevUrl']);
 const emit = defineEmits(['onClickNextBtnEmit', 'alertTrue']);
-
 const cardTitle = ref(props.cardTitle);
 const next = ref(props.next);
 const nextUrl = ref(props.nextUrl);
