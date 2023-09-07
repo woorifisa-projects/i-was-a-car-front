@@ -2,15 +2,17 @@
   <v-container class="d-flex justify-center h-screen">
     <v-sheet class="mt-5 rounded-xl" :elevation="4" width="500" height="690">
       <v-card-title class="text-center text-h5 ma-8">회원가입</v-card-title>
-      <v-sheet width="350" class="mx-auto" max-width="320">
+      <v-sheet class="mx-auto" max-width="320">
         <v-form @submit.prevent>
           <v-text-field
             type="email"
-            disabled
-            label="인증된 이메일이 들어갈 예정"
+            readonly
             density="compact"
             variant="underlined"
-          ></v-text-field>
+          >
+            {{ form.email ? form.email : router.push('/email') }}
+          </v-text-field>
+
           <v-text-field
             :type="passwordVisible ? 'text' : 'password'"
             density="compact"
@@ -18,56 +20,74 @@
             @click:append-inner="passwordVisible = !passwordVisible"
             :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
             variant="underlined"
+            v-model="form.password"
+            required
           ></v-text-field>
+
           <v-text-field
             type="password"
             label="비밀번호 확인"
             density="compact"
             variant="underlined"
           ></v-text-field>
+
           <v-text-field
             label="이름"
             density="compact"
             clearable
             variant="underlined"
+            v-model="form.name"
           ></v-text-field>
+
           <v-text-field
             label="휴대폰 번호"
             density="compact"
             clearable
             placeholder="010-1234-5678"
             variant="underlined"
+            v-model="form.tel"
           ></v-text-field>
+
           <v-text-field
             label="생년월일"
             placeholder="YYYY-MM-DD"
             density="compact"
             clearable
             variant="underlined"
+            v-model="form.birth"
           ></v-text-field>
+
           <v-sheet class="d-flex justify-space-between">
             <v-radio-group
               label="성별"
-              v-model="genderRadio"
+              v-model="form.gender"
               class="w-50"
               inline
             >
               <v-radio label="남" value="남자"></v-radio>
               <v-radio label="여" value="여자"></v-radio>
             </v-radio-group>
+
             <v-radio-group
               class="w-50"
               label="면허 유무"
-              v-model="licenseRadio"
+              v-model="form.hasLicense"
               inline
             >
               <v-radio label="있음" value="true"></v-radio>
               <v-radio label="없음" value="false"></v-radio>
             </v-radio-group>
           </v-sheet>
+
           <v-sheet class="d-flex justify-space-between mt-5">
             <v-btn width="120" height="40">이전</v-btn>
-            <v-btn width="120" height="40" class="bg-black">다음</v-btn>
+            <v-btn
+              width="120"
+              height="40"
+              class="bg-black"
+              @click="signupHandler"
+              >완료</v-btn
+            >
           </v-sheet>
         </v-form>
       </v-sheet>
@@ -76,11 +96,44 @@
 </template>
 
 <script setup>
+import { signupAPI } from '@/apis/service/auth/authApi';
+import { useAuthStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const auth = useAuthStore();
+const { emailAuthInfo } = storeToRefs(auth);
+const { verifiedAuth } = auth;
+
+const form = ref({
+  email: emailAuthInfo.value.email,
+  code: emailAuthInfo.value.code,
+  password: '',
+  name: '',
+  birth: '',
+  tel: '',
+  gender: '',
+  hasLicense: false,
+});
 
 const passwordVisible = ref(false);
-const genderRadio = ref(null);
-const licenseRadio = ref(null);
+
+const signupHandler = async () => {
+  try {
+    const { data } = await signupAPI(form.value);
+
+    verifiedAuth(data);
+
+    router.push({ name: 'Home' });
+  } catch (e) {
+    if (e.response.status === 401) {
+      console.error('signupHandler: ', e);
+    }
+  }
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
