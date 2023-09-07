@@ -26,9 +26,12 @@
     <v-select
       label="은행명"
       :items="bankList"
+      item-title="name"
+      item-value="id"
       variant="underlined"
       style="width: 30%; margin-right: 1em"
       density="compact"
+      v-model="selectedBank"
     ></v-select>
     <v-text-field
       label="계좌번호"
@@ -36,15 +39,19 @@
       variant="underlined"
       style="width: 70%"
       type="number"
+      v-model="account"
     >
     </v-text-field>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount, defineEmits, watch } from 'vue';
+import { getBanks } from '@/apis/service/contracts/contractApi';
+
 import FindAddress from '@/components/FindAddress.vue';
 
+const emit = defineEmits(['targetDelivery']);
 const meetingDate = ref('');
 const zipCode = ref('');
 const address = ref('');
@@ -55,15 +62,40 @@ const setAddress = (emitAddress) => (address.value = emitAddress);
 const setAddressDetail = (emitAddressDetail) =>
   (addressDetail.value = emitAddressDetail);
 
-const price = ref();
 const accountHolder = ref('');
-const bankList = ref([
-  '우리은행',
-  '국민은행',
-  '신한은행',
-  '하나은행',
-  '농협은행',
-]);
+const selectedBank = ref();
+const account = ref();
+
+const bankList = ref([]);
+
+onBeforeMount(async () => {
+  const resp = await getBanks();
+  const banks = resp.data.data;
+  bankList.value.push(...banks);
+});
+
+watch(
+  (meetingDate,
+  zipCode,
+  address,
+  addressDetail,
+  accountHolder,
+  selectedBank,
+  account),
+  () => {
+    const targetDelivery = {
+      meetingDate: meetingDate.value,
+      zipCode: zipCode.value,
+      address: address.value,
+      addressDetail: addressDetail.value,
+      accountHolder: accountHolder.value,
+      selectedBank: selectedBank.value,
+      account: account.value,
+    };
+
+    emit('targetDelivery', targetDelivery);
+  }
+);
 </script>
 
 <style lang="scss" scoped></style>

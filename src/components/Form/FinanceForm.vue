@@ -30,6 +30,7 @@
       <ScrollComponent
         :finance="finance"
         :dataType="dataType"
+        @targetFinance="WhichTargetFinance"
       ></ScrollComponent>
     </Suspense>
   </v-form>
@@ -37,13 +38,19 @@
 
 <script setup>
 import { ref, defineProps, onBeforeMount, defineAsyncComponent } from 'vue';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { storeToRefs } from 'pinia';
 
 const props = defineProps(['finance', 'wantMoney', 'installment', 'dataType']);
 const finance = ref(props.finance);
 const dataType = ref(props.dataType);
 
-const wantMoney = ref(props.wantMoney);
-const installment = ref(props.installment);
+const purchaseStore = usePurchaseStore();
+const { financeInfo } = storeToRefs(purchaseStore);
+const { setLoanId, setInsuranceId } = purchaseStore;
+
+const wantMoney = ref(financeInfo.value.loan);
+const installment = ref(financeInfo.value.period);
 const monthlyPayment = Math.round(wantMoney.value / installment.value);
 
 let ScrollComponent;
@@ -57,6 +64,16 @@ onBeforeMount(async () => {
     console.error(e);
   }
 });
+
+const WhichTargetFinance = (child) => {
+  console.log(child);
+  console.log(dataType.value);
+  if (dataType.value === 'loan') {
+    setLoanId(child.id);
+  } else {
+    setInsuranceId(child.id);
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>

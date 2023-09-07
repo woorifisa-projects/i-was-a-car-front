@@ -3,26 +3,31 @@
     <v-text-field
       label="이름"
       density="compact"
-      clearable
       variant="underlined"
       class="mb-10"
+      :readonly="true"
+      v-model="targetName"
     ></v-text-field>
 
     <div class="d-flex flex-row justify-space-around my-16">
       <v-text-field
         label="주민등록번호 앞자리"
+        type="number"
         density="compact"
-        clearable
         variant="underlined"
+        :readonly="true"
+        v-model="targetRrnf"
       ></v-text-field>
       <div class="align-self-center mx-8">-</div>
       <v-text-field
-        :type="passwordVisible ? 'text' : 'password'"
+        :type="passwordVisible ? 'number' : 'password'"
         density="compact"
         label="주민등록번호 뒷자리"
+        :hide-details="passwordVisible"
         @click:append-inner="passwordVisible = !passwordVisible"
         :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
         variant="underlined"
+        v-model="targetRrnb"
       ></v-text-field>
     </div>
     <v-divider></v-divider>
@@ -87,6 +92,17 @@ import { ref, onBeforeMount } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
 
 import AgreementCheck from '@/components/contract/AgreementCheck.vue';
+import { useBtnStore } from '@/store/btnStore';
+import { useAuthStore } from '@/store/auth';
+import { watch } from 'vue';
+import { storeToRefs } from 'pinia';
+
+const btnStore = useBtnStore();
+const { setBtnCondition, setisBasicInfo } = btnStore;
+
+const authStore = useAuthStore();
+const { authInfo } = storeToRefs(authStore);
+const { setRrnb } = authStore;
 
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
@@ -95,7 +111,23 @@ const passwordVisible = ref(false);
 const contractId = 5;
 const contract = ref([]);
 
+const targetName = ref(authInfo.value.name);
+const targetRrnf = ref(authInfo.value.birth);
+const targetRrnb = ref();
+
+watch([targetRrnb, agreeRadio], () => {
+  if (!!targetRrnb.value && agreeRadio.value === 'agree') {
+    setBtnCondition(true);
+    console.log(targetRrnb.value);
+    setRrnb(targetRrnb.value);
+  } else {
+    setBtnCondition(false);
+  }
+});
+
 onBeforeMount(async () => {
+  setBtnCondition(false);
+  setisBasicInfo(true);
   try {
     const response = await findContractById(contractId);
     contract.value = response.data.data;

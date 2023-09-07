@@ -54,7 +54,7 @@
 
 <script setup>
 import Card from '@/components/card/Card.vue';
-import { getBanks } from '@/apis/service/histories/sales/saleApi';
+import { getBanks } from '@/apis/service/contracts/contractApi';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { onBeforeMount, ref, watch } from 'vue';
 import { useBtnStore } from '@/store/btnStore';

@@ -142,6 +142,9 @@
 import { ref, onBeforeMount } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
 import AgreementCheck from '@/components/contract/AgreementCheck.vue';
+import { watch } from 'vue';
+import { useBtnStore } from '@/store/btnStore.js';
+import { storeToRefs } from 'pinia';
 
 const props = defineProps([
   'seller',
@@ -163,7 +166,6 @@ const tradeDialog = ref(false);
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
 const showDialog = ref();
-// const enctype = ref(props.enctype == null ? 'application/x-www-form-urlencoded' : props.enctype);
 
 /***** Props *****/
 const seller = ref(props.seller);
@@ -177,7 +179,12 @@ const fuel = ref(props.fuel);
 const tradeContract = ref([]);
 const refundContract = ref([]);
 
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
+
 onBeforeMount(async () => {
+  setBtnCondition(false);
+
   try {
     const traderesponse = await findContractById(tradingContractId);
     tradeContract.value = traderesponse.data.data;
@@ -189,12 +196,11 @@ onBeforeMount(async () => {
   }
 });
 
-async () => {
-  try {
-  } catch (e) {
-    console.error(e);
+watch((tradeAgreeRadio, agreeRadio), () => {
+  if (tradeAgreeRadio.value === 'agree' && agreeRadio.value === 'agree') {
+    setBtnCondition(true);
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

@@ -17,6 +17,7 @@
         :prev="prev"
         :prevUrl="prevUrl"
         @onClickNextBtnEmit="onClickNextBtnEmit"
+        @alertTrue="alertTrue"
       ></CardBtn>
     </v-sheet>
   </v-container>
@@ -33,7 +34,7 @@ import { useDisplay } from 'vuetify/lib/framework.mjs';
 const { xs } = useDisplay();
 
 const props = defineProps(['cardTitle', 'next', 'nextUrl', 'prev', 'prevUrl']);
-const emit = defineEmits(['onClickNextBtnEmit']);
+const emit = defineEmits(['onClickNextBtnEmit', 'alertTrue']);
 
 const cardTitle = ref(props.cardTitle);
 const next = ref(props.next);
@@ -41,7 +42,13 @@ const nextUrl = ref(props.nextUrl);
 const prev = ref(props.prev == null ? null : props.prev);
 const prevUrl = ref(props.prevUrl == null ? null : props.prevUrl);
 
-const onClickNextBtnEmit = () => emit('onClickNextBtnEmit');
+const onClickNextBtnEmit = () => {
+  emit('onClickNextBtnEmit');
+};
+
+const alertTrue = () => {
+  emit('alertTrue', true);
+};
 </script>
 
 <style lang="scss" scoped></style>
