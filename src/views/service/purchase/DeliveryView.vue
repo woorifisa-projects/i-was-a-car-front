@@ -30,9 +30,6 @@ const { request } = storeToRefs(purchaseStore);
 const { setDeilveryInfo, setResponse } = purchaseStore;
 
 const onClickNextBtnEmit = async () => {
-  console.log(targetDelivery.value);
-
-  console.log(request.value);
   setDeilveryInfo(targetDelivery.value);
   await createPurchase()
     .then((resp) => {

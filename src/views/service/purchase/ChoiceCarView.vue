@@ -31,7 +31,6 @@ const onClickNextBtnEmit = () => {
 };
 
 const whichTargetProduct = (child) => {
-  console.log(child);
   targetProduct.value = child;
 };
 </script>

@@ -20,7 +20,7 @@
       ></v-text-field>
       <div class="align-self-center mx-4">-</div>
       <v-text-field
-        :type="'password'"
+        :type="passwordVisible ? 'number' : 'password'"
         density="compact"
         label="주민등록번호 뒷자리"
         :hide-details="passwordVisible"

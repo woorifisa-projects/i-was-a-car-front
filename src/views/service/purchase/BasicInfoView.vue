@@ -9,7 +9,16 @@
     title="본인 인증에 실패하였습니다"
     @click:close="alertClose"
   >
+<<<<<<< HEAD
     주민등록번호 뒷자리를 다시 한번 확인해주세요.
+=======
+    Aenean imperdiet. Quisque id odio. Cras dapibus. Pellentesque ut neque. Cras
+    dapibus. Vivamus consectetuer hendrerit lacus. Sed mollis, eros et ultrices
+    tempus, mauris ipsum aliquam libero, non adipiscing dolor urna a orci. Sed
+    mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non adipiscing
+    dolor urna a orci. Curabitur blandit mollis lacus. Curabitur ligula sapien,
+    tincidunt non, euismod vitae, posuere imperdiet, leo.
+>>>>>>> c0422d5 (feat:구매 로직 연결[#3])
   </v-alert>
   <Card
     :cardTitle="cardTitle"

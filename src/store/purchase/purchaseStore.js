@@ -45,7 +45,7 @@ export const usePurchaseStore = defineStore('purchaseStore', () => {
     request.value.accountHolder = targetDelivery.accountHolder;
     request.value.bankId = targetDelivery.selectedBank;
     request.value.accountNumber = targetDelivery.account;
-  
+
   };
 
   const setResponse = (resp) => (response.value = resp);

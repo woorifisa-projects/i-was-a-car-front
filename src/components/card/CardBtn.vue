@@ -46,6 +46,7 @@ const nextUrl = props.nextUrl;
 const next = ref(isBasicInfo.value ? '본인 인증 하기' : props.next);
 const prevUrl = ref(props.prevUrl == null ? -1 : props.prevUrl);
 const prev = ref(props.prev == null ? '이전' : props.prev);
+
 const onClickNextBtn = async () => {
   if (next.value === '본인 인증 하기') {
     // api 보내기
@@ -70,7 +71,6 @@ const onClickNextBtn = async () => {
 
     return;
   }
-
   router.push(nextUrl);
 };
 
