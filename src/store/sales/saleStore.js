@@ -22,7 +22,8 @@ export const useSaleStore = defineStore('saleStore', () => {
 
   const combineResponse = (carInfo) => Object.assign(request.value, carInfo);
   const addStoreImages = (imgs) => {
-    images.value.push(...imgs);
+    images.value = imgs;
+    // images.value.push(...imgs);
   };
 
   const setFinanceInfo = (price, accountHolder, bankId, accountNumber) => {

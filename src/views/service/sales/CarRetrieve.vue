@@ -42,24 +42,25 @@ import { useSaleStore } from '@/store/sales/saleStore';
 import { useValidateSaleStore } from '@/store/sales/saleValidateStore';
 import { useBtnStore } from '@/store/btnStore';
 import { onBeforeMount, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
 const saleValidateStore = useValidateSaleStore();
 const { setCarInfoCheck } = saleValidateStore;
 
-onBeforeMount(() => setBtnCondition(false));
+onBeforeMount(() => {
+  const { name } = storeToRefs(carStore);
+  setBtnCondition(name !== undefined);
+});
 
 const cardTitle = ref('차량 정보 조회');
 const next = ref('조회하기');
 const nextUrl = ref('4');
 
-const name = ref('');
-const carNumber = ref('');
-const distance = ref('');
-
 const carStore = useRetrieveCarStore();
 const { setNameAndCarNumber } = carStore;
+const { name, carNumber, distance } = storeToRefs(carStore);
 const saleStore = useSaleStore();
 const { setDistance } = saleStore;
 

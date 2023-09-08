@@ -16,7 +16,7 @@ export const useValidateSaleStore = defineStore('validateSaleStore', () => {
 
   // PriceAndAccount.vue
   const financeCheck = ref(false);
-  const setfinanceInfoCheck = (bool) => (financeCheck.value = bool);
+  const setFinanceInfoCheck = (bool) => (financeCheck.value = bool);
 
   const allValid = ref(
     meetingCheck.value && carInfoCheck.value && imagesCheck.value && financeCheck.value
@@ -33,6 +33,6 @@ export const useValidateSaleStore = defineStore('validateSaleStore', () => {
     setImageInfoCheck,
 
     // PriceAndAccount.vue
-    setfinanceInfoCheck,
+    setFinanceInfoCheck,
   };
 });

@@ -19,6 +19,7 @@
       class="my-1"
       :readonly="true"
       v-model="address"
+      @click="findAddress"
       @change="$emit('changeAddress', address)"
     >
     </v-text-field>
@@ -39,21 +40,17 @@
 <script setup>
 import { ref, watch, defineEmits } from 'vue';
 
-const myTrue = ref('true');
-
+const props = defineProps(['zipCode', 'address', 'addressDetail']);
 const emit = defineEmits([
-  'changeMeetingDate',
   'changeZipCode',
   'changeAddress',
   'changeAddressDetail',
 ]);
 
-const meetingDate = ref('');
-const zipCode = ref('');
-const address = ref('');
-const addressDetail = ref('');
+const zipCode = ref(props.zipCode == undefined ? '' : props.zipCode);
+const address = ref(props.address == undefined ? '' : props.address);
+const addressDetail = ref(props.addressDetail == undefined ? '' : props.addressDetail);
 
-watch(meetingDate, (meetingDate) => emit('changeMeetingDate', meetingDate));
 watch(zipCode, (zipCode) => emit('changeZipCode', zipCode));
 watch(address, (address) => emit('changeAddress', address));
 watch(addressDetail, (ad) => emit('changeAddressDetail', ad));

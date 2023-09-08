@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref, watch } from 'vue';
+import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import { changeFiles, deleteImage } from '@/utils';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
@@ -24,6 +24,7 @@ import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
 import Card from '@/components/card/Card.vue';
 import ImageAttach from '@/components/common/ImageAttach.vue';
 import { useBtnStore } from '@/store/btnStore';
+import { storeToRefs } from 'pinia';
 
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
@@ -31,6 +32,7 @@ onBeforeMount(() => setBtnCondition(false));
 
 const store = useSaleStore();
 const { addStoreImages } = store;
+const { images } = storeToRefs(store);
 const validateStore = useValidateSaleStore();
 const { setImageInfoCheck } = validateStore;
 
@@ -49,6 +51,12 @@ const deleteProductImage = (idx) =>
 
 const onClickNextBtnEmit = () =>
   addStoreImages(Array.from(imageRef.value.input.files));
+
+onMounted(() => {
+  if (images.value.length > 0) {
+    changeFiles(images.value, imageRef, imageList, imageData);
+  }
+});
 
 watch(imageList, (i) => {
   const value =

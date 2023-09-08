@@ -73,55 +73,70 @@ import { findProductByNameAndCarNumber } from '@/apis/service/products/productAp
 import { storeToRefs } from 'pinia';
 import { useBtnStore } from '@/store/btnStore';
 
-const btnStore = useBtnStore();
-const { setBtnCondition } = btnStore;
-onBeforeMount(() => setBtnCondition(false));
-
 import Card from '@/components/card/Card.vue';
 
 const carStore = useRetrieveCarStore();
 const { getCarInfo } = carStore;
 const info = storeToRefs(getCarInfo());
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
 
 const saleStore = useSaleStore();
 const { combineResponse } = saleStore;
+
+const carInfo = ref({});
+
+onBeforeMount(() => {
+  const { request } = storeToRefs(saleStore);
+  carInfo.value = request.value;
+  setBtnCondition(request.value.carName !== undefined);
+});
 
 const model = ref();
 const cardTitle = ref('차량정보');
 const next = ref('다음');
 const nextUrl = ref('5');
-const isLoaded = ref(false);
-const carInfo = ref({});
-const carNumber = ref('');
+const carNumber = ref(carInfo.value.info);
 const infos = ref([]);
-const imgUrl = ref();
+const isLoaded = ref(carInfo.value.images !== undefined);
+const imgUrl = ref(
+  carInfo.value.images === undefined ? null : carInfo.value.images[0]
+);
 
-findProductByNameAndCarNumber(info.name.value, info.carNumber.value)
-  .then((resp) => {
-    setBtnCondition(true);
-    isLoaded.value = true;
-    carInfo.value = resp.data.data;
+const addInfo = (carInfo) => {
+  infos.value.push(
+    ...[
+      {
+        contentName: '소유자',
+        content: carInfo.value.memberName,
+      },
+      {
+        contentName: '차명',
+        content: carInfo.value.carName,
+      },
+      {
+        contentName: '연식',
+        content: `${carInfo.value.year.split('-')[0]}년식`,
+      },
+    ]
+  );
+};
 
-    imgUrl.value = carInfo.value.images[0];
-    carNumber.value = carInfo.value.info;
-    infos.value.push(
-      ...[
-        {
-          contentName: '소유자',
-          content: carInfo.value.memberName,
-        },
-        {
-          contentName: '차명',
-          content: carInfo.value.carName,
-        },
-        {
-          contentName: '연식',
-          content: `${carInfo.value.year.split('-')[0]}년식`,
-        },
-      ]
-    );
-  })
-  .catch((e) => console.error(e));
+if (carInfo.value.carName === undefined) {
+  findProductByNameAndCarNumber(info.name.value, info.carNumber.value)
+    .then((resp) => {
+      setBtnCondition(true);
+      isLoaded.value = true;
+      carInfo.value = resp.data.data;
+
+      imgUrl.value = carInfo.value.images[0];
+      carNumber.value = carInfo.value.info;
+      addInfo(carInfo);
+    })
+    .catch((e) => console.error(e));
+} else {
+  addInfo(carInfo);
+}
 
 const onClickNextBtnEmit = () => combineResponse(carInfo.value);
 </script>
@@ -129,6 +144,8 @@ const onClickNextBtnEmit = () => combineResponse(carInfo.value);
 <style lang="scss" scoped>
 .main-img {
   width: 200px;
+  max-height: 200px;
+  object-fit: cover;
   margin: 0 auto;
 }
 </style>
