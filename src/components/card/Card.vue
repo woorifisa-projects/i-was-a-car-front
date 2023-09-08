@@ -14,7 +14,8 @@
       <CardBtn
         :next="next"
         :nextUrl="nextUrl"
-        :id="paramsId"
+        :prev="prev"
+        :prevUrl="prevUrl"
         @onClickNextBtnEmit="onClickNextBtnEmit"
       ></CardBtn>
     </v-sheet>
@@ -31,12 +32,14 @@ import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const { xs } = useDisplay();
 
-const props = defineProps(['cardTitle', 'next', 'nextUrl']);
+const props = defineProps(['cardTitle', 'next', 'nextUrl', 'prev', 'prevUrl']);
 const emit = defineEmits(['onClickNextBtnEmit']);
 
 const cardTitle = ref(props.cardTitle);
 const next = ref(props.next);
 const nextUrl = ref(props.nextUrl);
+const prev = ref(props.prev == null ? null : props.prev);
+const prevUrl = ref(props.prevUrl == null ? null : props.prevUrl);
 
 const onClickNextBtnEmit = () => emit('onClickNextBtnEmit');
 </script>
