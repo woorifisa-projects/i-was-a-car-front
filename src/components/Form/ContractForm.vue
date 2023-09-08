@@ -166,6 +166,18 @@ const tradeDialog = ref(false);
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
 const showDialog = ref();
+<<<<<<< HEAD
+=======
+
+const contractStore = useContractStore();
+const { setIsDisable } = contractStore;
+
+watch((tradeAgreeRadio, agreeRadio), () => {
+  if (tradeAgreeRadio.value === 'agree' && agreeRadio.value === 'agree') {
+    setIsDisable(false);
+  }
+});
+>>>>>>> e88b274 (임시저장)
 
 /***** Props *****/
 const seller = ref(props.seller);
