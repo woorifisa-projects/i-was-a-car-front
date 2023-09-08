@@ -202,7 +202,7 @@ const rules = {
   },
 
   name: (value) => {
-    const pattern = /^[가-힣]{2,}$/;
+    const pattern = /^[가-힣]{2,10}$/;
 
     validations.value.name = pattern.test(value) ? true : false;
 
