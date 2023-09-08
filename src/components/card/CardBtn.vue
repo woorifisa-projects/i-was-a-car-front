@@ -81,7 +81,6 @@ const toPrev = () => {
     router.push(prevUrl.value);
   }
 };
-
 </script>
 
 <style lang="scss" scoped>

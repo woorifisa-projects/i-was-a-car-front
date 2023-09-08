@@ -33,3 +33,5 @@ const getIdentification = (name, rrnf, rrnb) => {
 }
 
 export { findContractById, findSpecificLoan, findSpecificinsurance, getBanks, getIdentification };
+
+

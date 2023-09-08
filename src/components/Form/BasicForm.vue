@@ -55,14 +55,16 @@
           <v-btn
             color="grey"
             variant="text"
-            @click="[(dialog = false), (agreeRadio = 'disagree')]"
+            @click="
+              [(dialog = false), (agreeRadio = 'disagree'), isReadyCheck()]
+            "
           >
             동의 안 함
           </v-btn>
           <v-btn
             color="black"
             variant="outlined"
-            @click="[(dialog = false), (agreeRadio = 'agree')]"
+            @click="[(dialog = false), (agreeRadio = 'agree'), isReadyCheck()]"
           >
             동의 하기
           </v-btn>
@@ -88,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, defineEmits } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
 
 import AgreementCheck from '@/components/contract/AgreementCheck.vue';

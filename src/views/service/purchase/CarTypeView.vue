@@ -13,7 +13,6 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore';
-import { useBtnStore } from '@/store/btnStore';
 
 import Card from '@/components/card/Card.vue';
 import CarTypeForm from '@/components/Form/CarTypeForm.vue';
