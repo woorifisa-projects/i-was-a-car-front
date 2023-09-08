@@ -14,6 +14,7 @@
       :elevation="2"
       width="120"
       height="40"
+      :disabled="isDisable"
       @click="onClickNextBtn(), $emit('onClickNextBtnEmit')"
     >
       {{ next }}
@@ -22,11 +23,15 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
+import { useContractStore } from '@/store/contractStore.js';
+import { storeToRefs } from 'pinia';
 
 const emit = defineEmits(['onClickNextBtnEmit']);
+
 const router = useRouter();
+
 const props = defineProps([
   'prev',
   'prevUrl',
@@ -39,6 +44,10 @@ const nextUrl = props.nextUrl;
 const next = ref(props.next);
 const prevUrl = ref(props.prevUrl == null ? -1 : props.prevUrl);
 const prev = ref(props.prev == null ? '이전' : props.prev);
+
+const contractStore = useContractStore();
+const { isDisable } = storeToRefs(contractStore);
+
 const personal = ref(props.personal);
 const isReady = ref(props.isReady);
 
@@ -49,7 +58,6 @@ const onClickNextBtn = () => {
   //   personal.value = false;
   //   return;
   // }
-
   router.push(nextUrl);
 };
 const toPrev = () => router.go(prevUrl.value);

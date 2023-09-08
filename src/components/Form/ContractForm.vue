@@ -139,8 +139,10 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, watch } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
+import { useContractStore } from '@/store/contractStore';
+
 import AgreementCheck from '@/components/contract/AgreementCheck.vue';
 
 const props = defineProps([
@@ -163,7 +165,15 @@ const tradeDialog = ref(false);
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
 const showDialog = ref();
-// const enctype = ref(props.enctype == null ? 'application/x-www-form-urlencoded' : props.enctype);
+
+const contractStore = useContractStore();
+const { setIsDisable } = contractStore;
+
+watch((tradeAgreeRadio, agreeRadio), () => {
+  if (tradeAgreeRadio.value === 'agree' && agreeRadio.value === 'agree') {
+    setIsDisable(false);
+  }
+});
 
 /***** Props *****/
 const seller = ref(props.seller);

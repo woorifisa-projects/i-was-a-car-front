@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, defineProps } from 'vue';
 
 import CardTitle from '@/components/card/CardTitle.vue';
 import CardBtn from '@/components/card/CardBtn.vue';
