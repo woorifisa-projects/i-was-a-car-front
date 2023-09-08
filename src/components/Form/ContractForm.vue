@@ -139,8 +139,10 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, watch } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
+import { useContractStore } from '@/store/contractStore';
+
 import AgreementCheck from '@/components/contract/AgreementCheck.vue';
 import { watch } from 'vue';
 import { useBtnStore } from '@/store/btnStore.js';
