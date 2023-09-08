@@ -1,10 +1,10 @@
 <template>
   <v-container class="d-flex justify-center h-screen">
     <v-sheet
-      class="mt-5 rounded-xl"
-      :elevation="4"
+      class="mt-2 rounded-xl"
+      :elevation="xs ? 0 : 4"
       width="500"
-      height="690"
+      height="650"
       style="position: relative"
     >
       <CardTitle :cardTitle="cardTitle"></CardTitle>
@@ -27,6 +27,9 @@ import { ref, defineEmits } from 'vue';
 import CardTitle from '@/components/card/CardTitle.vue';
 import CardBtn from '@/components/card/CardBtn.vue';
 import CardForm from '@/components/card/CardForm.vue';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const { xs } = useDisplay();
 
 const props = defineProps(['cardTitle', 'next', 'nextUrl']);
 const emit = defineEmits(['onClickNextBtnEmit']);

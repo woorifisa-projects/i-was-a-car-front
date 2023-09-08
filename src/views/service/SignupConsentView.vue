@@ -3,10 +3,12 @@
     <v-sheet
       width="500"
       height="690"
-      class="mt-5 rounded-xl d-flex flex-column align-center"
-      :elevation="4"
+      class="mt-2 rounded-xl d-flex flex-column align-center"
+      :elevation="xs ? 0 : 4"
     >
-      <v-card-title class="text-center text-h5 ma-8">약관 동의</v-card-title>
+      <v-card-title class="text-center text-h5 font-weight-black ma-8"
+        >약관 동의</v-card-title
+      >
       <v-sheet width="500" class="mx-auto d-flex flex-column align-center">
         <div class="d-flex justify-center w-80">
           <v-img
@@ -59,7 +61,6 @@
           <v-checkbox
             v-model="selected.one"
             density="compact"
-            append-icon="mdi-chevron-right"
             class="checkbox-label"
           >
             <template v-slot:label>
@@ -67,18 +68,45 @@
                 I was a car 서비스 이용약관 (필수)</span
               >
             </template>
+
+            <template v-slot:append>
+              <v-icon @click="toggeDialogOne">mdi-chevron-right</v-icon>
+
+              <Dialog
+                :number="'one'"
+                :dialog="dialogOne"
+                :xs="xs"
+                :items="serviceData"
+                @agreeEvent="agreeHandler"
+                @disagreeEvent="disagreeHandler"
+              >
+              </Dialog>
+            </template>
           </v-checkbox>
 
           <v-checkbox
             v-model="selected.two"
             density="compact"
-            append-icon="mdi-chevron-right"
             class="checkbox-label"
           >
             <template v-slot:label>
               <span class="custom-font-size">
                 I was a car 개인정보 수집 및 이용 동의 (필수)</span
               >
+            </template>
+
+            <template v-slot:append>
+              <v-icon @click="toggeDialogTwo">mdi-chevron-right</v-icon>
+
+              <Dialog
+                :number="'two'"
+                :dialog="dialogTwo"
+                :xs="xs"
+                :items="personalInfoData"
+                @agreeEvent="agreeHandler"
+                @disagreeEvent="disagreeHandler"
+              >
+              </Dialog>
             </template>
           </v-checkbox>
 
@@ -87,7 +115,6 @@
             :required="false"
             density="compact"
             class="checkbox-label"
-            append-icon="mdi-chevron-right"
             style="height: 40px"
           >
             <template v-slot:label>
@@ -95,17 +122,30 @@
                 I was a car 마케팅 활용 서비스 수신 동의(선택)</span
               >
             </template>
+
+            <template v-slot:append>
+              <v-icon @click="toggeDialogThree">mdi-chevron-right</v-icon>
+              <Dialog
+                :number="'three'"
+                :dialog="dialogThree"
+                :xs="xs"
+                :items="marketingData"
+                @agreeEvent="agreeHandler"
+                @disagreeEvent="disagreeHandler"
+              >
+              </Dialog>
+            </template>
           </v-checkbox>
         </v-form>
       </v-sheet>
       <v-sheet width="320" class="d-flex justify-space-between mt-9">
-        <v-btn width="120" height="40">이전</v-btn>
+        <v-btn width="120" height="40" to="/email">이전</v-btn>
         <v-btn
           :disabled="isVerifyAuthentication"
           width="120"
           height="40"
           class="bg-black"
-          @click="nagivateToSignup"
+          to="/signup"
           >다음</v-btn
         >
       </v-sheet>
@@ -114,9 +154,32 @@
 </template>
 
 <script setup>
-import router from '@/router';
-import { ref, computed, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import Dialog from '@/components/service/Dialog.vue';
+import { findContractById } from '@/apis/service/contracts/contractApi';
+import { onBeforeMount } from 'vue';
+import { ref, watch } from 'vue';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const dialogOne = ref(false);
+
+const dialogTwo = ref(false);
+
+const dialogThree = ref(false);
+
+const toggeDialogOne = () => {
+  dialogOne.value = !dialogOne.value;
+};
+
+const toggeDialogTwo = () => {
+  dialogTwo.value = !dialogTwo.value;
+};
+
+const toggeDialogThree = () => {
+  dialogThree.value = !dialogThree.value;
+};
+
+const { xs } = useDisplay();
+
 const selected = ref({
   one: false,
   two: false,
@@ -124,7 +187,40 @@ const selected = ref({
 });
 
 const selectedAll = ref(false);
+
 const isVerifyAuthentication = ref(false);
+
+const serviceData = ref([]);
+
+const personalInfoData = ref([]);
+
+const marketingData = ref([]);
+
+const agreeHandler = (value) => {
+  if (value === 'one') {
+    selected.value.one = true;
+    toggeDialogOne();
+  } else if (value === 'two') {
+    selected.value.two = true;
+    toggeDialogTwo();
+  } else if (value === 'three') {
+    selected.value.three = true;
+    toggeDialogThree();
+  }
+};
+
+const disagreeHandler = (value) => {
+  if (value === 'one') {
+    selected.value.one = false;
+    toggeDialogOne();
+  } else if (value === 'two') {
+    selected.value.two = false;
+    toggeDialogTwo();
+  } else if (value === 'three') {
+    selected.value.three = false;
+    toggeDialogThree();
+  }
+};
 
 const toggleAllCheckboxes = () => {
   const newState = selectedAll.value;
@@ -142,19 +238,50 @@ const toggleAllCheckboxes = () => {
 
 watch(selected.value, (newState) => {
   const filterTrue = Object.values(newState).filter((state) => state);
+
   if (selected.value.one && selected.value.two) {
     isVerifyAuthentication.value = false;
   } else if (filterTrue.length === 3) {
     selectedAll.value = true;
   } else {
     isVerifyAuthentication.value = true;
+
     selectedAll.value = false;
   }
 });
 
-const nagivateToSignup = () => {
-  router.push('/signup');
+const getService = async () => {
+  const { data } = await findContractById(1);
+  return data.data;
 };
+
+const getPersonalInfo = async () => {
+  const { data } = await findContractById(3);
+  return data.data;
+};
+
+const getMarketing = async () => {
+  const { data } = await findContractById(4);
+  return data.data;
+};
+
+onBeforeMount(async () => {
+  try {
+    const [serviceResp, personalInfoResp, marketingResp] = await Promise.all([
+      getService(),
+      getPersonalInfo(),
+      getMarketing(),
+    ]);
+
+    serviceData.value = serviceResp;
+
+    personalInfoData.value = personalInfoResp;
+
+    marketingData.value = marketingResp;
+  } catch (e) {
+    console.error('동의항목 API 호출: ', e);
+  }
+});
 </script>
 
 <style scoped>
@@ -170,7 +297,33 @@ const nagivateToSignup = () => {
 .custom-font-size {
   font-size: 13px;
 }
+
 .checkbox-label {
   height: 40px;
+}
+
+.scrollable-content {
+  max-height: calc(100% - 160px);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+  }
+}
+
+.fixed-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.black-btn {
+  background-color: black !important;
+  color: white !important;
 }
 </style>

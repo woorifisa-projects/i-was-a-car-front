@@ -39,13 +39,12 @@ const onClickNextBtn = () => {
   }
 };
 const toPrev = () => router.go(prevUrl.value);
-
 </script>
 
 <style lang="scss" scoped>
 .position {
   position: absolute;
-  bottom: 3em;
+  bottom: 1.5em;
   left: 50%;
   transform: translate(-50%);
   width: 350px;
