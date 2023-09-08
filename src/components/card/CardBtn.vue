@@ -44,6 +44,7 @@ const onClickNextBtn = () => {
     router.push(nextUrl);
   }
 };
+
 const toPrev = () => {
   if (prevUrl.value == -1) {
     router.go(prevUrl.value);
@@ -51,12 +52,13 @@ const toPrev = () => {
     router.push(prevUrl.value);
   }
 };
+
 </script>
 
 <style lang="scss" scoped>
 .position {
   position: absolute;
-  bottom: 3em;
+  bottom: 1.5em;
   left: 50%;
   transform: translate(-50%);
   width: 350px;

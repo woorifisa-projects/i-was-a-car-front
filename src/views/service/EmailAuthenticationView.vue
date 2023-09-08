@@ -1,13 +1,15 @@
 <template>
   <v-container class="d-flex justify-center align-center h-screen">
     <v-sheet
-      class="mt-5 rounded-xl"
-      :elevation="4"
+      class="mt-2 rounded-xl"
+      :elevation="xs ? 0 : 4"
       width="500"
       height="690"
       max-height="690"
     >
-      <v-card-title class="text-center text-h5 ma-8">이메일 인증</v-card-title>
+      <v-card-title class="text-center text-h5 font-weight-black ma-8"
+        >이메일 인증</v-card-title
+      >
       <v-sheet
         width="350"
         class="mx-auto d-flex flex-column justify-space-between"
@@ -78,7 +80,7 @@
             width="120"
             height="40"
             class="bg-black"
-            to="signup"
+            to="/signup-consent"
             >다음</v-btn
           >
         </v-sheet>
@@ -95,6 +97,9 @@ import {
 import { useAuthStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const { xs } = useDisplay();
 
 const email = ref('');
 const code = ref('');

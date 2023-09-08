@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import DefaultBar from './AppBar.vue';
+import DefaultBar from '@/layouts/common/AppBar.vue';
 import DefaultView from './View.vue';
 import Footer from './Footer.vue';
 </script>

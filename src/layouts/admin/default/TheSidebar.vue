@@ -67,7 +67,9 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block color="white" rounded="xl">LOGOUT</v-btn>
+          <v-btn block color="white" rounded="xl" @click="logoutHandler"
+            >LOGOUT</v-btn
+          >
         </div>
       </template>
     </v-navigation-drawer>
@@ -75,12 +77,33 @@
 </template>
 
 <script setup>
+import { logoutAPI } from '@/apis/service/auth/authApi';
+import { useAuthStore } from '@/store/auth';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const products = ref([
   ['전체 상품 조회', '/admin'],
   ['심사 대기 차량 조회', '/admin/judge'],
 ]);
+
+const router = useRouter();
+
+const auth = useAuthStore();
+const { setLogout, initAuthInfo } = auth;
+
+const logoutHandler = async () => {
+  try {
+    const data = await logoutAPI();
+    if (data === 204) {
+      initAuthInfo();
+      router.push({ name: 'Home' });
+    }
+    setLogout();
+  } catch (e) {
+    console.error('logoutHandler: ', e);
+  }
+};
 </script>
 
 <style scoped>

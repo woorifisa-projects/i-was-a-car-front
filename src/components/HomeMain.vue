@@ -23,7 +23,7 @@
           class="d-flex justify-sm-end flex-sm-column"
           :class="{ 'custom-sm-width': smAndDown }"
         >
-          <BtnBlack :msg="btnB"> </BtnBlack>
+          <BtnBlack :destination="purchase" :msg="btnB"> </BtnBlack>
           <BtnWhite :destination="sales" :msg="btnW"></BtnWhite>
         </div>
       </div>
@@ -41,6 +41,9 @@ const { smAndDown } = useDisplay();
 
 const btnB = '내 차 사기';
 const btnW = '내 차 팔기';
+
+
+const purchase = ref('/one-click-purchase/1');
 
 const sales = ref('/one-click-sale/1');
 </script>

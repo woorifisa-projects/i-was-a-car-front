@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import DefaultBar from './AppBar.vue';
+import DefaultBar from '@/layouts/common/AppBar.vue';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { memberDetailApi } from '@/apis/service/histories/memberInfoApi.js';
