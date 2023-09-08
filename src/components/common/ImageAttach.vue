@@ -49,11 +49,13 @@ defineExpose({ input });
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 300px;
   gap: 20px;
   .uploadFiles__form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 350px;
     .uploadFiles__form-attach {
       width: 100px;
       font-size: 30px;
@@ -89,15 +91,16 @@ defineExpose({ input });
       overflow-x: scroll;
       > div {
         position: relative;
+        margin-top: 20px;
         .thumb {
-          width: 200px;
-          height: 200px;
+          min-width: 120px;
+          height: 120px;
           border-radius: 10px;
         }
         button {
           position: absolute;
-          min-width: 30px;
-          min-height: 30px;
+          min-width: 20px;
+          min-height: 20px;
           aspect-ratio: 1 / 1;
           padding: 0;
           top: -17px;
@@ -108,8 +111,8 @@ defineExpose({ input });
       @media (max-width: 980px) {
         > div {
           .thumb {
-            width: 100px;
-            height: 100px;
+            // width: 100px;
+            // height: 100px;
           }
         }
       }

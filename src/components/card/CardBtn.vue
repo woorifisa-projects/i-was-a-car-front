@@ -15,6 +15,7 @@
       width="120"
       height="40"
       @click="onClickNextBtn(), $emit('onClickNextBtnEmit')"
+      :disabled="computedBtnCondition"
     >
       {{ next }}
     </v-btn>
@@ -24,6 +25,11 @@
 <script setup>
 import { ref, defineEmits } from 'vue';
 import { useRouter } from 'vue-router';
+import { useBtnStore } from '@/store/btnStore';
+import { storeToRefs } from 'pinia';
+
+const btnStore = useBtnStore();
+const { computedBtnCondition } = storeToRefs(btnStore);
 
 const emit = defineEmits(['onClickNextBtnEmit']);
 const router = useRouter();
@@ -38,8 +44,13 @@ const onClickNextBtn = () => {
     router.push(nextUrl);
   }
 };
-const toPrev = () => router.go(prevUrl.value);
-
+const toPrev = () => {
+  if (prevUrl.value == -1) {
+    router.go(prevUrl.value);
+  } else {
+    router.push(prevUrl.value);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
