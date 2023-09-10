@@ -4,13 +4,18 @@
       <v-table density="compact">
         <thead>
           <tr>
-            <th style="width: 70%; font-weight: 800; color: black">회원</th>
+            <th
+              class="pl-10"
+              style="width: 70%; font-weight: 800; color: black"
+            >
+              회원
+            </th>
             <th style="width: 30%; font-weight: 800; color: black">내용</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th>이름</th>
+            <th class="pl-10 py-3">이름</th>
 
             <th style="text-align: left">
               <input
@@ -26,14 +31,14 @@
           </tr>
 
           <tr>
-            <th>이메일</th>
+            <th class="pl-10 py-3">이메일</th>
             <th style="text-align: left">
               <input v-model="orderData.email" :readonly="true" />
             </th>
           </tr>
 
           <tr>
-            <th>패스워드</th>
+            <th class="pl-10 py-3">패스워드</th>
             <th style="text-align: left">
               <input
                 type="password"
@@ -49,7 +54,7 @@
           </tr>
 
           <tr>
-            <th>패스워드확인</th>
+            <th class="pl-10 py-3">패스워드확인</th>
             <th style="text-align: left">
               <input
                 type="password"
@@ -64,14 +69,14 @@
           </tr>
 
           <tr>
-            <th>전화번호</th>
+            <th class="pl-10 py-3">전화번호</th>
             <th style="text-align: left">
               <input v-model="changeTel" :readonly="!editable" />
             </th>
           </tr>
 
           <tr>
-            <th>면허 유무</th>
+            <th class="pl-10 py-3">면허 유무</th>
             <th style="text-align: left">
               <span v-if="!editable">{{
                 changeHasLicense ? '있음' : '없음'
@@ -97,7 +102,7 @@
           </tr>
 
           <tr>
-            <th>성별</th>
+            <th class="pl-10 py-3">성별</th>
             <th style="text-align: left">
               <span v-if="!editable">{{
                 changeGender === '남자' ? '남자' : '여자'
@@ -124,14 +129,14 @@
           </tr>
 
           <tr>
-            <th>최근 접속일</th>
+            <th class="pl-10 py-3">최근 접속일</th>
             <th style="text-align: left">
               <input v-model="orderData.lastLoginAt" :readonly="true" />
             </th>
           </tr>
 
           <tr>
-            <th>회원가입일</th>
+            <th class="pl-10 py-3">회원가입일</th>
             <th style="text-align: left">
               <input v-model="orderData.createdAt" :readonly="true" />
             </th>
@@ -140,12 +145,12 @@
       </v-table>
     </div>
 
-    <div style="display: flex; justify-content: center">
+    <div style="display: flex; justify-content: center" class="mt-10">
       <v-btn
         v-if="editable"
         @click="cancelEditing"
-        :width="120"
-        size="x-large"
+        :width="180"
+        size="large"
         class="font-weight-black my-2"
       >
         취소
@@ -154,8 +159,8 @@
       <div style="width: 30px"></div>
       <v-btn
         :disabled="isdiable"
-        :width="120"
-        size="x-large"
+        :width="180"
+        size="large"
         class="bg-black font-weight-black my-2"
         @click="toggleEditing"
       >
@@ -166,15 +171,13 @@
 </template>
 
 <script setup>
-import {
-  ref,
-  onBeforeMount,
-  nextTick,
-  defineProps,
-  watch,
-  computed,
-} from 'vue';
+import { ref, onBeforeMount, nextTick, defineProps, watch } from 'vue';
 import { memberDetailApi } from '@/apis/service/histories/memberInfoApi.js';
+import { useAuthStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
+
+const auth = useAuthStore();
+const { authInfo } = storeToRefs(auth);
 
 const props = defineProps(['clickMember']);
 
@@ -261,7 +264,7 @@ watch([changeName, changeTel, changeHasLicense, changeGender], () => {
 
 const fetchData = async () => {
   try {
-    const memberId = 1; // 예시로 memberId 설정
+    const memberId = authInfo.value.id;
     const res = await memberDetailApi(memberId);
 
     orderData.value = res.data.data;

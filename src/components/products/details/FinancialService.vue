@@ -1,14 +1,18 @@
 <template>
-  <v-card>
-    <v-card-title>IWC 금융 서비스</v-card-title>
+  <v-sheet class="mt-5" elevation="2">
+    <v-card-title class="font-weight-bold text-h6 text-sm-h5 py-5"
+      >금융 서비스</v-card-title
+    >
+    <v-divider></v-divider>
+
     <v-card-item>
       <div class="d-flex justify-space-around flex-wrap align-content-stretch">
         <div class="w-30">
           <v-card-item>
-            <v-card-text class="font-bold"> 판매 가격 </v-card-text>
-            <v-text-field>
+            <v-card-text class="font-bold pl-0"> 판매 가격 </v-card-text>
+            <v-text-field variant="outlined" readonly="true">
               <template v-slot:append-inner>
-                <span style="width: 3em; font-size: 0.7em">만 원</span>
+                <span style="width: 3em">만 원</span>
               </template>
               {{ (carInfo.price / 10000).toLocaleString() }}
             </v-text-field>
@@ -17,8 +21,9 @@
 
         <div class="w-30">
           <v-card-item>
-            <v-card-text class="font-bold">선수금</v-card-text>
+            <v-card-text class="font-bold pl-0">선수금</v-card-text>
             <v-select
+              variant="outlined"
               v-model="selected"
               :items="guaranteePercentage"
             ></v-select>
@@ -27,14 +32,14 @@
       </div>
     </v-card-item>
 
-    <v-card-text class="font-bold">
+    <v-card-text class="font-bold text-right pr-sm-16 pr-8">
       총 할부 신청 금액:
       <span class="my-highlight">{{ installment.toLocaleString() }} 원</span>
     </v-card-text>
 
     <div>
       <div>
-        <v-card-text class="font-bold"> 기간 </v-card-text>
+        <!-- <v-card-text class="font-bold bg-red"> 기간 </v-card-text> -->
         <v-card-item>
           <div
             class="d-flex justify-space-around flex-wrap align-content-stretch"
@@ -44,7 +49,9 @@
                 @click="onClickPeriod(p)"
                 variant="outlined"
                 :disabled="btnDisable"
-                class="btn-design"
+                width="160"
+                :size="xs ? 'large' : 'x-large'"
+                class="ma-5"
                 :class="month === p ? 'btn-selected' : ''"
               >
                 {{ p }}
@@ -54,22 +61,27 @@
         </v-card-item>
       </div>
       <div>
-        <v-card-text class="font-bold">
+        <v-card-text class="font-bold text-right pr-sm-16 pr-8">
           월 납입 예상 금액:
           <span class="my-highlight">
             {{ monthlyPrice.toLocaleString() }} 원
           </span>
         </v-card-text>
 
-        <v-card-subtitle>기준금리 3.5%로 계산한 결과입니다.</v-card-subtitle>
+        <v-card-subtitle class="text-right pr-sm-16 pr-8 text-subtitle-1"
+          >※ 기준금리 3.5%로 계산한 결과입니다.</v-card-subtitle
+        >
         <br />
       </div>
     </div>
-  </v-card>
+  </v-sheet>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const { xs } = useDisplay();
 
 const guaranteePercentage = ref(['없음', '10%', '20%', '30%', '40%', '50%']);
 const period = ref(['12개월', '24개월', '36개월', '48개월', '60개월']);
@@ -115,7 +127,7 @@ watch(month, (m) => {
 
 .my-highlight {
   font-size: 1.5em;
-  color: #0057ff;
+  color: #465ed5;
 }
 
 .btn-design {
@@ -125,6 +137,7 @@ watch(month, (m) => {
 }
 
 .btn-selected {
-  border: 5px solid blue;
+  background-color: black;
+  color: white;
 }
 </style>

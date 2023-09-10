@@ -307,7 +307,7 @@ onBeforeMount(async () => {
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 3px;
   }
 
   &::-webkit-scrollbar-thumb {

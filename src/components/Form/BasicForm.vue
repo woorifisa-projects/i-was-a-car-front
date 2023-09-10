@@ -15,7 +15,7 @@
         clearable
         variant="underlined"
       ></v-text-field>
-      <div class="align-self-center mx-8">-</div>
+      <div class="align-self-center mx-4">-</div>
       <v-text-field
         :type="passwordVisible ? 'text' : 'password'"
         density="compact"
