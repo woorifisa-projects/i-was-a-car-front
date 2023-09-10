@@ -47,8 +47,6 @@ const { xs } = useDisplay();
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
-
-const goto = () => {};
 </script>
 
 <style lang="scss" scoped>

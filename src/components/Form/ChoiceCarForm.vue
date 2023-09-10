@@ -70,6 +70,7 @@ onBeforeMount(async () => {
     );
 
     products.value = response.data.data;
+    console.log(products.value);
   } catch (e) {
     console.error(e);
   }
