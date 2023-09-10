@@ -174,6 +174,8 @@ onBeforeMount(async () => {
 watch([tradeAgreeRadio, agreeRadio], () => {
   if (tradeAgreeRadio.value === 'agree' && agreeRadio.value === 'agree') {
     setBtnCondition(true);
+  } else {
+    setBtnCondition(false);
   }
 });
 
