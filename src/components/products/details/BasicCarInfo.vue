@@ -38,6 +38,7 @@
     <v-btn class="w-100" color="black" size="x-large" @click="selectedProduct"
       >구매하기</v-btn
     >
+
   </div>
 </template>
 
@@ -48,6 +49,7 @@ import { useRouter } from 'vue-router';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 
 const router = useRouter();
+
 
 const { xs } = useDisplay();
 

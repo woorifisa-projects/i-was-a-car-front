@@ -9,9 +9,9 @@
           :class="selectedProduct === item.name ? 'set' : 'set2'"
           @click="whichTargetProduct(item)"
         >
+
           <v-card-text class="mx-auto" width="300">
             <v-img :src="item.images" cover height="150"></v-img>
-
             <v-card class="mx-auto" width="250">
               <v-card-title class="text-subtitle-1">
                 {{ item.brand }} {{ item.name }} {{ item.fuel }}
@@ -95,6 +95,19 @@ a {
 
 .set2 {
   background-color: #fff;
+}
+
+.scrollable-content {
+  max-height: calc(100% - 100px);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+  }
 }
 
 .scrollable-content {
