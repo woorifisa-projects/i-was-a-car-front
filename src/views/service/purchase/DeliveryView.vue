@@ -12,9 +12,11 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
+import { createPurchase } from '@/apis/service/histories/purchase/purchaseApi';
 
 import Card from '@/components/card/Card.vue';
 import DeliveryForm from '@/components/Form/DeliveryForm.vue';
+import { storeToRefs } from 'pinia';
 
 const props = defineProps(['nextUrl']);
 
@@ -24,11 +26,15 @@ const nextUrl = ref(props.nextUrl);
 const targetDelivery = ref();
 
 const purchaseStore = usePurchaseStore();
+const { request } = storeToRefs(purchaseStore);
 const { setDeilveryInfo, setResponse } = purchaseStore;
 
 const onClickNextBtnEmit = async () => {
+  console.log(targetDelivery.value);
+
+  console.log(request.value);
   setDeilveryInfo(targetDelivery.value);
-  await createProduct()
+  await createPurchase()
     .then((resp) => {
       console.log(resp);
       const response = resp.data.data;

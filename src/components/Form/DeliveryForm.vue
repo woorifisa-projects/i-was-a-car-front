@@ -74,6 +74,7 @@ onBeforeMount(async () => {
   bankList.value.push(...banks);
 });
 
+const targetDelivery = ref();
 watch(
   (meetingDate,
   zipCode,
@@ -83,7 +84,7 @@ watch(
   selectedBank,
   account),
   () => {
-    const targetDelivery = {
+    targetDelivery.value = {
       meetingDate: meetingDate.value,
       zipCode: zipCode.value,
       address: address.value,
@@ -93,7 +94,7 @@ watch(
       account: account.value,
     };
 
-    emit('targetDelivery', targetDelivery);
+    emit('targetDelivery', targetDelivery.value);
   }
 );
 </script>

@@ -20,7 +20,7 @@
       ></v-text-field>
       <div class="align-self-center mx-8">-</div>
       <v-text-field
-        :type="passwordVisible ? 'number' : 'password'"
+        :type="'password'"
         density="compact"
         label="주민등록번호 뒷자리"
         :hide-details="passwordVisible"
@@ -28,6 +28,7 @@
         :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
         variant="underlined"
         v-model="targetRrnb"
+        @keypress="isNumber"
       ></v-text-field>
     </div>
     <v-divider></v-divider>
@@ -137,6 +138,15 @@ onBeforeMount(async () => {
     console.error(e);
   }
 });
+
+const isNumber = (evt) => {
+  const keysAllowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
+  const keyPressed = evt.key;
+
+  if (!keysAllowed.includes(keyPressed)) {
+    evt.preventDefault();
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>

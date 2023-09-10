@@ -9,12 +9,7 @@
     title="본인 인증에 실패하였습니다"
     @click:close="alertClose"
   >
-    Aenean imperdiet. Quisque id odio. Cras dapibus. Pellentesque ut neque. Cras
-    dapibus. Vivamus consectetuer hendrerit lacus. Sed mollis, eros et ultrices
-    tempus, mauris ipsum aliquam libero, non adipiscing dolor urna a orci. Sed
-    mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non adipiscing
-    dolor urna a orci. Curabitur blandit mollis lacus. Curabitur ligula sapien,
-    tincidunt non, euismod vitae, posuere imperdiet, leo.
+    주민등록번호가 올바른지 다시 한번 체크 하여주시길 바랍니다.
   </v-alert>
   <Card
     :cardTitle="cardTitle"

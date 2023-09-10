@@ -35,15 +35,16 @@ export const usePurchaseStore = defineStore('purchaseStore', () => {
     request.value.period = period;
   }
 
-  const setDeilveryInfo = (meetingSchedule, zipCode, address, addressDetail) => {
-    request.value.deliverySchedule = dateFormat(meetingSchedule);
-    request.value.zipCode = zipCode;
-    request.value.address = address;
-    request.value.addressDetail = addressDetail;
+  const setDeilveryInfo = (targetDelivery) => {
+    console.log(targetDelivery)
+    request.value.deliverySchedule = dateFormat(targetDelivery.meetingDate);
+    request.value.zipCode = targetDelivery.zipCode;
+    request.value.address = targetDelivery.address;
+    request.value.addressDetail = targetDelivery.addressDetail;
 
-    request.value.accountHolder = accountHolder;
-    request.value.bankId = bankId;
-    request.value.accountNumber = accountNumber;
+    request.value.accountHolder = targetDelivery.accountHolder;
+    request.value.bankId = targetDelivery.selectedBank;
+    request.value.accountNumber = targetDelivery.account;
   
   };
 
