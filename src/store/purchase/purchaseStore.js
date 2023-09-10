@@ -41,11 +41,19 @@ export const usePurchaseStore = defineStore('purchaseStore', () => {
     request.value.zipCode = targetDelivery.zipCode;
     request.value.address = targetDelivery.address;
     request.value.addressDetail = targetDelivery.addressDetail;
+<<<<<<< HEAD
 
     request.value.accountHolder = targetDelivery.accountHolder;
     request.value.bankId = targetDelivery.selectedBank;
     request.value.accountNumber = targetDelivery.account;
 
+=======
+
+    request.value.accountHolder = targetDelivery.accountHolder;
+    request.value.bankId = targetDelivery.selectedBank;
+    request.value.accountNumber = targetDelivery.account;
+  
+>>>>>>> 23616d6 (원클릭 연결 완료[#3])
   };
 
   const setResponse = (resp) => (response.value = resp);

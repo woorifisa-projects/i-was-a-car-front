@@ -33,7 +33,6 @@
         판매 가격: {{ carInfo.price / 10000 }}만원
       </v-card-text>
     </v-card-text>
-
     <br />
 
     <v-btn class="w-100" color="black" size="x-large">구매하기</v-btn>
@@ -48,6 +47,8 @@ const { xs } = useDisplay();
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
+
+const goto = () => {};
 </script>
 
 <style lang="scss" scoped>
