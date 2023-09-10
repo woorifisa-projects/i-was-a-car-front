@@ -96,4 +96,17 @@ a {
 .set2 {
   background-color: #fff;
 }
+
+.scrollable-content {
+  max-height: calc(100% - 100px);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+  }
+}
 </style>

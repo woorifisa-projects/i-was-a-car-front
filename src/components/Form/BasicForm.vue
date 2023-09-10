@@ -18,7 +18,7 @@
         :readonly="true"
         v-model="targetRrnf"
       ></v-text-field>
-      <div class="align-self-center mx-8">-</div>
+      <div class="align-self-center mx-4">-</div>
       <v-text-field
         :type="'password'"
         density="compact"

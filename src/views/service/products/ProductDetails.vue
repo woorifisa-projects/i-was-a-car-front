@@ -1,8 +1,7 @@
 <template>
   <v-container>
-    <v-sheet
-      class="d-flex justify-space-around flex-wrap align-content-stretch"
-    >
+    <!-- <v-sheet class="d-flex justify-space-between mt-5 w-100 flex-wrap"> -->
+    <v-sheet class="mt-5 w-100 d-sm-flex">
       <Suspense>
         <ImageSlider :carImages="carImages"></ImageSlider>
       </Suspense>

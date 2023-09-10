@@ -1,46 +1,43 @@
 <template>
-  <v-container style="height: 50vh" class="h-screen">
-    <div class="d-flex justify-space-around">
-      <div class="mr-5">
-        <h2 style="text-align: center; margin-bottom: 1.5rem">탁송정보</h2>
-
-        <v-table style="width: 600px" class="mx-auto">
+  <v-container class="h-screen d-flex flex-column">
+    <div class="d-sm-flex justify-sm-center">
+      <div class="pb-5">
+        <h3 style="text-align: center; margin-bottom: 1.5rem; opacity: 0.7">
+          탁송정보
+        </h3>
+        <v-table style="width: 400px" class="mx-auto">
           <thead>
             <tr>
-              <th style="width: 55%; font-weight: 800; color: black">정보</th>
-              <th style="width: 45%; font-weight: 800; color: black">내용</th>
+              <th style="width: 35%; font-weight: 800">정보</th>
+              <th style="width: 65%; font-weight: 800; text-align: right">
+                내용
+              </th>
             </tr>
           </thead>
-
           <tbody>
             <tr>
               <th>수령인</th>
-
-              <th style="text-align: left">
+              <th style="text-align: right">
                 {{ deliveryData.memberName }}
               </th>
             </tr>
-
             <tr>
               <th>연락처</th>
-              <th style="text-align: left">
+              <th style="text-align: right">
                 {{ deliveryData.memberTel }}
               </th>
             </tr>
-
             <tr>
               <th>우편번호</th>
-              <th style="text-align: left">{{ deliveryData.zipCode }}</th>
+              <th style="text-align: right">{{ deliveryData.zipCode }}</th>
             </tr>
-
             <tr>
               <th>탁송 주소</th>
-              <th style="text-align: left">{{ deliveryData.address }}</th>
+              <th style="text-align: right">{{ deliveryData.address }}</th>
             </tr>
-
             <tr>
               <th>탁송 예정일</th>
-              <th style="text-align: left">
+              <th style="text-align: right">
                 {{ deliveryData.deliverySchedule }}
               </th>
             </tr>
@@ -48,68 +45,63 @@
         </v-table>
       </div>
 
-      <v-divider class="ms-3" inset vertical></v-divider>
+      <v-divider class="mx-10" inset vertical></v-divider>
 
-      <div class="ml-5">
-        <h2 style="text-align: center; margin-bottom: 1.5rem">계약정보</h2>
-        <v-table style="width: 600px" class="mx-auto">
+      <div class="mb-5">
+        <h3 style="text-align: center; margin-bottom: 1.5rem; opacity: 0.7">
+          계약정보
+        </h3>
+        <v-table style="width: 400px" class="mx-auto">
           <thead>
             <tr>
-              <th style="width: 55%; font-weight: 800; color: black">정보</th>
-              <th style="width: 45%; font-weight: 800; color: black">내용</th>
+              <th style="width: 35%; font-weight: 800">정보</th>
+              <th style="width: 65%; font-weight: 800; text-align: right">
+                내용
+              </th>
             </tr>
           </thead>
-
           <tbody>
             <tr>
               <th>차량명</th>
-
-              <th style="text-align: left">
+              <th style="text-align: right">
                 {{ contractData.productName }}
               </th>
             </tr>
-
             <tr>
               <th>계약 일자</th>
-              <th style="text-align: left">
+              <th style="text-align: right">
                 {{ contractData.createdAt }}
               </th>
             </tr>
-
             <tr>
               <th>차량 가격</th>
-              <th style="text-align: left">{{ contractData.productPrice }}</th>
+              <th style="text-align: right">{{ contractData.productPrice }}</th>
             </tr>
-
             <tr>
               <th>은행</th>
-              <th style="text-align: left">{{ contractData.bankName }}</th>
+              <th style="text-align: right">{{ contractData.bankName }}</th>
             </tr>
-
             <tr>
               <th>예금주</th>
-              <th style="text-align: left">
+              <th style="text-align: right">
                 {{ contractData.accountHolder }}
               </th>
             </tr>
-
             <tr>
               <th>계좌번호</th>
-              <th style="text-align: left">
+              <th style="text-align: right">
                 {{ contractData.accountNumber }}
               </th>
             </tr>
-
             <tr>
               <th>대출 정보</th>
-              <th style="text-align: left">
+              <th style="text-align: right">
                 {{ contractData.loanName }}
               </th>
             </tr>
-
             <tr>
               <th>보험 정보</th>
-              <th style="text-align: left">
+              <th style="text-align: right">
                 {{ contractData.insuranceName }}
               </th>
             </tr>
@@ -120,12 +112,12 @@
 
     <div style="text-align: center; margin-top: 2rem">
       <v-btn
-        :width="120"
-        size="x-large"
-        class="bg-black font-weight-black my-2"
+        width="180"
+        size="large"
+        class="bg-black font-weight-black my-2 mb-10"
         @click="$emit('historyList')"
       >
-        목록으로 가기
+        목록으로
       </v-btn>
     </div>
   </v-container>
@@ -134,12 +126,16 @@
 <script setup>
 import { ref, onBeforeMount, defineEmits } from 'vue';
 import { purchaseHistoryDetailAPI } from '@/apis/service/histories/historyApi';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
+import { useAuthStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
+
+const auth = useAuthStore();
+const { authInfo } = storeToRefs(auth);
 
 const emit = defineEmits(['historyList']);
 
 const route = useRoute();
-const router = useRouter();
 
 const purchaseHistoryNo = route.params.id;
 
@@ -148,7 +144,7 @@ const contractData = ref({});
 
 const fetchData = async () => {
   try {
-    const memberId = 1; // 예시로 memberId 설정
+    const memberId = authInfo.value.id;
     const res = await purchaseHistoryDetailAPI(memberId, purchaseHistoryNo);
 
     deliveryData.value = {
