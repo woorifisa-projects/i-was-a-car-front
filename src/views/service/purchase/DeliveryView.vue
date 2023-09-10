@@ -13,13 +13,10 @@
 import { ref, defineProps } from 'vue';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 import { createPurchase } from '@/apis/service/histories/purchase/purchaseApi';
-import { useRoute } from 'vue-router';
 
 import Card from '@/components/card/Card.vue';
 import DeliveryForm from '@/components/Form/DeliveryForm.vue';
 import { storeToRefs } from 'pinia';
-
-const router = useRoute();
 
 const props = defineProps(['nextUrl']);
 
