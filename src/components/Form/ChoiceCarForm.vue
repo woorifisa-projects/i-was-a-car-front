@@ -1,5 +1,10 @@
 <template>
-  <v-virtual-scroll :height="400" width="100%" :items="products">
+  <v-virtual-scroll
+    :height="400"
+    width="100%"
+    :items="products"
+    class="scrollable-content"
+  >
     <v-sheet class="d-flex flex-wrap justify-space-around">
       <v-card-actions
         v-for="product in products"
@@ -10,8 +15,8 @@
           <v-card-text class="mx-auto" width="300">
             <v-img :src="product.images" cover height="150"></v-img>
 
-            <v-card class="mx-auto" width="250">
-              <v-card-title class="text-subtitle-1">
+            <v-sheet elevation="2" class="mx-auto" width="285">
+              <v-card-title class="text-subtitle-1 font-weight-bold">
                 {{ product.brand }} {{ product.name }} {{ product.fuel }}
                 {{ (product.displacement / 1000).toFixed(1) }}
                 {{ product.drivingMethod }}
@@ -25,7 +30,7 @@
               <v-card-title class="text-sm-right text-subtitle-1">
                 {{ (product.price / 10000).toLocaleString() }}만원
               </v-card-title>
-            </v-card>
+            </v-sheet>
           </v-card-text>
         </router-link>
       </v-card-actions>
@@ -63,5 +68,18 @@ onBeforeMount(async () => {
 <style lang="scss" scoped>
 a {
   text-decoration: none;
+}
+
+.scrollable-content {
+  max-height: calc(100% - 100px);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+  }
 }
 </style>

@@ -1,6 +1,8 @@
 <template>
-  <v-card>
-    <v-card-title>주행 거리 분석</v-card-title>
+  <v-sheet class="mt-5" elevation="2">
+    <v-card-title class="font-weight-bold text-h6 text-sm-h5 py-5"
+      >주행 거리 분석</v-card-title
+    >
 
     <div class="d-flex justify-center">
       <div class="w-97">
@@ -8,7 +10,7 @@
       </div>
     </div>
 
-    <v-card-text>
+    <v-card-text class="text-right pr-sm-16 pr-8 text-h6">
       총
       <span class="color-blue font-bold"
         >{{ lenYear }}년 {{ lenMonth }}개월</span
@@ -23,8 +25,10 @@
       일반적인 연평균 주행거리 대비 [
       <span class="color-blue font-bold">{{ distanceStatus }}</span> ]입니다.
     </v-card-text>
-    <v-card-subtitle>분석기준: 20,000KM</v-card-subtitle><br />
-  </v-card>
+    <v-card-subtitle class="text-right pr-sm-16 pr-8 text-subtitle-1"
+      >※ 분석기준: 20,000KM</v-card-subtitle
+    ><br />
+  </v-sheet>
 </template>
 
 <script setup>

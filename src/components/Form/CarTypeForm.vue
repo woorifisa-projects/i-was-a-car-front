@@ -8,19 +8,15 @@
     >
       <v-row dense>
         <v-col
-          cols="2"
+          cols="6"
           v-for="item in carTypes"
           :key="item.id"
           align-self="center"
-          md="6"
-          sm="6"
         >
-          <v-radio
-            :label="item.name"
-            :value="item.name"
-            class="mb-3"
-          ></v-radio> </v-col></v-row
-    ></v-radio-group>
+          <v-radio :label="item.name" :value="item.name" class="mb-3"></v-radio>
+        </v-col>
+      </v-row>
+    </v-radio-group>
   </v-form>
 </template>
 
@@ -31,6 +27,7 @@ import { findCarTpyes } from '@/apis/service/products/productApi.js';
 const agreeRadio = ref('disagree');
 
 const carTypes = ref();
+
 onBeforeMount(async () => {
   try {
     const response = await findCarTpyes();
