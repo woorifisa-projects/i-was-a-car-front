@@ -2,7 +2,7 @@
   <v-sheet
     width="350"
     class="mx-auto"
-    style="position: absolute; top: 10em; left: 50%; transform: translate(-50%)"
+    style="position: absolute; top: 7rem; left: 50%; transform: translate(-50%)"
   >
     <slot></slot>
   </v-sheet>

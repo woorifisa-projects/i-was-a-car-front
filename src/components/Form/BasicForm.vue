@@ -41,7 +41,10 @@
       </template>
 
       <v-card>
-        <AgreementCheck :contract="personalContract"></AgreementCheck>
+        <Suspense
+          ><AgreementCheck :contract="contract"></AgreementCheck
+        ></Suspense>
+
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -80,15 +83,26 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { personalContract } from '@/components/data/contract';
+import { ref, onBeforeMount } from 'vue';
+import { findContractById } from '@/apis/service/contracts/contractApi.js';
 
 import AgreementCheck from '@/components/contract/AgreementCheck.vue';
 
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
-
 const passwordVisible = ref(false);
+
+const contractId = 5;
+const contract = ref([]);
+
+onBeforeMount(async () => {
+  try {
+    const response = await findContractById(contractId);
+    contract.value = response.data.data;
+  } catch (e) {
+    console.error(e);
+  }
+});
 </script>
 
 <style lang="scss" scoped></style>
