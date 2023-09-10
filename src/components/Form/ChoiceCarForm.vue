@@ -1,38 +1,47 @@
 <template>
   <v-virtual-scroll :height="400" width="100%" :items="products">
-    <v-sheet class="d-flex flex-wrap justify-space-around">
-      <v-card-actions
-        v-for="product in products"
-        :key="product.name"
-        style="cursor: pointer"
-        class="ma-2 pa-2"
-        :class="selectedProduct === product.name ? 'set' : 'set2'"
-        @click="whichTargetProduct(product)"
-      >
-        <v-card-text class="mx-auto" width="300">
-          <v-img :src="product.images" cover height="150"></v-img>
+    <template v-slot:default="{ item }">
+      <v-sheet class="d-flex flex-wrap justify-space-around">
+        <v-card-actions
+          :key="item.name"
+          style="cursor: pointer"
+          class="ma-2 pa-2"
+          :class="selectedProduct === item.name ? 'set' : 'set2'"
+          @click="whichTargetProduct(item)"
+        >
+          <v-card-text class="mx-auto" width="300">
+            <v-img :src="item.images" cover height="150"></v-img>
 
-          <v-card class="mx-auto" width="250">
-            <router-link :to="`/products/${product.id}`">
+            <v-card class="mx-auto" width="250">
               <v-card-title class="text-subtitle-1">
-                {{ product.brand }} {{ product.name }} {{ product.fuel }}
-                {{ (product.displacement / 1000).toFixed(1) }}
-                {{ product.drivingMethod }}
+                {{ item.brand }} {{ item.name }} {{ item.fuel }}
+                {{ (item.displacement / 1000).toFixed(1) }}
+                {{ item.drivingMethod }}
               </v-card-title>
-            </router-link>
 
-            <v-card-subtitle>
-              연식: {{ product.year.substring(0, product.year.length - 3) }} |
-              주행거리: {{ product.distance.toLocaleString() }} km
-            </v-card-subtitle>
+              <v-card-subtitle class="mb-3">
+                연식: {{ item.year.substring(0, item.year.length - 3) }} |
+                주행거리: {{ item.distance.toLocaleString() }} km
+              </v-card-subtitle>
 
-            <v-card-title class="text-sm-right text-subtitle-1">
-              {{ (product.price / 10000).toLocaleString() }}만원
-            </v-card-title>
-          </v-card>
-        </v-card-text>
-      </v-card-actions>
-    </v-sheet>
+              <v-sheet class="d-flex justify-space-around align-center">
+                <router-link :to="`/products/${item.id}`">
+                  <v-btn
+                    variant="outlined"
+                    class="text-sm-left text-subtitle-1"
+                  >
+                    자세히보기
+                  </v-btn></router-link
+                >
+                <v-card-title class="text-sm-right text-subtitle-1">
+                  {{ (item.price / 10000).toLocaleString() }}만원
+                </v-card-title>
+              </v-sheet>
+            </v-card>
+          </v-card-text>
+        </v-card-actions>
+      </v-sheet>
+    </template>
   </v-virtual-scroll>
 </template>
 
@@ -61,6 +70,7 @@ onBeforeMount(async () => {
     );
 
     products.value = response.data.data;
+    console.log(products.value);
   } catch (e) {
     console.error(e);
   }

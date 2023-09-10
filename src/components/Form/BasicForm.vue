@@ -46,31 +46,16 @@
         </v-btn>
       </template>
 
-      <v-card>
-        <Suspense
-          ><AgreementCheck :contract="contract"></AgreementCheck
-        ></Suspense>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="grey"
-            variant="text"
-            @click="
-              [(dialog = false), (agreeRadio = 'disagree'), isReadyCheck()]
-            "
-          >
-            동의 안 함
-          </v-btn>
-          <v-btn
-            color="black"
-            variant="outlined"
-            @click="[(dialog = false), (agreeRadio = 'agree'), isReadyCheck()]"
-          >
-            동의 하기
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <Suspense
+        ><Dialog
+          :dialog="dialog"
+          :xs="xs"
+          :items="contract"
+          :number="'one'"
+          @agreeEvent="agreeHandler"
+          @disagreeEvent="disagreeHandler"
+        ></Dialog
+      ></Suspense>
     </v-dialog>
 
     <div class="d-flex justify-space-between align-content-center">
@@ -91,14 +76,15 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, defineEmits } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
+import Dialog from '@/components/service/Dialog.vue';
 
-import AgreementCheck from '@/components/contract/AgreementCheck.vue';
 import { useBtnStore } from '@/store/btnStore';
 import { useAuthStore } from '@/store/auth';
 import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const btnStore = useBtnStore();
 const { setBtnCondition, setisBasicInfo } = btnStore;
@@ -110,6 +96,25 @@ const { setRrnb } = authStore;
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
 const passwordVisible = ref(false);
+const { xs } = useDisplay();
+
+const toggeDialog = () => {
+  dialog.value = !dialog.value;
+};
+
+const agreeHandler = (value) => {
+  if (value === 'one') {
+    agreeRadio.value = 'agree';
+    toggeDialog();
+  }
+};
+
+const disagreeHandler = (value) => {
+  if (value === 'one') {
+    agreeRadio.value = 'disagree';
+    toggeDialog();
+  }
+};
 
 const contractId = 5;
 const contract = ref([]);

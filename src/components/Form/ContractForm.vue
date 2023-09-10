@@ -36,12 +36,11 @@
       (만원)<br />「을」이 「갑」에게 다음과 같이 지급한다
     </div>
 
-    <v-dialog v-model="tradeDialog" width="800">
+    <v-dialog v-model="dialogOne" width="800">
       <template v-slot:activator="{ props }">
         <v-btn
           class="mt-5"
           variant="outlined"
-          @click="showDialog"
           :elevation="0"
           block
           v-bind="props"
@@ -50,27 +49,16 @@
         </v-btn>
       </template>
 
-      <v-card>
-        <AgreementCheck :contract="tradeContract"></AgreementCheck>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="grey"
-            variant="text"
-            @click="[(tradeDialog = false), (tradeAgreeRadio = 'disagree')]"
-          >
-            동의 안 함
-          </v-btn>
-          <v-btn
-            color="black"
-            variant="outlined"
-            @click="[(tradeDialog = false), (tradeAgreeRadio = 'agree')]"
-          >
-            동의 하기
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <Dialog
+        :dialog="dialogOne"
+        :xs="xs"
+        :items="tradeContract"
+        :number="'one'"
+        @agreeEvent="agreeHandler"
+        @disagreeEvent="disagreeHandler"
+      ></Dialog>
     </v-dialog>
+
     <div class="d-flex justify-space-between align-content-center">
       <div class="align-self-center">매매 계약서 확인 및 동의</div>
       <div>
@@ -86,41 +74,30 @@
       </div>
     </div>
 
-    <v-dialog v-model="dialog" width="800">
+    <v-dialog v-model="dialogTwo" width="800">
       <template v-slot:activator="{ props }">
         <v-btn
           class="mt-5"
           variant="outlined"
-          @click="showDialog"
           :elevation="0"
           block
           v-bind="props"
+          @click="dialogTwo"
         >
           환불 약관
         </v-btn>
       </template>
 
-      <v-card>
-        <AgreementCheck :contract="refundContract"></AgreementCheck>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="grey"
-            variant="text"
-            @click="[(dialog = false), (agreeRadio = 'disagree')]"
-          >
-            동의 안 함
-          </v-btn>
-          <v-btn
-            color="black"
-            variant="outlined"
-            @click="[(dialog = false), (agreeRadio = 'agree')]"
-          >
-            동의 하기
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <Dialog
+        :dialog="dialogTwo"
+        :xs="xs"
+        :items="refundContract"
+        :number="'two'"
+        @agreeEvent="agreeHandler"
+        @disagreeEvent="disagreeHandler"
+      ></Dialog>
     </v-dialog>
+
     <div class="d-flex justify-space-between align-content-center">
       <div class="align-self-center">환불 약관 확인 및 동의</div>
       <div>
@@ -142,9 +119,9 @@
 import { ref, onBeforeMount, watch } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
 import { useBtnStore } from '@/store/btnStore';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
 
-import AgreementCheck from '@/components/contract/AgreementCheck.vue';
-import { storeToRefs } from 'pinia';
+import Dialog from '@/components/service/Dialog.vue';
 
 const props = defineProps([
   'seller',
@@ -161,11 +138,9 @@ const tradingContractId = 8;
 const refundContractId = 7;
 
 const tradeAgreeRadio = ref('disagree');
-const tradeDialog = ref(false);
-
 const agreeRadio = ref('disagree');
-const dialog = ref(false);
-const showDialog = ref();
+const dialogOne = ref(false);
+const dialogTwo = ref(false);
 
 /***** Props *****/
 const seller = ref(props.seller);
@@ -196,11 +171,41 @@ onBeforeMount(async () => {
   }
 });
 
-watch((tradeAgreeRadio, agreeRadio), () => {
+watch([tradeAgreeRadio, agreeRadio], () => {
   if (tradeAgreeRadio.value === 'agree' && agreeRadio.value === 'agree') {
     setBtnCondition(true);
   }
 });
+
+const { xs } = useDisplay();
+
+const toggeDialogOne = () => {
+  dialogOne.value = !dialogOne.value;
+};
+
+const toggeDialogTwo = () => {
+  dialogTwo.value = !dialogTwo.value;
+};
+
+const agreeHandler = (value) => {
+  if (value === 'one') {
+    tradeAgreeRadio.value = 'agree';
+    toggeDialogOne();
+  } else if (value === 'two') {
+    agreeRadio.value = 'agree';
+    toggeDialogTwo();
+  }
+};
+
+const disagreeHandler = (value) => {
+  if (value === 'one') {
+    tradeAgreeRadio.value = 'disagree';
+    toggeDialogOne();
+  } else if (value === 'two') {
+    agreeRadio.value = 'disagree';
+    toggeDialogTwo();
+  }
+};
 </script>
 
 <style lang="scss" scoped>

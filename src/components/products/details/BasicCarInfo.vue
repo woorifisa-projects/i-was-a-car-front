@@ -17,7 +17,7 @@
 
     <div class="d-flex justify-space-around w-100">
       <v-btn>상담 신청</v-btn>
-      <v-btn @click="goTo">
+      <v-btn>
         홈 서비스 구매하기 <br />
         8/14일 도착
       </v-btn>
@@ -32,8 +32,6 @@ import { ref } from 'vue';
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
-
-const goto = () => {};
 </script>
 
 <style lang="scss" scoped>
