@@ -33,21 +33,36 @@
         판매 가격: {{ carInfo.price / 10000 }}만원
       </v-card-text>
     </v-card-text>
-
     <br />
 
-    <v-btn class="w-100" color="black" size="x-large">구매하기</v-btn>
+    <v-btn class="w-100" color="black" size="x-large" @click="selectedProduct"
+      >구매하기</v-btn
+    >
+
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { useRouter } from 'vue-router';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
+
+const router = useRouter();
+
 
 const { xs } = useDisplay();
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
+
+const purchaseStore = usePurchaseStore();
+const { setCarInfo } = purchaseStore;
+
+const selectedProduct = () => {
+  setCarInfo(carInfo.value);
+  router.push('/normal-purchase/1');
+};
 </script>
 
 <style lang="scss" scoped>
