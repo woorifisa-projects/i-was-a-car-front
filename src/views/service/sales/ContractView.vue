@@ -71,8 +71,8 @@ const onClickNextBtnEmit = async () => {
   console.log(request.value);
 
   await createConscent()
+
     .then((resp) => {
-      console.log(resp);
       const response = resp.data.data;
       setResponse(response);
     })
