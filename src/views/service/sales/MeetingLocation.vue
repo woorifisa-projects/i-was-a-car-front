@@ -11,6 +11,7 @@
       variant="underlined"
       v-model="meetingSchedule"
       type="datetime-local"
+      :min="minDate"
     >
     </v-text-field>
     <FindAddress
@@ -43,6 +44,8 @@ const cardTitle = ref('미팅 장소 입력');
 const next = ref('다음');
 const nextUrl = ref('3');
 
+// const minDate = ref(date);
+
 const store = useSaleStore();
 const { setMeetingInfo } = store;
 const { request } = storeToRefs(store);
@@ -73,6 +76,13 @@ const onClickNextBtnEmit = () => {
     addressDetail.value
   );
 };
+
+const date = new Date();
+const m = date.getMonth() + 1;
+const month = m < 10 ? '0' + m : m;
+const d = date.getDate() + 1;
+const day = d < 10 ? '0' + d : d;
+const minDate = ref(`${date.getFullYear()}-${month}-${day}T09:00`);
 
 watch([meetingSchedule, zipCode, address, addressDetail], ([ms, zc, a, ad]) => {
   const value =
