@@ -29,7 +29,7 @@ const serviceRoutes = [
       {
         path: '/one-click-sale/:id',
         name: 'OneClickSale',
-        component: () => import('@/views/service/sales/OneClickSaleView.vue'),
+        component: () => import('@/views/service/OneClickSaleView.vue'),
         meta: { requiresAuth: true },
       },
     ],

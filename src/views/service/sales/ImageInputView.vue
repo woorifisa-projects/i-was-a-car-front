@@ -38,7 +38,7 @@ const { setImageInfoCheck } = validateStore;
 
 const cardTitle = ref('사진 정보 입력');
 const next = ref('다음');
-const nextUrl = ref('6');
+const nextUrl = ref('5');
 const imageRef = ref([]);
 const imageList = ref([]);
 const imageData = ref({});

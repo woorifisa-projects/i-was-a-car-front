@@ -18,7 +18,7 @@
     @onClickNextBtnEmit="onClickNextBtnEmit"
     @alertTrue="alertTrue"
   >
-    <BasicForm @isReady="isReadyCheck"></BasicForm>
+    <BasicForm></BasicForm>
   </Card>
 </template>
 
@@ -27,22 +27,22 @@ import { ref, defineProps } from 'vue';
 import { useBtnStore } from '@/store/btnStore';
 import { useRouter } from 'vue-router';
 
-const btnStore = useBtnStore();
-const { setisBasicInfo } = btnStore;
-
 import Card from '@/components/card/Card.vue';
 import BasicForm from '@/components/Form/BasicForm.vue';
+
+const btnStore = useBtnStore();
+const { setisBasicInfo } = btnStore;
 
 const props = defineProps(['nextUrl']);
 
 const cardTitle = ref('기본 정보 입력');
 const next = ref('본인 인증 하기');
-const nextUrl = ref(props.nextUrl);
+const nextUrl = ref('2');
 
 const alert = ref(false);
 const router = useRouter();
 
-const onClickNextBtnEmit = () => {
+const onClickNextBtnEmit = async () => {
   setisBasicInfo(false);
 };
 

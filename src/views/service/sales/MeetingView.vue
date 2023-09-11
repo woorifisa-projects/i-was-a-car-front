@@ -11,6 +11,7 @@
       variant="underlined"
       v-model="meetingSchedule"
       type="datetime-local"
+      class="my-10"
     >
     </v-text-field>
     <FindAddress
@@ -32,6 +33,7 @@ import { useSaleStore } from '@/store/sales/saleStore.js';
 import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
 import { useBtnStore } from '@/store/btnStore.js';
 import { storeToRefs } from 'pinia';
+import { createProduct } from '@/apis/service/histories/sales/saleApi';
 
 const validateSaleStore = useValidateSaleStore();
 const { setMeetingCheck } = validateSaleStore;
@@ -41,10 +43,10 @@ const { setBtnCondition } = btnStore;
 
 const cardTitle = ref('미팅 장소 입력');
 const next = ref('다음');
-const nextUrl = ref('3');
+const nextUrl = ref('8');
 
 const store = useSaleStore();
-const { setMeetingInfo } = store;
+const { setMeetingInfo, setResponse } = store;
 const { request } = storeToRefs(store);
 
 const meetingSchedule = ref('');
@@ -65,13 +67,22 @@ const setAddress = (emitAddress) => (address.value = emitAddress);
 const setAddressDetail = (emitAddressDetail) =>
   (addressDetail.value = emitAddressDetail);
 
-const onClickNextBtnEmit = () => {
+const onClickNextBtnEmit = async () => {
   setMeetingInfo(
     meetingSchedule.value,
     zipCode.value,
     address.value,
     addressDetail.value
   );
+
+  await createProduct()
+    .then((resp) => {
+      console.log(resp);
+      const response = resp.data.data;
+      setResponse(response);
+      isLoading.value = false;
+    })
+    .catch((e) => console.error(e));
 };
 
 watch([meetingSchedule, zipCode, address, addressDetail], ([ms, zc, a, ad]) => {

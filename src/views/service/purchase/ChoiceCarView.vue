@@ -12,6 +12,7 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { useContractStore } from '@/store/contractStore';
 
 import Card from '@/components/card/Card.vue';
 import ChoiceCarForm from '@/components/Form/ChoiceCarForm.vue';
@@ -26,8 +27,12 @@ const targetProduct = ref();
 const purchaseStore = usePurchaseStore();
 const { setCarInfo } = purchaseStore;
 
+const contractStore = useContractStore();
+const { setProductId } = contractStore;
+
 const onClickNextBtnEmit = () => {
   setCarInfo(targetProduct.value);
+  setProductId(targetProduct.value.id);
 };
 
 const whichTargetProduct = (child) => {

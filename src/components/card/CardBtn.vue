@@ -29,6 +29,10 @@ import { useBtnStore } from '@/store/btnStore';
 import { useAuthStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
 import { getIdentification } from '@/apis/service/contracts/contractApi';
+import { useContractStore } from '@/store/contractStore';
+
+const contractStore = useContractStore();
+const { setRadioReadOnly } = contractStore;
 
 const btnStore = useBtnStore();
 const { isBasicInfo, computedBtnCondition } = storeToRefs(btnStore);
@@ -61,6 +65,7 @@ const onClickNextBtn = async () => {
 
       setisBasicInfo(false);
       next.value = '다음';
+      setRadioReadOnly(true);
     } catch (e) {
       console.error(e);
 
