@@ -55,7 +55,6 @@ const fetchData = async () => {
 
     orderData.value = res.data.data.items;
     pageCount.value = res.data.data.totalPage;
-    console.log(orderData.value);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
