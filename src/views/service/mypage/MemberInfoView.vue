@@ -181,7 +181,7 @@
           size="large"
           class="font-weight-black my-2 mt-10"
         >
-1          취소
+          취소
         </v-btn>
         <div style="width: 20px"></div>
         <v-btn
@@ -371,6 +371,7 @@ const updateMemberHandler = async () => {
     };
 
     const { data } = await updateMemberAPI(body);
+    editable.value = false;
     console.log('정보 업데이트 됨: ', data);
   } catch (e) {
     console.error('updateMemberHandler: ', e);
