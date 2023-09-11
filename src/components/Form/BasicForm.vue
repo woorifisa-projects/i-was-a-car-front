@@ -3,26 +3,32 @@
     <v-text-field
       label="이름"
       density="compact"
-      clearable
       variant="underlined"
       class="mb-10"
+      :readonly="true"
+      v-model="targetName"
     ></v-text-field>
 
     <div class="d-flex flex-row justify-space-around my-16">
       <v-text-field
         label="주민등록번호 앞자리"
+        type="number"
         density="compact"
-        clearable
         variant="underlined"
+        :readonly="true"
+        v-model="targetRrnf"
       ></v-text-field>
       <div class="align-self-center mx-4">-</div>
       <v-text-field
-        :type="passwordVisible ? 'text' : 'password'"
+        :type="'password'"
         density="compact"
         label="주민등록번호 뒷자리"
+        :hide-details="passwordVisible"
         @click:append-inner="passwordVisible = !passwordVisible"
         :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
         variant="underlined"
+        v-model="targetRrnb"
+        @keypress="isNumber"
       ></v-text-field>
     </div>
     <v-divider></v-divider>
@@ -40,29 +46,16 @@
         </v-btn>
       </template>
 
-      <v-card>
-        <Suspense
-          ><AgreementCheck :contract="contract"></AgreementCheck
-        ></Suspense>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="grey"
-            variant="text"
-            @click="[(dialog = false), (agreeRadio = 'disagree')]"
-          >
-            동의 안 함
-          </v-btn>
-          <v-btn
-            color="black"
-            variant="outlined"
-            @click="[(dialog = false), (agreeRadio = 'agree')]"
-          >
-            동의 하기
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <Suspense
+        ><Dialog
+          :dialog="dialog"
+          :xs="xs"
+          :items="contract"
+          :number="'one'"
+          @agreeEvent="agreeHandler"
+          @disagreeEvent="disagreeHandler"
+        ></Dialog
+      ></Suspense>
     </v-dialog>
 
     <div class="d-flex justify-space-between align-content-center">
@@ -85,17 +78,64 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
+import Dialog from '@/components/service/Dialog.vue';
 
-import AgreementCheck from '@/components/contract/AgreementCheck.vue';
+import { useBtnStore } from '@/store/btnStore';
+import { useAuthStore } from '@/store/auth';
+import { watch } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const btnStore = useBtnStore();
+const { setBtnCondition, setisBasicInfo } = btnStore;
+
+const authStore = useAuthStore();
+const { authInfo } = storeToRefs(authStore);
+const { setRrnb } = authStore;
 
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
 const passwordVisible = ref(false);
+const { xs } = useDisplay();
+
+const toggeDialog = () => {
+  dialog.value = !dialog.value;
+};
+
+const agreeHandler = (value) => {
+  if (value === 'one') {
+    agreeRadio.value = 'agree';
+    toggeDialog();
+  }
+};
+
+const disagreeHandler = (value) => {
+  if (value === 'one') {
+    agreeRadio.value = 'disagree';
+    toggeDialog();
+  }
+};
 
 const contractId = 5;
 const contract = ref([]);
 
+const targetName = ref(authInfo.value.name);
+const targetRrnf = ref(authInfo.value.birth);
+const targetRrnb = ref();
+
+watch([targetRrnb, agreeRadio], () => {
+  if (!!targetRrnb.value && agreeRadio.value === 'agree') {
+    setBtnCondition(true);
+    console.log(targetRrnb.value);
+    setRrnb(targetRrnb.value);
+  } else {
+    setBtnCondition(false);
+  }
+});
+
 onBeforeMount(async () => {
+  setBtnCondition(false);
+  setisBasicInfo(true);
   try {
     const response = await findContractById(contractId);
     contract.value = response.data.data;
@@ -103,6 +143,15 @@ onBeforeMount(async () => {
     console.error(e);
   }
 });
+
+const isNumber = (evt) => {
+  const keysAllowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
+  const keyPressed = evt.key;
+
+  if (!keysAllowed.includes(keyPressed)) {
+    evt.preventDefault();
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>

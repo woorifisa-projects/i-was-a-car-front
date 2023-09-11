@@ -26,8 +26,13 @@ const adminRoutes = [
       },
       {
         path: 'log',
-        name: 'LogManagemnet',
+        name: 'LogManagement',
         component: () => import('@/views/admin/logs/LogManagementView.vue'),
+      },
+      {
+        path: 'productDetail/:id',
+        name: 'ProductManagementDetail',
+        component: () => import('@/views/admin/products/ProductDetailView.vue'),
       },
     ],
   },

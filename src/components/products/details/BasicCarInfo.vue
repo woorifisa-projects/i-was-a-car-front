@@ -65,8 +65,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { useRouter } from 'vue-router';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 
 const router = useRouter();
 
@@ -77,6 +78,14 @@ const carInfo = ref(props.carInfo);
 
 const goBack = () => {
   router.go(-1);
+}
+
+const purchaseStore = usePurchaseStore();
+const { setCarInfo } = purchaseStore;
+
+const selectedProduct = () => {
+  setCarInfo(carInfo.value);
+  router.push('/normal-purchase/1');
 };
 </script>
 

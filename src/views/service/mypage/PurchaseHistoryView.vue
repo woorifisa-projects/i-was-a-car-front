@@ -128,6 +128,7 @@ const getColor = (label) => {
 const goToPage = () => {
   router.push('one-click-purchase/1');
 };
+
 </script>
 
 <style lang="scss" scoped></style>

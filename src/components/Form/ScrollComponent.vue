@@ -7,7 +7,7 @@
         variant="outlined"
         width="96%"
         style="cursor: pointer"
-        :class="loan === item.name ? 'set' : 'set2'"
+        :class="target === item.name ? 'set' : 'set2'"
         @click="selectedItem(item)"
       >
         <div v-if="dataType === `loan`">
@@ -35,17 +35,19 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, defineEmits } from 'vue';
 
 const props = defineProps(['finance', 'dataType']);
+const emit = defineEmits(['targetFinance']);
 
 const finance = ref(props.finance);
 const dataType = ref(props.dataType);
 
-const loan = ref('');
+const target = ref();
 
 const selectedItem = (item) => {
-  loan.value = item.name;
+  target.value = item.name;
+  emit('targetFinance', item);
 };
 </script>
 

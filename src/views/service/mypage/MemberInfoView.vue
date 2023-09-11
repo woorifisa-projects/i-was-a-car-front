@@ -181,7 +181,7 @@
           size="large"
           class="font-weight-black my-2 mt-10"
         >
-          취소
+1          취소
         </v-btn>
         <div style="width: 20px"></div>
         <v-btn

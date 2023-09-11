@@ -6,9 +6,15 @@ export const useBtnStore = defineStore('btnStore', () => {
   const setBtnCondition = (value) => (btnEnable.value = value);
   const computedBtnCondition = computed(() => !btnEnable.value);
   
+  const isBasicInfo = ref(false);
+  const setisBasicInfo = (value) => {
+    isBasicInfo.value = value;
+  }
   return {
     btnEnable,
     setBtnCondition,
     computedBtnCondition,
+    isBasicInfo,
+    setisBasicInfo
   };
 });
