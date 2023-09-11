@@ -9,7 +9,6 @@
           :class="selectedProduct === item.name ? 'set' : 'set2'"
           @click="whichTargetProduct(item)"
         >
-
           <v-card-text class="mx-auto" width="300">
             <v-img :src="item.images" cover height="150"></v-img>
             <v-card class="mx-auto" width="250">
@@ -61,7 +60,6 @@ const { carType, financeInfo } = storeToRefs(purchaseStore);
 
 onBeforeMount(async () => {
   try {
-    console.log(financeInfo.value);
     const response = await RecommendationProducts(
       carType.value,
       financeInfo.value.capital,
@@ -70,7 +68,6 @@ onBeforeMount(async () => {
     );
 
     products.value = response.data.data;
-    console.log(products.value);
   } catch (e) {
     console.error(e);
   }
