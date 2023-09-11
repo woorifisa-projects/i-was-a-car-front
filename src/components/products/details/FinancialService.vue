@@ -12,9 +12,11 @@
             <v-card-text class="font-bold pl-0"> 판매 가격 </v-card-text>
             <v-text-field variant="outlined" readonly="true">
               <template v-slot:append-inner>
-                <span style="width: 3em">만 원</span>
+                <span style="width: 3em; font-weight: 600">만 원</span>
               </template>
-              {{ (carInfo.price / 10000).toLocaleString() }}
+              <span style="color: blue; font-weight: 900">
+                {{ Math.floor(carInfo.price / 10000).toLocaleString() }}
+              </span>
             </v-text-field>
           </v-card-item>
         </div>
@@ -23,6 +25,7 @@
           <v-card-item>
             <v-card-text class="font-bold pl-0">선수금</v-card-text>
             <v-select
+              class="font-weight-bold"
               variant="outlined"
               v-model="selected"
               :items="guaranteePercentage"
@@ -32,14 +35,17 @@
       </div>
     </v-card-item>
 
-    <v-card-text class="font-bold text-right pr-sm-16 pr-8">
+    <v-card-text
+      class="font-bold text-right pr-sm-16 pr-8 text-subtitle-1 text-sm-h6"
+    >
       총 할부 신청 금액:
-      <span class="my-highlight">{{ installment.toLocaleString() }} 원</span>
+      <span class="my-highlight"
+        >{{ Math.floor(installment).toLocaleString() }} 원</span
+      >
     </v-card-text>
 
     <div>
       <div>
-        <!-- <v-card-text class="font-bold bg-red"> 기간 </v-card-text> -->
         <v-card-item>
           <div
             class="d-flex justify-space-around flex-wrap align-content-stretch"
@@ -61,10 +67,12 @@
         </v-card-item>
       </div>
       <div>
-        <v-card-text class="font-bold text-right pr-sm-16 pr-8">
+        <v-card-text
+          class="font-bold text-right pr-sm-16 pr-8 text-subtitle-1 text-sm-h6"
+        >
           월 납입 예상 금액:
           <span class="my-highlight">
-            {{ monthlyPrice.toLocaleString() }} 원
+            {{ Math.floor(monthlyPrice).toLocaleString() }} 원
           </span>
         </v-card-text>
 
@@ -85,11 +93,11 @@ const { xs } = useDisplay();
 
 const guaranteePercentage = ref(['없음', '10%', '20%', '30%', '40%', '50%']);
 const period = ref(['12개월', '24개월', '36개월', '48개월', '60개월']);
-const selected = ref('-');
+const selected = ref('없음');
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
-const installment = ref('-');
+const installment = ref('0');
 const month = ref('');
 const monthlyPrice = ref(0);
 const onClickPeriod = (p) => (month.value = p);

@@ -10,11 +10,11 @@
     >
       <v-tab
         class="font-weight-bold"
-        :width="xs ? 120 : 200"
+        :width="xs ? 100 : 200"
         v-for="item in items"
         :key="item"
         :value="item"
-        style="font-size: 20px"
+        :class="xs ? 'fs-15' : 'fs-20'"
         :is="selectedComponent"
         @click="changeFlag"
       >
@@ -92,3 +92,13 @@ const changeFlag = () => {
   }
 };
 </script>
+
+<style scoped>
+.fs-20 {
+  font-size: 20px;
+}
+
+.fs-15 {
+  font-size: 15px;
+}
+</style>

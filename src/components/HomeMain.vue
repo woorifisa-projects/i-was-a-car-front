@@ -1,8 +1,8 @@
 <template>
-  <section class="bg-black bg-grey-lighten-4" style="height: 450px">
+  <section class="bg-grey-lighten-4" style="height: 450px">
     <v-container class="py-10">
       <h1
-        class="text-h2 font-weight-bold text-decoration-underline text-center text-sm-left"
+        class="text-h3 text-sm-h2 font-weight-black text-decoration-underline text-center text-sm-left"
       >
         I was a car
       </h1>
@@ -41,7 +41,6 @@ const { smAndDown } = useDisplay();
 
 const btnB = '내 차 사기';
 const btnW = '내 차 팔기';
-
 
 const purchase = ref('/one-click-purchase/1');
 

@@ -1,22 +1,23 @@
 <template>
   <div class="d-flex flex-column align-start w-100">
-    <img class="w-100" v-bind:src="mainImage" alt="자동차 사진들" />
+    <v-img
+      class="w-100"
+      v-bind:src="mainImage"
+      alt="자동차 사진들"
+      cover
+      style="max-height: 360px"
+    />
     <!-- 자동차 사진들 -->
-
-    <div class="w-100">
+    <div class="w-100 mt-2">
       <v-card class="mx-auto" elevation="1">
-        <v-slide-group
-          v-model="model"
-          class="pa-1"
-          selected-class="bg-success"
-          show-arrows
-        >
+        <v-slide-group v-model="model" selected-class="bg-success" show-arrows>
           <v-slide-group-item
             v-for="(carImage, index) in carImages"
             :key="index"
             v-slot="{ toggle }"
           >
             <v-card
+              class="mr-1"
               :class="[selectedClass]"
               :height="xs ? '100' : '150'"
               :width="xs ? '100' : '150'"

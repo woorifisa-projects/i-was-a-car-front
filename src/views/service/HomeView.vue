@@ -49,7 +49,6 @@ const renderKey = ref(0);
 const search = (child) => {
   category.value = child.category;
   keyword.value = child.keyword;
-  console.log(child);
 
   forceRender();
 };

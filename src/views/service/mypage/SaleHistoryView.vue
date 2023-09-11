@@ -1,33 +1,56 @@
 <template>
-  <v-data-table
-    style="width: 800px"
-    height="500"
-    v-if="orderData.length"
-    :page.sync="page"
-    :headers="headers"
-    :items="orderData"
-    :items-per-page="itemsPerPage"
-    hide-default-footer
-    class="mt-6 mx-auto text-center"
-    @click:row="goToDetail"
-  >
-    <template v-slot:item.label="{ item }">
-      <v-chip :color="getColor(item.columns.label)" variant="outlined">
-        {{ item.columns.label }}
-      </v-chip>
-    </template>
+  <ProgressSpinner v-if="isLoading" />
 
-    <template v-slot:bottom>
-      <div class="text-center">
-        <v-pagination
-          v-model="page"
-          :length="pageCount"
-          :total-visible="5"
-          @click="changePage(page)"
-        ></v-pagination>
-      </div>
-    </template>
-  </v-data-table>
+  <template v-else>
+    <v-data-table
+      style="width: 800px"
+      height="500"
+      v-if="orderData.length"
+      :page.sync="page"
+      :headers="headers"
+      :items="orderData"
+      :items-per-page="itemsPerPage"
+      hide-default-footer
+      class="mt-6 mx-auto text-center"
+      @click:row="goToDetail"
+    >
+      <template v-slot:item.label="{ item }">
+        <v-chip :color="getColor(item.columns.label)" variant="outlined">
+          {{ item.columns.label }}
+        </v-chip>
+      </template>
+
+      <template v-slot:bottom>
+        <div class="text-center">
+          <v-pagination
+            v-model="page"
+            :length="pageCount"
+            :total-visible="5"
+            @click="changePage(page)"
+          ></v-pagination>
+        </div>
+      </template>
+    </v-data-table>
+
+    <v-container
+      v-else
+      class="h-screen d-flex flex-column text-center justify-start align-center pt-16"
+    >
+      <br />
+      <br />
+      <h2>판매이력이 존재하지 않습니다.</h2>
+      <br />
+      <br />
+      <v-btn
+        color="black"
+        width="200"
+        size="large"
+        @click="goToPage"
+        class="font-weight-bold"
+        >내 차 팔기</v-btn
+      >
+    </v-container>
+  </template>
 </template>
 
 <script setup>
@@ -35,9 +58,16 @@ import { ref, onBeforeMount, defineEmits } from 'vue';
 import { saleHistoryAPI } from '@/apis/service/histories/historyApi.js';
 import { useAuthStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+import { useLoadingStore } from '@/store/loading';
+
+const router = useRouter();
 
 const auth = useAuthStore();
 const { authInfo } = storeToRefs(auth);
+
+const loading = useLoadingStore();
+const { isLoading } = storeToRefs(loading);
 
 const emit = defineEmits(['historyNo']);
 
@@ -91,6 +121,11 @@ const getColor = (label) => {
     return 'blue';
   else return 'error';
 };
+
+const goToPage = () => {
+  router.push('one-click-sale/1');
+};
+
 </script>
 
 <style lang="scss" scoped></style>
