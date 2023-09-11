@@ -1,43 +1,46 @@
 <template>
-  <v-card-text class="d-flex">
-    <v-col cols="2" class="flex-grow-0 flex-shrink-0">
+  <v-container class="mt-10">
+    <div class="d-flex flex-column flex-sm-row">
       <v-autocomplete
+        :class="xs ? 'w-100' : 'cw-10'"
         label="선택"
         :items="category"
         item-title="title"
         item-value="id"
-        color="grey"
+        color="black"
         theme="light"
-        variant="solo"
+        variant="outlined"
         single-line
         v-model="selectedCategory"
+        :density="xs ? 'compact' : 'comfortable'"
       ></v-autocomplete>
-    </v-col>
 
-    <v-col
-      cols="1"
-      style="min-width: 100px; max-width: 100%"
-      class="flex-grow-1 flex-shrink-0"
-    >
       <v-text-field
+        :class="xs ? 'w-100' : 'cw-70'"
         :loading="loading"
         append-inner-icon="mdi-magnify"
-        color="grey"
+        color="black"
         theme="light"
-        variant="solo"
+        variant="outlined"
         label="원하는 차종 또는 제조사를 입력해주세요."
         clearable
+        :density="xs ? 'compact' : 'comfortable'"
         single-line
         @click:append-inner="onClick"
+        @keydown.enter.prevent="onClick"
         v-model="keyword"
       ></v-text-field>
-    </v-col>
-  </v-card-text>
+    </div>
+  </v-container>
 </template>
 
 <script setup>
 import { ref, defineEmits } from 'vue';
 import { category } from '@/components/data/searchCategory.js';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const { xs } = useDisplay();
+
 const emit = defineEmits(['search']);
 
 const loading = ref(false);
@@ -54,4 +57,13 @@ const onClick = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.cw-10 {
+  width: 10%;
+  margin-right: 10px;
+}
+
+.cw-70 {
+  width: 70%;
+}
+</style>

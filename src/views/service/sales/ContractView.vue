@@ -57,10 +57,8 @@ const nextUrl = ref('block');
 const isLoading = ref(false);
 
 const onClickNextBtnEmit = async () => {
-  // isLoading.value = true;
   await createProduct()
     .then((resp) => {
-      console.log(resp);
       const response = resp.data.data;
       setResponse(response);
       router.push('8');
@@ -68,8 +66,6 @@ const onClickNextBtnEmit = async () => {
     })
     .catch((e) => console.error(e));
 };
-
-
 </script>
 
 <style lang="scss" scoped></style>

@@ -17,7 +17,7 @@
         >
       </div>
       <br />
-      <div class="pt-0">
+      <div class="pt-0 text-subtitle-2">
         대표 이사: 황동민 | 주소: 서울특별시 상암 어딘가<br /><br />
         I was a car 가 제공하는 서비스는 온라인 거래장소 및 기타 부가정보 제공에
         한하며, 실제 거래의 모든 책임은 판매자와 구매자에게 있음을
@@ -38,6 +38,9 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const { xs } = useDisplay();
 
 const icons = ref([
   {

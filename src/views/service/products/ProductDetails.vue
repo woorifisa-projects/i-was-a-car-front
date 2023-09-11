@@ -1,6 +1,7 @@
 <template>
-  <v-container>
-    <!-- <v-sheet class="d-flex justify-space-between mt-5 w-100 flex-wrap"> -->
+  <ProgressSpinner v-if="isLoading" />
+
+  <v-container v-else>
     <v-sheet class="mt-5 w-100 d-sm-flex">
       <Suspense>
         <ImageSlider :carImages="carImages"></ImageSlider>
@@ -32,6 +33,11 @@
 import { ref, onBeforeMount, defineAsyncComponent } from 'vue';
 import { findProductDetail } from '@/apis/service/products/productApi.js';
 import { useRoute } from 'vue-router';
+import { useLoadingStore } from '@/store/loading';
+import { storeToRefs } from 'pinia';
+
+const loading = useLoadingStore();
+const { isLoading } = storeToRefs(loading);
 
 const carImages = ref([]);
 const carInfo = ref({});

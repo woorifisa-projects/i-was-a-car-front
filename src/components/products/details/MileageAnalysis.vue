@@ -6,28 +6,42 @@
 
     <div class="d-flex justify-center">
       <div class="w-97">
-        <v-slider v-model="slider2" track-color="gray"></v-slider>
+        <v-slider readonly v-model="slider2" track-color="gray"></v-slider>
       </div>
     </div>
 
-    <v-card-text class="text-right pr-sm-16 pr-8 text-h6">
+    <v-card-text class="text-right pr-sm-16 pr-8 text-subtitle-1 text-sm-h6">
       총
-      <span class="color-blue font-bold"
-        >{{ lenYear }}년 {{ lenMonth }}개월</span
-      >
+      <span v-if="lenYear <= 0" class="color-blue font-bold">
+        {{ lenMonth }}개월
+      </span>
+      <span v-else class="color-blue font-bold">
+        {{ lenYear }}년 {{ lenMonth }}개월
+      </span>
       동안
       <span class="color-blue font-bold">{{ carInfo.distance }} KM</span>
       <br />
-      연평균
-      <span class="color-blue font-bold"> {{ yearlyDistance }} KM </span>
+      <template v-if="lenYear > 0">
+        연평균
+        <span class="color-blue font-bold"> {{ yearlyDistance }} KM </span>
+      </template>
+      <template v-else> </template>
       <br />
       [ <span class="font-bold"> {{ carInfo.info }} </span> ]의 주행거리는
-      일반적인 연평균 주행거리 대비 [
+      일반적인 연평균 주행거리 측정 [
       <span class="color-blue font-bold">{{ distanceStatus }}</span> ]입니다.
     </v-card-text>
-    <v-card-subtitle class="text-right pr-sm-16 pr-8 text-subtitle-1"
+
+    <v-card-subtitle
+      class="text-right pr-sm-16 pr-8 text-subtitle-2 text-sm-subtitle-1"
+      >※ 매우짧음 | 짧음 | 보통 | 높음 | 매우 높음
+    </v-card-subtitle>
+
+    <v-card-subtitle
+      class="text-right pr-sm-16 pr-8 text-subtitle-2 text-sm-subtitle-1"
       >※ 분석기준: 20,000KM</v-card-subtitle
-    ><br />
+    >
+    <br />
   </v-sheet>
 </template>
 
@@ -65,10 +79,10 @@ if (yd <= 5000) {
   distanceStatus.value = '보통';
   slider2.value = 60;
 } else if (25000 < yd && yd < 35000) {
-  distanceStatus.value = '다소 김';
+  distanceStatus.value = '높음';
   slider2.value = 80;
 } else {
-  distanceStatus.value = '김';
+  distanceStatus.value = '매우 높음';
   slider2.value = 100;
 }
 </script>

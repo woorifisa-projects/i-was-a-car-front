@@ -45,7 +45,6 @@ const dataType = ref(props.dataType);
 const loan = ref('');
 
 const selectedItem = (item) => {
-  console.log(item);
   loan.value = item.name;
 };
 </script>
