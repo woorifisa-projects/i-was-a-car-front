@@ -17,10 +17,11 @@
         variant="underlined"
         :readonly="true"
         v-model="targetRrnf"
+        class="w-25"
       ></v-text-field>
       <div class="align-self-center mx-4">-</div>
       <v-text-field
-        :type="'password'"
+        :type="passwordVisible ? 'password' : 'text'"
         density="compact"
         label="주민등록번호 뒷자리"
         :hide-details="passwordVisible"
@@ -29,6 +30,7 @@
         variant="underlined"
         v-model="targetRrnb"
         @keypress="isNumber"
+        class="w-25"
       ></v-text-field>
     </div>
     <v-divider></v-divider>
@@ -41,6 +43,7 @@
           :elevation="0"
           block
           v-bind="props"
+          :disabled="radioReadOnly"
         >
           개인 정보 수집 동의 약관 확인 하기
         </v-btn>
@@ -66,6 +69,7 @@
           v-model="agreeRadio"
           inline
           row
+          :readonly="radioReadOnly"
         >
           <v-radio label="동의" value="agree"></v-radio>
           <v-radio label="동의 안함" value="disagree"></v-radio>
@@ -82,9 +86,14 @@ import Dialog from '@/components/service/Dialog.vue';
 
 import { useBtnStore } from '@/store/btnStore';
 import { useAuthStore } from '@/store/auth';
+import { useContractStore } from '@/store/contractStore';
 import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const contractStore = useContractStore();
+const { request, radioReadOnly } = storeToRefs(contractStore);
+const { setContract, setIsConsent, resetRequest } = contractStore;
 
 const btnStore = useBtnStore();
 const { setBtnCondition, setisBasicInfo } = btnStore;
@@ -95,7 +104,7 @@ const { setRrnb } = authStore;
 
 const agreeRadio = ref('disagree');
 const dialog = ref(false);
-const passwordVisible = ref(false);
+const passwordVisible = ref(true);
 const { xs } = useDisplay();
 
 const toggeDialog = () => {
@@ -105,6 +114,7 @@ const toggeDialog = () => {
 const agreeHandler = (value) => {
   if (value === 'one') {
     agreeRadio.value = 'agree';
+    setIsConsent(true);
     toggeDialog();
   }
 };
@@ -126,19 +136,21 @@ const targetRrnb = ref();
 watch([targetRrnb, agreeRadio], () => {
   if (!!targetRrnb.value && agreeRadio.value === 'agree') {
     setBtnCondition(true);
-    console.log(targetRrnb.value);
     setRrnb(targetRrnb.value);
+    setIsConsent(true);
   } else {
     setBtnCondition(false);
   }
 });
 
 onBeforeMount(async () => {
+  resetRequest();
   setBtnCondition(false);
   setisBasicInfo(true);
   try {
     const response = await findContractById(contractId);
     contract.value = response.data.data;
+    setContract(contract.value);
   } catch (e) {
     console.error(e);
   }

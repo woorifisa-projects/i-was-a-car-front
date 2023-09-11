@@ -16,13 +16,13 @@
     </div>
     <ContractForm
       v-else
-      :seller="iwc"
-      :buyer="request.memberName"
-      :price="request.price"
-      :carNumber="request.info"
-      :carName="request.carName"
-      :carType="request.carType"
-      :fuel="request.fuel"
+      :seller="authInfo.name"
+      :buyer="iwc"
+      :price="carInfo.price"
+      :carNumber="carInfo.info"
+      :carName="carInfo.carName"
+      :carType="carInfo.carType"
+      :fuel="carInfo.fuel"
     >
     </ContractForm>
   </Card>
@@ -30,19 +30,26 @@
 
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import { useSaleStore } from '@/store/sales/saleStore';
-import { createProduct } from '@/apis/service/histories/sales/saleApi';
-import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
+import { useSaleStore } from '@/store/sales/saleStore';
 import { useBtnStore } from '@/store/btnStore';
+import ContractForm from '@/components/Form/ContractForm.vue';
+import { useAuthStore } from '@/store/auth.js';
 
 import Card from '@/components/card/Card.vue';
-import ContractForm from '@/components/Form/ContractForm.vue';
+import { useContractStore } from '@/store/contractStore';
+import { createConscent } from '@/apis/service/contracts/contractApi';
 
-const router = useRouter();
-const store = useSaleStore();
-const { setResponse } = store;
-const { request } = storeToRefs(store);
+const authStore = useAuthStore();
+const { authInfo } = storeToRefs(authStore);
+
+const saleStore = useSaleStore();
+const { carInfo } = storeToRefs(saleStore);
+
+const contractStore = useContractStore();
+const { setConsent, setResponse } = contractStore;
+const { request, documentItems, isConsent } = storeToRefs(contractStore);
+
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
 
@@ -53,16 +60,21 @@ onBeforeMount(() => {
 const iwc = ref('IWC');
 const cardTitle = ref('자동차 매매 계약서 작성');
 const next = ref('계약하기');
-const nextUrl = ref('block');
+const nextUrl = ref('7');
 const isLoading = ref(false);
 
 const onClickNextBtnEmit = async () => {
-  await createProduct()
+  documentItems.value.forEach((e) => {
+    setConsent(e.documentItemId, isConsent.value, authInfo.value.id);
+  });
+
+  console.log(request.value);
+
+  await createConscent()
+
     .then((resp) => {
       const response = resp.data.data;
       setResponse(response);
-      router.push('8');
-      isLoading.value = false;
     })
     .catch((e) => console.error(e));
 };

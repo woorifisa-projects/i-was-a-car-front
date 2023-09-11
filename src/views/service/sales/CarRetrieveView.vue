@@ -30,7 +30,9 @@
       class="my-10"
       v-model="distance"
       type="number"
-    >
+      ><template v-slot:append-inner>
+        <span style="width: 3em; font-size: 1em">km</span>
+      </template>
     </v-text-field>
   </Card>
 </template>
@@ -56,7 +58,7 @@ onBeforeMount(() => {
 
 const cardTitle = ref('차량 정보 조회');
 const next = ref('조회하기');
-const nextUrl = ref('4');
+const nextUrl = ref('3');
 
 const carStore = useRetrieveCarStore();
 const { setNameAndCarNumber } = carStore;
