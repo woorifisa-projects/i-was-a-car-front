@@ -10,9 +10,13 @@
               class="d-flex justify-space-around flex-wrap align-content-stretch"
             >
               <div class="diagnosis-item">
-                <div class="diagnosis-box">
-                  {{ new Date(Date.parse(carInfo.year)).getFullYear() }}년식
-                </div>
+                <input
+                  class="diagnosis-box"
+                  :value="`${new Date(
+                    Date.parse(carInfo.year)
+                  ).getFullYear()}년식`"
+                  readonly
+                />
                 연식
               </div>
 
@@ -69,7 +73,10 @@
           </v-card-item>
           <v-card>
             <v-card-item>
-              <div class="d-flex justify-space-between performance-checker">
+              <div
+                v-if="carInfo.performanceCheck"
+                class="d-flex justify-space-between performance-checker"
+              >
                 <div class="d-flex align-center">
                   <PerformanceCheckIcon
                     style="margin-right: 1em"
@@ -85,6 +92,18 @@
                 </div>
                 <div style="font-size: 4em; margin-right: 0.2em">⇲</div>
               </div>
+              <template v-else>
+                <div>
+                  <v-file-input
+                    v-model="file"
+                    label="파일 등록하기"
+                    variant="outlined"
+                    density="dense"
+                    >{{ carInfo.performanceCheck }}</v-file-input
+                  >
+                  <BtnBlack :msg="'업로드'" @click="uploadFile"></BtnBlack>
+                </div>
+              </template>
             </v-card-item>
           </v-card>
           <br />
@@ -97,9 +116,28 @@
 <script setup>
 import { ref } from 'vue';
 import PerformanceCheckIcon from './PerformanceCheckIcon.vue';
+import BtnBlack from '@/components/common/BtnBlack.vue';
+import { addPerformanceCheck } from '@/apis/admin/products/productAPI';
+import { useArraySome } from '@vueuse/core';
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
+const file = ref(null);
+const uploadFile = async () => {
+  if (file.value) {
+    const formData = new FormData();
+    formData.append('performanceCheck', file.value[0]);
+    try {
+      const response = await addPerformanceCheck(carInfo.value.id, formData);
+      console.log('File uploaded successfully');
+      carInfo.value.performanceCheck = response.data.data;
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    console.log('No file selected');
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -115,6 +153,7 @@ const carInfo = ref(props.carInfo);
 }
 
 .diagnosis-box {
+  text-align: center;
   display: flex;
   border: 5px solid #0057ff;
   width: 100px;

@@ -71,14 +71,6 @@ defineExpose({ input });
         height: 0;
         widows: 0;
       }
-      // @media (max-width: 980px) {
-      //   width: 100px;
-      //   font-size: 18px;
-      //   label {
-      //     width: 100px;
-      //     height: 100px;
-      //   }
-      // }
     }
     .uploadFiles__form-thumbnail {
       width: 450px;

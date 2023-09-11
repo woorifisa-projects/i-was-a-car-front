@@ -2,14 +2,6 @@
   <div class="center-container">
     <v-sheet>
       <h2>회원 목록</h2>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="사용자의 이름을 입력하세요"
-        single-line
-        hide-details
-        style="style=width: 300px"
-      ></v-text-field>
       <v-data-table
         height="500"
         v-if="orderData.length"
