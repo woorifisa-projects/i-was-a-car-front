@@ -1,7 +1,12 @@
 <template>
   <v-card-title
-    class="text-center text-h5 font-weight-bold mb-15"
-    style="position: absolute; top: 3em; left: 50%; transform: translate(-50%)"
+    class="text-center text-h5 font-weight-black mb-15"
+    style="
+      position: absolute;
+      top: 1.5em;
+      left: 50%;
+      transform: translate(-50%);
+    "
   >
     {{ cardTitle }}
   </v-card-title>

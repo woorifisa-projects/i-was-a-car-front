@@ -1,6 +1,9 @@
 <template>
-  <v-card>
-    <v-card-title> 차량 진단서 ⭐️⭐️⭐️ </v-card-title>
+  <v-sheet class="mt-5" elevation="2">
+    <v-card-title class="font-weight-bold text-h6 text-sm-h5 py-5">
+      차량 진단서 ⭐️⭐️⭐️
+    </v-card-title>
+    <v-divider></v-divider>
 
     <v-card-item>
       <div class="d-flex justify-space-around flex-wrap align-content-stretch">
@@ -27,14 +30,14 @@
                 주행거리
               </div>
 
-              <div class="diagnosis-item">
+              <div class="diagnosis-item mt-5">
                 <div class="diagnosis-box">
                   {{ carInfo.accidentHistory }} 건
                 </div>
                 사고이력
               </div>
 
-              <div class="diagnosis-item">
+              <div class="diagnosis-item mt-5">
                 <div class="diagnosis-box">
                   {{ carInfo.inundationHistory ? 'YES' : 'NO' }}
                 </div>
@@ -50,27 +53,60 @@
               <table class="car-info-table">
                 <tr>
                   <td class="font-weight-bold">구동방식</td>
-                  <td class="my-value">{{ carInfo.drivingMethod }}</td>
+                  <v-chip
+                    class="ma-2 font-weight-bold"
+                    variant="outlined"
+                    color="indigo-lighten-2"
+                  >
+                    <td class="my-value">
+                      {{ carInfo.drivingMethod }}
+                    </td>
+                  </v-chip>
                 </tr>
                 <tr>
                   <td class="font-weight-bold">변속기</td>
-                  <td class="my-value">{{ carInfo.transmission }}</td>
+                  <v-chip
+                    class="ma-2 font-weight-bold"
+                    variant="outlined"
+                    color="indigo-lighten-2"
+                  >
+                    <td class="my-value">{{ carInfo.transmission }}</td>
+                  </v-chip>
                 </tr>
                 <tr>
                   <td class="font-weight-bold">연료</td>
-                  <td class="my-value">{{ carInfo.fuel }}</td>
+                  <v-chip
+                    class="ma-2 font-weight-bold"
+                    variant="outlined"
+                    color="indigo-lighten-2"
+                  >
+                    <td class="my-value">{{ carInfo.fuel }}</td>
+                  </v-chip>
                 </tr>
                 <tr>
                   <td class="font-weight-bold">배기량</td>
-                  <td class="my-value">{{ carInfo.displacement }}cc</td>
+                  <v-chip
+                    class="ma-2 font-weight-bold"
+                    variant="outlined"
+                    color="indigo-lighten-2"
+                  >
+                    <td class="my-value">{{ carInfo.displacement }}cc</td>
+                  </v-chip>
                 </tr>
                 <tr>
                   <td class="font-weight-bold">연비</td>
-                  <td class="my-value">{{ carInfo.fuelEfficiency }} KM/L</td>
+                  <v-chip
+                    class="ma-2 font-weight-bold"
+                    variant="outlined"
+                    color="indigo-lighten-2"
+                  >
+                    <td class="my-value">{{ carInfo.fuelEfficiency }} KM/L</td>
+                  </v-chip>
                 </tr>
               </table>
             </div>
           </v-card-item>
+
           <v-card>
             <v-card-item>
               <div
@@ -110,7 +146,7 @@
         </div>
       </div>
     </v-card-item>
-  </v-card>
+  </v-sheet>
 </template>
 
 <script setup>
@@ -142,7 +178,7 @@ const uploadFile = async () => {
 
 <style lang="scss" scoped>
 .diagnosis {
-  max-width: 300px;
+  max-width: 400px;
 }
 
 .diagnosis-item {
@@ -155,12 +191,14 @@ const uploadFile = async () => {
 .diagnosis-box {
   text-align: center;
   display: flex;
-  border: 5px solid #0057ff;
-  width: 100px;
+  border: 2px solid black;
+  border-radius: 6px;
+  width: 150px;
   height: 100px;
   justify-content: center;
   align-items: center;
   margin-bottom: 0.3em;
+  font-size: 20px;
 }
 
 .car-info-table {
@@ -174,7 +212,6 @@ const uploadFile = async () => {
 
 .my-value {
   font-weight: bold;
-  color: #888;
 }
 
 .w-3 {

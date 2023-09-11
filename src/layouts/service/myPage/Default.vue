@@ -4,11 +4,13 @@
 
     <v-tabs
       v-model="tab"
-      class="mt-15"
       color="deep-black-accent-4"
       align-tabs="center"
+      style="margin-top: 80px"
     >
       <v-tab
+        class="font-weight-bold"
+        :width="xs ? 120 : 200"
         v-for="item in items"
         :key="item"
         :value="item"
@@ -30,10 +32,12 @@
 </template>
 
 <script setup>
-import DefaultBar from './AppBar.vue';
+import DefaultBar from '@/layouts/common/AppBar.vue';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { memberDetailApi } from '@/apis/service/histories/memberInfoApi.js';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const { xs } = useDisplay();
 
 const clickMember = ref(true);
 

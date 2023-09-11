@@ -12,7 +12,7 @@
 
       <template v-if="isLogin">
         <div class="d-none d-sm-block font-weight-medium">
-          <RouterLink class="nav-item" to="/email">마이페이지</RouterLink>
+          <RouterLink class="nav-item" to="/mypage">마이페이지</RouterLink>
           <span class="logout-btn" @click="logoutHandler">로그아웃</span>
         </div>
       </template>

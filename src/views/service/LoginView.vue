@@ -1,7 +1,14 @@
 <template>
   <v-container class="d-flex justify-center h-screen">
-    <v-sheet width="500" height="690" class="mt-5 rounded-xl" :elevation="4">
-      <v-card-title class="text-center text-h5 ma-8">로그인</v-card-title>
+    <v-sheet
+      width="500"
+      height="690"
+      class="mt-2 rounded-xl"
+      :elevation="xs ? 0 : 4"
+    >
+      <v-card-title class="text-center text-h5 font-weight-black ma-8"
+        >로그인</v-card-title
+      >
       <v-sheet width="350" class="mx-auto" max-width="320">
         <v-form @submit.prevent>
           <v-text-field
@@ -66,6 +73,7 @@
             color="yellow"
             density="compact"
             class="mb-5"
+            elevation="0"
           >
             카카오로 시작하기
           </v-btn>
@@ -76,6 +84,7 @@
             width="400"
             color="green"
             density="compact"
+            elevation="0"
           >
             <template v-slot:prepend>
               <v-icon size="32"></v-icon>
@@ -93,6 +102,9 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { loginAPI } from '@/apis/service/auth/authApi';
 import { useAuthStore } from '@/store/auth';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const { xs } = useDisplay();
 
 const router = useRouter();
 
@@ -114,6 +126,14 @@ const { verifiedAuth } = auth;
 
 const loginHandler = async () => {
   try {
+    if (!form.value.email && !form.value.password) {
+      error.value.loginError = true;
+
+      error.value.loginErrorMsg = '이메일과 비밀번호를 입력해주세요.';
+
+      return;
+    }
+
     const { data } = await loginAPI(form.value);
 
     verifiedAuth(data);
@@ -124,7 +144,7 @@ const loginHandler = async () => {
       router.push({ name: 'Home' });
     }
   } catch (e) {
-    if (e.response.status === 401) {
+    if (e.response.status === 401 || e.response.status === 400) {
       error.value.loginError = true;
 
       error.value.loginErrorMsg = '이메일 또는 비밀번호를 잘못 입력했습니다.';

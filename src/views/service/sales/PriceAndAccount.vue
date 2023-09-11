@@ -35,15 +35,16 @@
         variant="underlined"
         style="width: 30%; margin-right: 1em"
         density="compact"
-        v-model="selectedBank"
+        v-model="selectedBank.id"
       ></v-select>
-      
+
       <v-text-field
         label="계좌번호"
         density="compact"
         variant="underlined"
         style="width: 70%"
         type="number"
+        placeholder="10~14 자리 숫자만"
         v-model="accountNumber"
       >
       </v-text-field>
@@ -53,36 +54,71 @@
 
 <script setup>
 import Card from '@/components/card/Card.vue';
-import { getBanks } from '@/apis/service/histories/sales/saleApi';
+import { getBanks } from '@/apis/service/contracts/contractApi';
 import { useSaleStore } from '@/store/sales/saleStore.js';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
+import { useBtnStore } from '@/store/btnStore';
+import { storeToRefs } from 'pinia';
+import { useValidateSaleStore } from '@/store/sales/saleValidateStore';
 
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
 const saleStore = useSaleStore();
 const { setFinanceInfo } = saleStore;
+const saleValidateStore = useValidateSaleStore();
+const { setFinanceInfoCheck } = saleValidateStore;
+const { request } = storeToRefs(saleStore);
+const bankList = ref();
 
 const cardTitle = ref('가격 및 계좌정보 입력');
 const next = ref('다음');
 const nextUrl = ref('7');
 
-const price = ref();
-const accountHolder = ref('');
-const bankList = ref([]);
-const selectedBank = ref();
-const accountNumber = ref('');
+const price = ref(request.value.price);
+const accountHolder = ref(request.value.accountHolder);
+const accountNumber = ref(request.value.accountNumber);
+
+const selectedBank = ref({ id: null });
 
 onBeforeMount(async () => {
+  const { request } = storeToRefs(saleStore);
   const resp = await getBanks();
-  const banks = resp.data.data;
-  bankList.value.push(...banks);
+  const banks = await resp.data.data;
+  bankList.value = banks;
+  setBtnCondition(request.value.accountHolder !== undefined);
+  const selectedBankId = request.value.bankId;
+  const obj = Array.from(bankList.value).filter(
+    (b) => b.id === selectedBankId
+  )[0];
+  selectedBank.value = obj === undefined ? { id: null } : obj;
 });
 
-const onClickNextBtnEmit = () =>
+const onClickNextBtnEmit = () => {
   setFinanceInfo(
-    (price.value * 10000),
+    price.value * 10000,
     accountHolder.value,
-    selectedBank.value,
+    selectedBank.value.id,
     accountNumber.value
   );
+};
+
+watch(
+  [price, accountHolder, selectedBank, accountNumber],
+  ([p, ah, sb, an]) => {
+    const accountHolderRegex = /[가-힣]{2,10}$/;
+    const accountNumberRegex = /[0-9]{10,14}$/;
+    const value =
+      p != null &&
+      p > 10 &&
+      ah != null &&
+      accountHolderRegex.test(ah) &&
+      an != null &&
+      accountNumberRegex.test(an) &&
+      sb != null;
+    setBtnCondition(value);
+    setFinanceInfoCheck(value);
+  }
+);
 </script>
 
 <style lang="scss" scoped></style>
