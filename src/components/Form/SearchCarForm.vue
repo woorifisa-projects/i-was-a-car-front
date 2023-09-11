@@ -10,22 +10,24 @@
         <span style="font-size: large; font-weight: bold">
           {{ (carInfo.price / 1000).toLocaleString() }}
         </span>
-        만원 입니다.
+        만원 입니다
       </div>
     </div>
-    <v-text-field
-      type="number"
-      :label="customerText"
-      density="compact"
-      clearable
-      variant="underlined"
-      class="my-10"
-      v-model="targetCapital"
-    >
-      <template v-slot:append-inner>
-        <span style="width: 3em; font-size: 1em">만 원</span>
-      </template></v-text-field
-    >
+    <suspense>
+      <v-text-field
+        type="number"
+        :label="customerText"
+        density="compact"
+        clearable
+        variant="underlined"
+        class="my-10"
+        v-model="targetCapital"
+      >
+        <template v-slot:append-inner>
+          <span style="width: 3em; font-size: 1em">만 원</span>
+        </template></v-text-field
+      >
+    </suspense>
 
     <v-text-field
       type="number"
@@ -69,11 +71,21 @@ const targetLoan = ref();
 const targetPeriod = ref();
 
 watch([targetCapital, targetLoan, targetPeriod], () => {
-  if (isCarInfoExist) {
-    if (targetCapital.value + targetLoan.value === carInfo.value.price) {
-      setBtnCondition(false);
-    } else {
+  if (isCarInfoExist.value) {
+    if (
+      targetCapital.value * 10000 + targetLoan.value * 10000 ===
+        carInfo.value.price &&
+      !!targetPeriod.value
+    ) {
       setBtnCondition(true);
+    } else {
+      setBtnCondition(false);
+    }
+  } else {
+    if (!!targetCapital.value && !!targetLoan.value && !!targetPeriod.value) {
+      setBtnCondition(true);
+    } else {
+      setBtnCondition(false);
     }
   }
 
@@ -86,16 +98,16 @@ watch([targetCapital, targetLoan, targetPeriod], () => {
   emit('targetFinance', targetFinance);
 });
 
+const customerText = ref('현재 나의 최대 자본금');
 const isCarInfoExist = ref(false);
 
 onBeforeMount(() => {
   setBtnCondition(false);
   if (!!request.value.productId) {
     isCarInfoExist.value = true;
+    customerText.value = '선수금';
   }
 });
-
-const customerText = ref(isCarInfoExist ? '선수금' : '현재 나의 최대 자본금');
 </script>
 
 <style lang="scss" scoped></style>
