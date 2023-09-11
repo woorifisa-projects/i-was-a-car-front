@@ -25,7 +25,7 @@
   <DoneView
     v-else-if="route.params.id === '9'"
     :cardTitle="'원클릭 차량 구매 접수 완료'"
-    :nextUrl="'10'"
+    :nextUrl="`/mypage/purchase/${response.productId}`"
     :done="'원클릭 차량 구매가 완료 되었습니다'"
     :info="'구매 이력은 마이 페이지에서 확인 가능합니다'"
   ></DoneView>
@@ -33,6 +33,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
+import { useSaleStore } from '@/store/sales/saleStore';
 
 import BasicInfoView from '@/views/service/purchase/BasicInfoView.vue';
 import CarTypeView from '@/views/service/purchase/CarTypeView.vue';
@@ -43,6 +44,10 @@ import InsurancesView from '@/views/service/purchase/InsurancesView.vue';
 import DeliveryView from '@/views/service/purchase/DeliveryView.vue';
 import ContractView from '@/views/service/purchase/ContractView.vue';
 import DoneView from '@/views/service/purchase/DoneView.vue';
+import { storeToRefs } from 'pinia';
+
+const store = useSaleStore();
+const { response } = storeToRefs(store);
 
 const route = useRoute();
 </script>
