@@ -85,16 +85,14 @@ import { useRouter } from 'vue-router';
 
 const auth = useAuthStore();
 const { authInfo } = storeToRefs(auth);
-console.log(authInfo);
+const { setLogout, initAuthInfo } = auth;
+
 const products = ref([
   ['전체 상품 조회', '/admin'],
   ['심사 대기 차량 조회', '/admin/judge'],
 ]);
 
 const router = useRouter();
-
-const auth = useAuthStore();
-const { setLogout, initAuthInfo } = auth;
 
 const logoutHandler = async () => {
   try {
