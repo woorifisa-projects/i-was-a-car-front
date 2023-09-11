@@ -120,20 +120,19 @@
               </div>
               <div style="font-size: 3em; margin-right: 0.2em">⇲</div>
             </div>
-            
-              <template v-else>
-                <div>
-                  <v-file-input
-                    v-model="file"
-                    label="파일 등록하기"
-                    variant="outlined"
-                    density="dense"
-                    >{{ carInfo.performanceCheck }}</v-file-input
-                  >
-                  <BtnBlack :msg="'업로드'" @click="uploadFile"></BtnBlack>
-                </div>
-              </template>
-            </v-card-item>
+
+            <template v-else>
+              <div>
+                <v-file-input
+                  v-model="file"
+                  label="파일 등록하기"
+                  variant="outlined"
+                  density="dense"
+                  >{{ carInfo.performanceCheck }}</v-file-input
+                >
+                <BtnBlack :msg="'업로드'" @click="uploadFile"></BtnBlack>
+              </div>
+            </template>
           </v-card>
 
           <v-dialog
