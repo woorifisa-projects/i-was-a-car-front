@@ -262,6 +262,7 @@ watch(selected.value, (newState) => {
     setIsConsentMarketing(true);
   } else {
     isVerifyAuthentication.value = true;
+
     selectedAll.value = false;
     setIsConsent(false);
     setIsConsentMarketing(false);
