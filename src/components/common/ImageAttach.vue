@@ -89,15 +89,16 @@ defineExpose({ input });
       overflow-x: scroll;
       > div {
         position: relative;
+        margin-top: 20px;
         .thumb {
-          width: 200px;
-          height: 200px;
+          min-width: 120px;
+          height: 120px;
           border-radius: 10px;
         }
         button {
           position: absolute;
-          min-width: 30px;
-          min-height: 30px;
+          min-width: 20px;
+          min-height: 20px;
           aspect-ratio: 1 / 1;
           padding: 0;
           top: -17px;
