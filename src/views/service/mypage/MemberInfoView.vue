@@ -1,19 +1,34 @@
 <template>
+  <ProgressSprinner v-if="isLoading" />
+
   <div :key="renderKey">
-    <div class="mx-auto mt-10" style="max-width: 800px; font-size: 1.1em">
+    <div class="mx-auto mt-10" style="max-width: 750px; font-size: 1.1em">
       <v-table density="compact">
         <thead>
           <tr>
-            <th style="width: 70%; font-weight: 800; color: black">회원</th>
-            <th style="width: 30%; font-weight: 800; color: black">내용</th>
+            <th
+              class="pl-10"
+              style="font-weight: 800; color: black"
+              :style="xs ? 'width: 40%' : 'width: 60%'"
+            >
+              회원
+            </th>
+            <th
+              style="font-weight: 800; color: black"
+              :style="xs ? 'width: 60%' : 'width: 40%'"
+            >
+              내용
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th>이름</th>
+            <th class="pl-10 py-3">이름</th>
 
             <th style="text-align: left">
               <input
+                class="w-100"
+                placeholder="홍길동"
                 type="text"
                 v-model="changeName"
                 ref="firstInput"
@@ -26,16 +41,18 @@
           </tr>
 
           <tr>
-            <th>이메일</th>
+            <th class="pl-10 py-3">이메일</th>
             <th style="text-align: left">
-              <input v-model="orderData.email" :readonly="true" />
+              <input class="w-100" v-model="orderData.email" readonly="true" />
             </th>
           </tr>
 
           <tr>
-            <th>패스워드</th>
+            <th class="pl-10 py-3">새로운 비밀번호</th>
             <th style="text-align: left">
               <input
+                class="w-100"
+                placeholder="변경할 비밀번호를 입력해주세요."
                 type="password"
                 v-model="password"
                 @input="validatePassword"
@@ -45,33 +62,39 @@
                 비밀번호는 영문 대소문자와 숫자, 특수기호를 각각 적어도 1개 이상
                 포함하고, 길이는 8자 ~ 20자여야 합니다.
               </div>
+              <template v-else> </template>
             </th>
           </tr>
 
           <tr>
-            <th>패스워드확인</th>
+            <th class="pl-10 py-3">비밀번호 확인</th>
             <th style="text-align: left">
               <input
+                class="w-100"
+                placeholder="비밀번호를 다시 한번 입력해주세요."
                 type="password"
                 v-model="confirmPassword"
                 @input="checkPasswordMatch"
                 :readonly="!editable"
               />
-              <div v-if="passwordMismatch" style="color: red; font-size: 10px">
+              <div
+                v-if="confirmPassword && passwordMismatch"
+                style="color: red; font-size: 10px"
+              >
                 비밀번호가 일치하지 않습니다.
               </div>
             </th>
           </tr>
 
           <tr>
-            <th>전화번호</th>
+            <th class="pl-10 py-3">전화번호</th>
             <th style="text-align: left">
-              <input v-model="changeTel" :readonly="!editable" />
+              <input class="w-100" v-model="changeTel" :readonly="!editable" />
             </th>
           </tr>
 
           <tr>
-            <th>면허 유무</th>
+            <th class="pl-10 py-3">면허 유무</th>
             <th style="text-align: left">
               <span v-if="!editable">{{
                 changeHasLicense ? '있음' : '없음'
@@ -84,20 +107,22 @@
                   value="true"
                   v-model="changeHasLicense"
                 />
-                <label for="license-yes" style="margin-right: 1rem">있음</label>
+                <label for="license-yes" style="margin-right: 1rem">
+                  있음</label
+                >
                 <input
                   type="radio"
                   id="license-no"
                   value="false"
                   v-model="changeHasLicense"
                 />
-                <label for="license-no">없음</label>
+                <label for="license-no"> 없음</label>
               </div>
             </th>
           </tr>
 
           <tr>
-            <th>성별</th>
+            <th class="pl-10 py-3">성별</th>
             <th style="text-align: left">
               <span v-if="!editable">{{
                 changeGender === '남자' ? '남자' : '여자'
@@ -110,7 +135,7 @@
                   value="남자"
                   v-model="changeGender"
                 />
-                <label for="man" style="margin-right: 1rem">남자</label>
+                <label for="man" style="margin-right: 1rem"> 남자</label>
 
                 <input
                   type="radio"
@@ -118,63 +143,89 @@
                   value="여자"
                   v-model="changeGender"
                 />
-                <label for="woman">여자</label>
+                <label for="woman"> 여자</label>
               </div>
             </th>
           </tr>
 
           <tr>
-            <th>최근 접속일</th>
+            <th class="pl-10 py-3">최근 접속일</th>
             <th style="text-align: left">
-              <input v-model="orderData.lastLoginAt" :readonly="true" />
+              <input
+                class="w-100"
+                v-model="orderData.lastLoginAt"
+                readonly="true"
+              />
             </th>
           </tr>
 
           <tr>
-            <th>회원가입일</th>
+            <th class="pl-10 py-3">회원가입일</th>
             <th style="text-align: left">
-              <input v-model="orderData.createdAt" :readonly="true" />
+              <input
+                class="w-100"
+                v-model="orderData.createdAt"
+                readonly="true"
+              />
             </th>
           </tr>
         </tbody>
       </v-table>
     </div>
 
-    <div style="display: flex; justify-content: center">
-      <v-btn
-        v-if="editable"
-        @click="cancelEditing"
-        :width="120"
-        size="x-large"
-        class="font-weight-black my-2"
-      >
-        취소
-      </v-btn>
+    <div style="display: flex; justify-content: center" class="mt-10">
+      <template v-if="editable">
+        <v-btn
+          @click="cancelEditing"
+          width="120"
+          size="large"
+          class="font-weight-black my-2 mt-10"
+        >
+          취소
+        </v-btn>
+        <div style="width: 20px"></div>
+        <v-btn
+          :disabled="false"
+          width="120"
+          size="large"
+          class="font-weight-black my-2 mt-10"
+          color="black"
+          @click="updateMemberHandler"
+        >
+          저장
+        </v-btn>
+      </template>
 
-      <div style="width: 30px"></div>
       <v-btn
-        :disabled="isdiable"
-        :width="120"
-        size="x-large"
-        class="bg-black font-weight-black my-2"
+        v-if="!editable"
+        width="180"
+        size="large"
+        class="bg-black font-weight-black my-2 mt-10"
         @click="toggleEditing"
       >
-        {{ editable ? '저장하기' : '수정하기' }}
+        수정하기
       </v-btn>
     </div>
   </div>
 </template>
 
 <script setup>
-import {
-  ref,
-  onBeforeMount,
-  nextTick,
-  defineProps,
-  watch,
-  computed,
-} from 'vue';
+import { ref, onBeforeMount, nextTick, defineProps, watch } from 'vue';
 import { memberDetailApi } from '@/apis/service/histories/memberInfoApi.js';
+import { useAuthStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+import ProgressSprinner from '@/components/common/ProgressSprinner.vue';
+import { useLoadingStore } from '@/store/loading';
+import { updateMemberAPI } from '@/apis/service/auth/authApi';
+
+const { xs } = useDisplay();
+
+const auth = useAuthStore();
+const { authInfo } = storeToRefs(auth);
+
+const loading = useLoadingStore();
+const { isLoading } = storeToRefs(loading);
 
 const props = defineProps(['clickMember']);
 
@@ -184,7 +235,7 @@ const changeHasLicense = ref();
 const changeGender = ref();
 
 const renderKey = ref(true);
-const isdiable = ref(false);
+const isDisable = ref(false);
 
 const password = ref();
 const confirmPassword = ref();
@@ -202,25 +253,14 @@ const firstInput = ref(null);
 
 const isNameValid = ref(true);
 
-const validateNameInput = () => {
-  const regex = /^[가-힣]+$/; // 정규식으로 한글 문자만 허용
-
-  if (!regex.test(changeName.value)) {
-    isNameValid.value = false;
-    isdiable.value = true;
-  } else {
-    isNameValid.value = true;
-  }
-};
-
 const isPasswordValid = ref(true);
 
 const validatePassword = () => {
-  const regex = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}/;
+  const regex = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,20}/;
 
   if (!regex.test(password.value)) {
     isPasswordValid.value = false;
-    isdiable.value = true;
+    isDisable.value = true;
   } else {
     isPasswordValid.value = true;
   }
@@ -229,7 +269,7 @@ const validatePassword = () => {
 const editable = ref(false);
 watch(editable, () => {
   if (editable.value) {
-    isdiable.value = true;
+    isDisable.value = true;
   }
 });
 
@@ -242,17 +282,18 @@ watch([changeName, changeTel, changeHasLicense, changeGender], () => {
     orderData.value.hasLicense.toString() === changeHasLicense.value &&
     orderData.value.gender === changeGender.value
   ) {
-    isdiable.value = true;
+    isDisable.value = true;
   } else {
-    isdiable.value = false;
+    isDisable.value = false; // 활성화
+
     if (!regex.test(changeName.value)) {
       isNameValid.value = false;
-      isdiable.value = true;
+      isDisable.value = true;
       return;
     } else {
       isNameValid.value = true;
       if (orderData.value.name === changeName.value) {
-        isdiable.value = true;
+        isDisable.value = true;
         return;
       }
     }
@@ -261,7 +302,7 @@ watch([changeName, changeTel, changeHasLicense, changeGender], () => {
 
 const fetchData = async () => {
   try {
-    const memberId = 1; // 예시로 memberId 설정
+    const memberId = authInfo.value.id;
     const res = await memberDetailApi(memberId);
 
     orderData.value = res.data.data;
@@ -279,7 +320,7 @@ const cancelEditing = () => {
   fetchData();
   renderKey.value = !renderKey.value;
   editable.value = false;
-  isdiable.value = false;
+  isDisable.value = false;
   isNameValid.value = true;
   password.value = '';
   confirmPassword.value = '';
@@ -301,14 +342,14 @@ const passwordMismatch = ref(false);
 
 const checkPasswordMatch = () => {
   if (password.value === '' && confirmPassword.value === '') {
-    isdiable.value = true;
+    isDisable.value = true;
     passwordMismatch.value = false;
   } else {
     if (password.value != confirmPassword.value) {
-      isdiable.value = true;
+      isDisable.value = true;
       passwordMismatch.value = true;
     } else {
-      isdiable.value = false;
+      isDisable.value = false;
       passwordMismatch.value = false;
     }
   }
@@ -316,8 +357,25 @@ const checkPasswordMatch = () => {
 
 onBeforeMount(() => {
   fetchData();
-  isdiable.value = false;
+  isDisable.value = false;
 });
+
+const updateMemberHandler = async () => {
+  try {
+    const body = {
+      name: changeName.value,
+      password: password.value,
+      tel: changeTel.value,
+      gender: changeGender.value,
+      hasLicense: changeHasLicense.value,
+    };
+
+    const { data } = await updateMemberAPI(body);
+    editable.value = false;
+  } catch (e) {
+    console.error('updateMemberHandler: ', e);
+  }
+};
 </script>
 
 <style lang="scss" scoped>

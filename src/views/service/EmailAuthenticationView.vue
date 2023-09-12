@@ -35,7 +35,7 @@
                 <v-btn
                   :loading="loading"
                   @click="sendEmailCode"
-                  variant="text"
+                  variant="outlined"
                   :disabled="disabled"
                   v-bind="props"
                   >인증번호 발송</v-btn
@@ -68,7 +68,9 @@
                 >{{ successMsg }}</span
               >
               <span v-else></span>
-              <v-btn @click="verifyEmailCode" variant="text">인증하기</v-btn>
+              <v-btn @click="verifyEmailCode" variant="outlined" width="120"
+                >인증하기</v-btn
+              >
             </v-sheet>
           </template>
         </v-form>

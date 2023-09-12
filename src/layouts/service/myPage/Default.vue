@@ -4,15 +4,17 @@
 
     <v-tabs
       v-model="tab"
-      class="mt-15"
       color="deep-black-accent-4"
       align-tabs="center"
+      style="margin-top: 80px"
     >
       <v-tab
+        class="font-weight-bold"
+        :width="xs ? 100 : 200"
         v-for="item in items"
         :key="item"
         :value="item"
-        style="font-size: 20px"
+        :class="xs ? 'fs-15' : 'fs-20'"
         :is="selectedComponent"
         @click="changeFlag"
       >
@@ -33,7 +35,9 @@
 import DefaultBar from '@/layouts/common/AppBar.vue';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { memberDetailApi } from '@/apis/service/histories/memberInfoApi.js';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const { xs } = useDisplay();
 
 const clickMember = ref(true);
 
@@ -88,3 +92,13 @@ const changeFlag = () => {
   }
 };
 </script>
+
+<style scoped>
+.fs-20 {
+  font-size: 20px;
+}
+
+.fs-15 {
+  font-size: 15px;
+}
+</style>

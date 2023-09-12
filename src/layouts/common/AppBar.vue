@@ -6,8 +6,8 @@
     ></v-app-bar-nav-icon>
 
     <v-container class="d-flex justify-space-between align-center">
-      <RouterLink to="/" class="nav-title font-weight-black text-sm-h5">
-        I was a car
+      <RouterLink to="/" class="nav-title font-weight-black text-sm-h6">
+        I WAS A CAR
       </RouterLink>
 
       <template v-if="isLogin">
@@ -35,8 +35,8 @@
   >
     <v-list nav>
       <v-list-item
-        v-for="item in navItems"
-        :key="item.value"
+        v-for="(item, idx) in navItems"
+        :key="idx"
         :to="item.to"
         @click="logoutHandler($event, item)"
       >
@@ -56,7 +56,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const auth = useAuthStore();
-const { setLogout, initAuthInfo } = auth;
+const { initAuthInfo } = auth;
 const { isLogin } = storeToRefs(auth);
 
 const drawer = ref(false);
@@ -71,11 +71,9 @@ const logoutHandler = async (e, item) => {
     try {
       const data = await logoutAPI();
       if (data === 204) {
-        console.log('[로그아웃 완료]');
         initAuthInfo();
         router.push({ name: 'Home' });
       }
-      setLogout();
     } catch (e) {
       console.error('logoutHandler: ', e);
     }

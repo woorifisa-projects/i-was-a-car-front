@@ -1,10 +1,12 @@
 <template>
-  <v-container>
-    <v-sheet
-      class="d-flex justify-space-around flex-wrap align-content-stretch"
-    >
+  <ProgressSpinner v-if="isLoading" />
+
+  <v-container v-else>
+    <v-sheet class="mt-5 d-sm-flex">
       <Suspense>
-        <ImageSlider :carImages="carImages"></ImageSlider>
+        <div :class="xs ? 'wp-100' : 'wp-50'">
+          <ImageSlider :carImages="carImages"></ImageSlider>
+        </div>
       </Suspense>
 
       <Suspense>
@@ -33,6 +35,14 @@
 import { ref, onBeforeMount, defineAsyncComponent } from 'vue';
 import { findProductDetail } from '@/apis/service/products/productApi.js';
 import { useRoute } from 'vue-router';
+import { useLoadingStore } from '@/store/loading';
+import { storeToRefs } from 'pinia';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+const { xs } = useDisplay();
+
+const loading = useLoadingStore();
+const { isLoading } = storeToRefs(loading);
 
 const carImages = ref([]);
 const carInfo = ref({});
@@ -73,4 +83,12 @@ onBeforeMount(async () => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.wp-50 {
+  min-width: 50%;
+}
+
+.wp-100 {
+  min-width: 100%;
+}
+</style>

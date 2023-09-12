@@ -4,9 +4,10 @@ import { dateFormat } from '@/utils';
 
 export const useSaleStore = defineStore('saleStore', () => {
   const request = ref({});
-  const response = ref({});
+  const saleResponse = ref({});
   const distance = ref(0);
   const images = ref([]);
+  const carInfo = ref();
 
   const setMeetingInfo = (meetingSchedule, zipCode, address, addressDetail) => {
     request.value.meetingSchedule = dateFormat(meetingSchedule);
@@ -20,13 +21,18 @@ export const useSaleStore = defineStore('saleStore', () => {
     distance.value = d;
   };
 
-  const combineResponse = (carInfo) => Object.assign(request.value, carInfo);
+  const combineResponse = (c) => {
+    Object.assign(request.value, c);
+    carInfo.value = c;
+  };
+
   const addStoreImages = (imgs) => {
     images.value = imgs;
-    // images.value.push(...imgs);
   };
 
   const setFinanceInfo = (price, accountHolder, bankId, accountNumber) => {
+    carInfo.value.price = price;
+
     request.value.price = price;
     request.value.accountHolder = accountHolder;
     request.value.bankId = bankId;
@@ -34,7 +40,7 @@ export const useSaleStore = defineStore('saleStore', () => {
   };
 
   const getRequestBody = () => {};
-  const setResponse = (resp) => (response.value = resp);
+  const setResponse = (resp) => (saleResponse.value = resp);
 
   return {
     request,
@@ -47,6 +53,7 @@ export const useSaleStore = defineStore('saleStore', () => {
     setFinanceInfo,
     getRequestBody,
     setResponse,
-    response,
+    saleResponse,
+    carInfo,
   };
 });

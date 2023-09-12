@@ -36,41 +36,30 @@
       (만원)<br />「을」이 「갑」에게 다음과 같이 지급한다
     </div>
 
-    <v-dialog v-model="tradeDialog" width="800">
+    <v-dialog v-model="dialogOne" width="800">
       <template v-slot:activator="{ props }">
         <v-btn
           class="mt-5"
           variant="outlined"
-          @click="showDialog"
           :elevation="0"
           block
           v-bind="props"
+          :disabled="radioReadOnly"
         >
           매매 계약서 세부 사항 확인
         </v-btn>
       </template>
 
-      <v-card>
-        <AgreementCheck :contract="tradeContract"></AgreementCheck>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="grey"
-            variant="text"
-            @click="[(tradeDialog = false), (tradeAgreeRadio = 'disagree')]"
-          >
-            동의 안 함
-          </v-btn>
-          <v-btn
-            color="black"
-            variant="outlined"
-            @click="[(tradeDialog = false), (tradeAgreeRadio = 'agree')]"
-          >
-            동의 하기
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <Dialog
+        :dialog="dialogOne"
+        :xs="xs"
+        :items="tradeContract"
+        :number="'one'"
+        @agreeEvent="agreeHandler"
+        @disagreeEvent="disagreeHandler"
+      ></Dialog>
     </v-dialog>
+
     <div class="d-flex justify-space-between align-content-center">
       <div class="align-self-center">매매 계약서 확인 및 동의</div>
       <div>
@@ -79,6 +68,7 @@
           v-model="tradeAgreeRadio"
           inline
           row
+          :readonly="radioReadOnly"
         >
           <v-radio label="동의" value="agree"></v-radio>
           <v-radio label="동의 안함" value="disagree"></v-radio>
@@ -86,41 +76,31 @@
       </div>
     </div>
 
-    <v-dialog v-model="dialog" width="800">
+    <v-dialog v-model="dialogTwo" width="800">
       <template v-slot:activator="{ props }">
         <v-btn
           class="mt-5"
           variant="outlined"
-          @click="showDialog"
           :elevation="0"
           block
           v-bind="props"
+          @click="dialogTwo"
+          :disabled="radioReadOnly"
         >
           환불 약관
         </v-btn>
       </template>
 
-      <v-card>
-        <AgreementCheck :contract="refundContract"></AgreementCheck>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="grey"
-            variant="text"
-            @click="[(dialog = false), (agreeRadio = 'disagree')]"
-          >
-            동의 안 함
-          </v-btn>
-          <v-btn
-            color="black"
-            variant="outlined"
-            @click="[(dialog = false), (agreeRadio = 'agree')]"
-          >
-            동의 하기
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <Dialog
+        :dialog="dialogTwo"
+        :xs="xs"
+        :items="refundContract"
+        :number="'two'"
+        @agreeEvent="agreeHandler"
+        @disagreeEvent="disagreeHandler"
+      ></Dialog>
     </v-dialog>
+
     <div class="d-flex justify-space-between align-content-center">
       <div class="align-self-center">환불 약관 확인 및 동의</div>
       <div>
@@ -129,6 +109,7 @@
           v-model="agreeRadio"
           inline
           row
+          :readonly="radioReadOnly"
         >
           <v-radio label="동의" value="agree"></v-radio>
           <v-radio label="동의 안함" value="disagree"></v-radio>
@@ -139,9 +120,18 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, watch } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
-import AgreementCheck from '@/components/contract/AgreementCheck.vue';
+import { useBtnStore } from '@/store/btnStore';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { useContractStore } from '@/store/contractStore';
+
+import Dialog from '@/components/service/Dialog.vue';
+import { storeToRefs } from 'pinia';
+
+const contractStore = useContractStore();
+const { radioReadOnly } = storeToRefs(contractStore);
+const { setRadioReadOnly, setContract, setIsConsent } = contractStore;
 
 const props = defineProps([
   'seller',
@@ -158,12 +148,9 @@ const tradingContractId = 8;
 const refundContractId = 7;
 
 const tradeAgreeRadio = ref('disagree');
-const tradeDialog = ref(false);
-
 const agreeRadio = ref('disagree');
-const dialog = ref(false);
-const showDialog = ref();
-// const enctype = ref(props.enctype == null ? 'application/x-www-form-urlencoded' : props.enctype);
+const dialogOne = ref(false);
+const dialogTwo = ref(false);
 
 /***** Props *****/
 const seller = ref(props.seller);
@@ -177,22 +164,62 @@ const fuel = ref(props.fuel);
 const tradeContract = ref([]);
 const refundContract = ref([]);
 
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
+
 onBeforeMount(async () => {
+  setRadioReadOnly(false);
+  setBtnCondition(false);
+  setIsConsent(false);
   try {
     const traderesponse = await findContractById(tradingContractId);
     tradeContract.value = traderesponse.data.data;
+    setContract(tradeContract.value);
 
     const refundresponse = await findContractById(refundContractId);
     refundContract.value = refundresponse.data.data;
+    setContract(refundContract.value);
   } catch (e) {
     console.error(e);
   }
 });
 
-async () => {
-  try {
-  } catch (e) {
-    console.error(e);
+watch([tradeAgreeRadio, agreeRadio], () => {
+  if (tradeAgreeRadio.value === 'agree' && agreeRadio.value === 'agree') {
+    setBtnCondition(true);
+    setIsConsent(true);
+  } else {
+    setBtnCondition(false);
+  }
+});
+
+const { xs } = useDisplay();
+
+const toggeDialogOne = () => {
+  dialogOne.value = !dialogOne.value;
+};
+
+const toggeDialogTwo = () => {
+  dialogTwo.value = !dialogTwo.value;
+};
+
+const agreeHandler = (value) => {
+  if (value === 'one') {
+    tradeAgreeRadio.value = 'agree';
+    toggeDialogOne();
+  } else if (value === 'two') {
+    agreeRadio.value = 'agree';
+    toggeDialogTwo();
+  }
+};
+
+const disagreeHandler = (value) => {
+  if (value === 'one') {
+    tradeAgreeRadio.value = 'disagree';
+    toggeDialogOne();
+  } else if (value === 'two') {
+    agreeRadio.value = 'disagree';
+    toggeDialogTwo();
   }
 };
 </script>

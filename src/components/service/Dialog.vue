@@ -13,19 +13,22 @@
       </v-card-title>
 
       <v-card-text class="scrollable-content">
-        <v-card-text v-for="(item, idx) in items" :key="idx">
-          {{ item.content }}
-        </v-card-text>
-        <v-card-text v-for="(item, idx) in items">
-          {{ item.content }}
-        </v-card-text>
+        <template v-for="(item, idx) in items" :key="idx">
+          <v-card-text
+            v-if="item.documentName == `자동차 매매 계약서` && item.order > 3"
+            >{{ item.content }}
+          </v-card-text>
+          <v-card-text v-if="item.documentName != `자동차 매매 계약서`"
+            >{{ item.content }}
+          </v-card-text>
+        </template>
       </v-card-text>
 
       <v-card-actions class="fixed-bottom d-flex justify-end">
         <v-btn @click="disagreeEvent" width="100">동의 안함</v-btn>
-        <v-btn class="black-btn" @click="agreeEvent" width="100"
-          >동의 하기</v-btn
-        >
+        <v-btn class="black-btn" @click="agreeEvent" width="100">
+          동의 하기
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -66,7 +69,7 @@ const disagreeEvent = () => {
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 3px;
   }
 
   &::-webkit-scrollbar-thumb {
