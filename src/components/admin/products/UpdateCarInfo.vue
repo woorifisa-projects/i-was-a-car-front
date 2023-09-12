@@ -27,7 +27,12 @@
             </div>
           </v-card-item>
         </div>
-        <BtnBlack :msg="'정보수정'" @click="uploadInfo"></BtnBlack>
+
+        <BtnBlack
+          :msg="'정보수정'"
+          :destination="''"
+          @click="uploadInfo"
+        ></BtnBlack>
       </div>
     </v-card-item>
   </v-card>

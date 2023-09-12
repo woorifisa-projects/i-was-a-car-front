@@ -42,7 +42,7 @@ const addPerformanceCheck = async (productId, formData) => {
 };
 
 const updatePriceAndLabel = async (productId, price, labelId) => {
-  return await instance.patch(`admin/products/${productId}`, {
+  return await instance.patch(`/admin/products/${productId}`, {
     price: price,
     labelId: labelId,
   });
