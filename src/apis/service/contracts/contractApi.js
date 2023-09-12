@@ -1,4 +1,6 @@
 import { instance } from '@/apis/index.js';
+import { useContractStore } from '@/store/contractStore';
+import { storeToRefs } from 'pinia';
 
 const findContractById = (contractId) => {
     return instance.get(`/documents/${contractId}`);
@@ -32,4 +34,16 @@ const getIdentification = (name, rrnf, rrnb) => {
     });
 }
 
-export { findContractById, findSpecificLoan, findSpecificinsurance, getBanks, getIdentification };
+const createConscent = async () => {
+  const store = useContractStore();
+  const { request } = storeToRefs(store);
+
+
+  return await instance({
+    method: 'POST',
+    url: '/consents',
+    data: request.value,
+  });
+};
+
+export { findContractById, findSpecificLoan, findSpecificinsurance, getBanks, getIdentification, createConscent };

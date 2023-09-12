@@ -72,7 +72,7 @@ const bankList = ref();
 
 const cardTitle = ref('가격 및 계좌정보 입력');
 const next = ref('다음');
-const nextUrl = ref('7');
+const nextUrl = ref('6');
 
 const price = ref(request.value.price);
 const accountHolder = ref(request.value.accountHolder);

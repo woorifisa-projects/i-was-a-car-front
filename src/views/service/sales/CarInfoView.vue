@@ -95,7 +95,7 @@ onBeforeMount(() => {
 const model = ref();
 const cardTitle = ref('차량정보');
 const next = ref('다음');
-const nextUrl = ref('5');
+const nextUrl = ref('4');
 const carNumber = ref(carInfo.value.info);
 const infos = ref([]);
 const isLoaded = ref(carInfo.value.images !== undefined);

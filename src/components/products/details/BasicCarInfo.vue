@@ -2,13 +2,15 @@
   <div class="d-flex flex-column justify-space-around w-100 px-10">
     <v-card-text class="w-100 d-flex flex-column justify-space-between">
       <v-card-title
-        class="font-weight-bold h-50 text-h5 text-sm-h4 text-center"
+        class="font-weight-bold h-50 text-h5 text-sm-h4 text-center mb-5 mb-sm-0"
         style="white-space: pre-line"
         >{{ carInfo.brand }} {{ carInfo.name }} {{ carInfo.fuel }}
         {{ carInfo.displacement }}</v-card-title
       >
 
-      <v-card-text class="h-50 d-flex justify-space-between">
+      <v-card-text
+        class="h-50 d-flex flex-column justify-space-between flex-sm-row"
+      >
         <v-chip
           class="ma-2 font-weight-bold"
           variant="outlined"
@@ -29,16 +31,35 @@
 
       <v-divider></v-divider>
 
-      <v-card-text class="text-h6 text-sm-h5 font-weight-bold text-right">
-        판매 가격: {{ carInfo.price / 10000 }}만원
+      <v-card-text
+        class="text-subtitle-1 text-sm-h5 font-weight-bold text-right"
+      >
+        판매 가격:
+        <span
+          style="color: rgb(81, 81, 255); font-size: 32px; font-weight: 900"
+          >{{ Math.floor(carInfo.price / 10000).toLocaleString() }}</span
+        >
+        만원
       </v-card-text>
     </v-card-text>
+
     <br />
 
-    <v-btn class="w-100" color="black" size="x-large" @click="selectedProduct"
-      >구매하기</v-btn
-    >
-
+    <div class="d-flex justify-space-between align-center">
+      <v-btn
+        :width="xs ? 120 : 200"
+        variant="outlined"
+        :size="xs ? 'large' : 'x-large'"
+        @click="goBack"
+        >뒤로</v-btn
+      >
+      <v-btn
+        :width="xs ? 120 : 200"
+        color="black"
+        :size="xs ? 'large' : 'x-large'"
+        >구매하기</v-btn
+      >
+    </div>
   </div>
 </template>
 
@@ -50,11 +71,14 @@ import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 
 const router = useRouter();
 
-
 const { xs } = useDisplay();
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
+
+const goBack = () => {
+  router.go(-1);
+}
 
 const purchaseStore = usePurchaseStore();
 const { setCarInfo } = purchaseStore;

@@ -44,6 +44,7 @@
           :elevation="0"
           block
           v-bind="props"
+          :disabled="radioReadOnly"
         >
           매매 계약서 세부 사항 확인
         </v-btn>
@@ -67,6 +68,7 @@
           v-model="tradeAgreeRadio"
           inline
           row
+          :readonly="radioReadOnly"
         >
           <v-radio label="동의" value="agree"></v-radio>
           <v-radio label="동의 안함" value="disagree"></v-radio>
@@ -83,6 +85,7 @@
           block
           v-bind="props"
           @click="dialogTwo"
+          :disabled="radioReadOnly"
         >
           환불 약관
         </v-btn>
@@ -106,6 +109,7 @@
           v-model="agreeRadio"
           inline
           row
+          :readonly="radioReadOnly"
         >
           <v-radio label="동의" value="agree"></v-radio>
           <v-radio label="동의 안함" value="disagree"></v-radio>
@@ -120,8 +124,14 @@ import { ref, onBeforeMount, watch } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
 import { useBtnStore } from '@/store/btnStore';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { useContractStore } from '@/store/contractStore';
 
 import Dialog from '@/components/service/Dialog.vue';
+import { storeToRefs } from 'pinia';
+
+const contractStore = useContractStore();
+const { radioReadOnly } = storeToRefs(contractStore);
+const { setRadioReadOnly, setContract, setIsConsent } = contractStore;
 
 const props = defineProps([
   'seller',
@@ -158,14 +168,17 @@ const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
 
 onBeforeMount(async () => {
+  setRadioReadOnly(false);
   setBtnCondition(false);
-
+  setIsConsent(false);
   try {
     const traderesponse = await findContractById(tradingContractId);
     tradeContract.value = traderesponse.data.data;
+    setContract(tradeContract.value);
 
     const refundresponse = await findContractById(refundContractId);
     refundContract.value = refundresponse.data.data;
+    setContract(refundContract.value);
   } catch (e) {
     console.error(e);
   }
@@ -174,6 +187,7 @@ onBeforeMount(async () => {
 watch([tradeAgreeRadio, agreeRadio], () => {
   if (tradeAgreeRadio.value === 'agree' && agreeRadio.value === 'agree') {
     setBtnCondition(true);
+    setIsConsent(true);
   } else {
     setBtnCondition(false);
   }
