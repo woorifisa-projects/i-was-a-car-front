@@ -29,6 +29,7 @@ import PriceAndAccountView from '@/views/service/sales/PriceAndAccountView.vue';
 import ContractView from '@/views/service/sales/ContractView.vue';
 import MeetingView from '@/views/service/sales/MeetingView.vue';
 import DoneView from '@/views/service/common/DoneView.vue';
+import { storeToRefs } from 'pinia';
 
 const store = useSaleStore();
 const { response } = storeToRefs(store);

@@ -8,14 +8,23 @@ export const useContractStore = defineStore('contractStore', () => {
   const productId = ref();
   const response = ref();
   const radioReadOnly = ref(false);
+  const marketingDocumnetItems = ref([]);
+  const isConsentMarketing = ref(false);
 
   const setContract = (d) => {
     documentItems.value.push(...d);
   };
 
+  const setMarketingContract = (d) => {
+    marketingDocumnetItems.value.push(...d);
+  };
+
   const setIsConsent = (v) => {
     isConsent.value = v;
+  }
 
+  const setIsConsentMarketing = (v) => {
+    isConsent.value = v;
   }
 
   const setConsent = (di, c, m) => {
@@ -53,12 +62,16 @@ export const useContractStore = defineStore('contractStore', () => {
     productId,
     radioReadOnly,
     response,
+    marketingDocumnetItems,
+    isConsentMarketing,
     setContract,
     setIsConsent,
     setConsent,
     setProductId,
     setRadioReadOnly,
     resetRequest,
-    setResponse
+    setResponse,
+    setIsConsentMarketing,
+    setMarketingContract
   };
 });

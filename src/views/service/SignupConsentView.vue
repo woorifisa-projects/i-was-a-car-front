@@ -146,6 +146,7 @@
           height="40"
           class="bg-black"
           to="/signup"
+          @click="consentPost"
           >다음</v-btn
         >
       </v-sheet>
@@ -159,6 +160,16 @@ import { findContractById } from '@/apis/service/contracts/contractApi';
 import { onBeforeMount } from 'vue';
 import { ref, watch } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { useContractStore } from '@/store/contractStore';
+
+const contractStore = useContractStore();
+const {
+  setContract,
+  setMarketingContract,
+  setIsConsent,
+  setIsConsentMarketing,
+  resetRequest,
+} = contractStore;
 
 const dialogOne = ref(false);
 
@@ -206,6 +217,7 @@ const agreeHandler = (value) => {
   } else if (value === 'three') {
     selected.value.three = true;
     toggeDialogThree();
+    setIsConsentMarketing(true);
   }
 };
 
@@ -219,6 +231,7 @@ const disagreeHandler = (value) => {
   } else if (value === 'three') {
     selected.value.three = false;
     toggeDialogThree();
+    setIsConsentMarketing(false);
   }
 };
 
@@ -239,14 +252,19 @@ const toggleAllCheckboxes = () => {
 watch(selected.value, (newState) => {
   const filterTrue = Object.values(newState).filter((state) => state);
 
-  if (selected.value.one && selected.value.two) {
+  if (selected.value.one && selected.value.two && filterTrue.length < 3) {
     isVerifyAuthentication.value = false;
+    setIsConsent(true);
+    selectedAll.value = false;
   } else if (filterTrue.length === 3) {
     selectedAll.value = true;
+    setIsConsent(true);
+    setIsConsentMarketing(true);
   } else {
     isVerifyAuthentication.value = true;
-
     selectedAll.value = false;
+    setIsConsent(false);
+    setIsConsentMarketing(false);
   }
 });
 
@@ -273,11 +291,16 @@ onBeforeMount(async () => {
       getMarketing(),
     ]);
 
+    resetRequest();
+
     serviceData.value = serviceResp;
+    setContract(serviceData.value);
 
     personalInfoData.value = personalInfoResp;
+    setContract(personalInfoData.value);
 
     marketingData.value = marketingResp;
+    setMarketingContract(marketingData.value);
   } catch (e) {
     console.error('동의항목 API 호출: ', e);
   }

@@ -135,6 +135,18 @@ import { computed } from 'vue';
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { useContractStore } from '@/store/contractStore';
+import { createConscent } from '@/apis/service/contracts/contractApi';
+
+const contractStore = useContractStore();
+const { setConsent, setResponse, resetRequest } = contractStore;
+const {
+  request,
+  documentItems,
+  marketingDocumnetItems,
+  isConsent,
+  isConsentMarketing,
+} = storeToRefs(contractStore);
 
 const { xs } = useDisplay();
 
@@ -231,8 +243,33 @@ const signupHandler = async () => {
     const { data } = await signupAPI(form.value);
 
     verifiedAuth(data);
+    console.log(data);
 
-    router.push({ name: 'Home' });
+    try {
+      //문서 동의 항목 저장
+      documentItems.value.forEach((e) => {
+        setConsent(e.documentItemId, isConsent.value, data.id);
+      });
+
+      marketingDocumnetItems.value.forEach((e) => {
+        setConsent(e.documentItemId, isConsentMarketing.value, data.id);
+      });
+
+      await createConscent()
+        .then((resp) => {
+          console.log(resp);
+          const response = resp.data.data;
+          setResponse(response);
+          console.log(response);
+        })
+        .catch((e) => console.error(e));
+
+      resetRequest();
+
+      router.push({ name: 'Home' });
+    } catch (e) {
+      console.log('문서 저장 오류: ', e);
+    }
   } catch (e) {
     if (e.response.status === 401) {
       console.error('signupHandler: ', e);
