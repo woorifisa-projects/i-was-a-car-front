@@ -69,8 +69,6 @@ const onClickNextBtnEmit = async () => {
     setConsent(e.documentItemId, isConsent.value, authInfo.value.id);
   });
 
-  console.log(request.value);
-
   await createConscent()
     .then((resp) => {
       const response = resp.data.data;
@@ -79,7 +77,6 @@ const onClickNextBtnEmit = async () => {
     .catch((e) => console.error(e));
 
   resetRequest();
-  console.log(request.value);
 };
 </script>
 
