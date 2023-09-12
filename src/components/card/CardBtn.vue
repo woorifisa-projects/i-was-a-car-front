@@ -89,7 +89,7 @@ const onClickNextBtn = async () => {
   }
 
   if (next.value === '마이페이지로' && type.value === 'sale') {
-    console.log(saleResponse.value);
+    
     nextUrl.value = `/sale/${saleResponse.value.saleId}`;
     router.push(nextUrl.value);
     // router.push({
@@ -102,7 +102,6 @@ const onClickNextBtn = async () => {
   }
 
   if (next.value === '마이페이지로' && type.value === 'purchase') {
-    console.log(purchaseResponse.value);
     nextUrl.value = `/purchase/${purchaseResponse.value.id}`;
     router.push(nextUrl.value);
 
