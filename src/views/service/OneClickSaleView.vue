@@ -18,7 +18,6 @@
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 
 import BasicInfoView from '@/views/service/common/BasicInfoView.vue';
@@ -29,7 +28,6 @@ import PriceAndAccountView from '@/views/service/sales/PriceAndAccountView.vue';
 import ContractView from '@/views/service/sales/ContractView.vue';
 import MeetingView from '@/views/service/sales/MeetingView.vue';
 import DoneView from '@/views/service/common/DoneView.vue';
-import { storeToRefs } from 'pinia';
 
 const route = useRoute();
 </script>
