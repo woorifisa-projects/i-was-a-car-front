@@ -3,6 +3,7 @@
     :cardTitle="cardTitle"
     :next="next"
     :nextUrl="nextUrl"
+    :type="'sale'"
     @onClickNextBtnEmit="onClickNextBtnEmit"
   >
     <div
@@ -47,7 +48,7 @@ const saleStore = useSaleStore();
 const { carInfo } = storeToRefs(saleStore);
 
 const contractStore = useContractStore();
-const { setConsent, setResponse } = contractStore;
+const { setConsent, setResponse, resetRequest } = contractStore;
 const { request, documentItems, isConsent } = storeToRefs(contractStore);
 
 const btnStore = useBtnStore();
@@ -71,12 +72,14 @@ const onClickNextBtnEmit = async () => {
   console.log(request.value);
 
   await createConscent()
-
     .then((resp) => {
       const response = resp.data.data;
       setResponse(response);
     })
     .catch((e) => console.error(e));
+
+  resetRequest();
+  console.log(request.value);
 };
 </script>
 

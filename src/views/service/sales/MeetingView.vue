@@ -81,7 +81,6 @@ const onClickNextBtnEmit = async () => {
       console.log(resp);
       const response = resp.data.data;
       setResponse(response);
-      isLoading.value = false;
     })
     .catch((e) => console.error(e));
 };

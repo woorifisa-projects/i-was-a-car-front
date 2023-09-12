@@ -4,7 +4,7 @@ import { dateFormat } from '@/utils';
 
 export const useSaleStore = defineStore('saleStore', () => {
   const request = ref({});
-  const response = ref({});
+  const saleResponse = ref({});
   const distance = ref(0);
   const images = ref([]);
   const carInfo = ref();
@@ -41,7 +41,7 @@ export const useSaleStore = defineStore('saleStore', () => {
   };
 
   const getRequestBody = () => {};
-  const setResponse = (resp) => (response.value = resp);
+  const setResponse = (resp) => (saleResponse.value = resp);
 
   return {
     request,
@@ -54,7 +54,7 @@ export const useSaleStore = defineStore('saleStore', () => {
     setFinanceInfo,
     getRequestBody,
     setResponse,
-    response,
+    saleResponse,
     carInfo
   };
 });
