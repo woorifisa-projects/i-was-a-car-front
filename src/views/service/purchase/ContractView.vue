@@ -3,7 +3,9 @@
     :cardTitle="cardTitle"
     :next="next"
     :nextUrl="nextUrl"
+    :type="'purchase'"
     @onClickNextBtnEmit="onClickNextBtnEmit"
+    s
   >
     <ContractForm
       :seller="iwc"
@@ -29,7 +31,7 @@ import { storeToRefs } from 'pinia';
 import { createConscent } from '@/apis/service/contracts/contractApi';
 
 const contractStore = useContractStore();
-const { setConsent, setResponse } = contractStore;
+const { setConsent, setResponse, resetRequest } = contractStore;
 const { request, documentItems, isConsent } = storeToRefs(contractStore);
 
 const props = defineProps(['nextUrl']);
@@ -59,6 +61,8 @@ const onClickNextBtnEmit = async () => {
       setResponse(response);
     })
     .catch((e) => console.error(e));
+
+  resetRequest();
 };
 </script>
 

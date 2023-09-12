@@ -49,13 +49,11 @@ defineExpose({ input });
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 300px;
   gap: 20px;
   .uploadFiles__form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 350px;
     .uploadFiles__form-attach {
       width: 100px;
       font-size: 30px;
@@ -73,6 +71,14 @@ defineExpose({ input });
         height: 0;
         widows: 0;
       }
+      // @media (max-width: 980px) {
+      //   width: 100px;
+      //   font-size: 18px;
+      //   label {
+      //     width: 100px;
+      //     height: 100px;
+      //   }
+      // }
     }
     .uploadFiles__form-thumbnail {
       width: 450px;
@@ -103,8 +109,8 @@ defineExpose({ input });
       @media (max-width: 980px) {
         > div {
           .thumb {
-            // width: 100px;
-            // height: 100px;
+            width: 100px;
+            height: 100px;
           }
         }
       }

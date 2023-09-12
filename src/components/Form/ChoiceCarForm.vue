@@ -12,7 +12,7 @@
             :key="item.name"
             style="cursor: pointer"
             class="ma-2 pa-2"
-            :class="selectedProduct === item.name ? 'set' : 'set2'"
+            :class="selectedProduct === item.id ? 'set' : 'set2'"
             @click="whichTargetProduct(item)"
           >
             <v-card-text class="mx-auto" width="300">
@@ -103,7 +103,7 @@ onBeforeMount(async () => {
 
 const selectedProduct = ref();
 const whichTargetProduct = (product) => {
-  selectedProduct.value = product.name;
+  selectedProduct.value = product.id;
   emit('targetProduct', product);
 };
 </script>

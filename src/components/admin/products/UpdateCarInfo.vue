@@ -43,6 +43,7 @@
           <BtnBlack
             class="align-self-end mr-4"
             :msg="'정보수정'"
+            :destination="''"
             @click="uploadInfo"
           ></BtnBlack>
         </div>

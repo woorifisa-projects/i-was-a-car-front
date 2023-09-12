@@ -11,6 +11,7 @@
       variant="underlined"
       v-model="meetingSchedule"
       type="datetime-local"
+      :min="minDate"
       class="my-10"
     >
     </v-text-field>
@@ -79,10 +80,16 @@ const onClickNextBtnEmit = async () => {
     .then((resp) => {
       const response = resp.data.data;
       setResponse(response);
-      isLoading.value = false;
     })
     .catch((e) => console.error(e));
 };
+
+const date = new Date();
+const m = date.getMonth() + 1;
+const month = m < 10 ? '0' + m : m;
+const d = date.getDate() + 1;
+const day = d < 10 ? '0' + d : d;
+const minDate = ref(`${date.getFullYear()}-${month}-${day}T09:00`);
 
 watch([meetingSchedule, zipCode, address, addressDetail], ([ms, zc, a, ad]) => {
   const value =

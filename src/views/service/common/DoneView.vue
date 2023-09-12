@@ -1,5 +1,10 @@
 <template>
-  <Card :cardTitle="props.cardTitle" :next="next" :nextUrl="props.nextUrl">
+  <Card
+    :cardTitle="props.cardTitle"
+    :next="next"
+    :nextUrl="props.nextUrl"
+    :type="props.type"
+  >
     <CompleteForm :done="props.done" :info="props.info"></CompleteForm>
   </Card>
 </template>
@@ -10,9 +15,9 @@ import { ref, defineProps } from 'vue';
 import Card from '@/components/card/Card.vue';
 import CompleteForm from '@/components/Form/CompleteForm.vue';
 
-const props = defineProps(['nextUrl', 'cardTitle', 'done', 'info']);
+const props = defineProps(['nextUrl', 'cardTitle', 'done', 'info', 'type']);
 
-const next = ref('거래 상세');
+const next = ref('마이페이지로');
 </script>
 
 <style lang="scss" scoped></style>

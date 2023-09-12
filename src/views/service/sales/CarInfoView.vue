@@ -18,7 +18,7 @@
       <img :src="imgUrl" class="main-img" />
       <br />
       <div>
-        {{ carNumber }}
+        {{ carInfo.info }}
       </div>
       <div>
         <v-sheet
@@ -118,6 +118,30 @@ const addInfo = (carInfo) => {
         contentName: '연식',
         content: `${carInfo.value.year.split('-')[0]}년식`,
       },
+      {
+        contentName: '차종',
+        content: carInfo.value.carType,
+      },
+      {
+        contentName: '색상',
+        content: carInfo.value.color
+      },
+      {
+        contentName: '배기량',
+        content: `${carInfo.value.displacement}`
+      },
+      {
+        contentName: '연료',
+        content: carInfo.value.fuel
+      },
+      {
+        contentName: '연비',
+        content: `${carInfo.value.fuelEfficiency} KM/l`
+      },
+      {
+        contentName: '구동방식',
+        content: carInfo.value.drivingMethod
+      },
     ]
   );
 };
@@ -134,6 +158,7 @@ if (carInfo.value.carName === undefined) {
       addInfo(carInfo);
     })
     .catch((e) => console.error(e));
+    
 } else {
   addInfo(carInfo);
 }

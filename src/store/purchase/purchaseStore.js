@@ -4,7 +4,7 @@ import { dateFormat } from '@/utils';
 
 export const usePurchaseStore = defineStore('purchaseStore', () => {
   const request = ref({}); //페이지마다 변수 모아서 쓸려구 
-  const response = ref({}); //마지막 API 응답값저장
+  const purchaseResponse = ref({}); //마지막 API 응답값저장
   const carType = ref();
   const financeInfo = ref({})
   const carInfo = ref({})
@@ -47,7 +47,7 @@ export const usePurchaseStore = defineStore('purchaseStore', () => {
   
   };
 
-  const setResponse = (resp) => (response.value = resp);
+  const setResponse = (resp) => (purchaseResponse.value = resp);
 
   return {
     request,
@@ -62,6 +62,6 @@ export const usePurchaseStore = defineStore('purchaseStore', () => {
     setResponse,
     setFinanceInfo,
     setMemberId,
-    response,
+    purchaseResponse,
   };
 });

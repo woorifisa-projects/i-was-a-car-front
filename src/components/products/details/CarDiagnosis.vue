@@ -120,19 +120,18 @@
               </div>
               <div style="font-size: 3em; margin-right: 0.2em">⇲</div>
             </div>
-
-            <template v-else>
-              <div>
-                <v-file-input
-                  v-model="file"
-                  label="파일 등록하기"
-                  variant="outlined"
-                  density="dense"
-                  >{{ carInfo.performanceCheck }}</v-file-input
-                >
-                <BtnBlack :msg="'업로드'" @click="uploadFile"></BtnBlack>
-              </div>
-            </template>
+              <template v-else>
+                <div>
+                  <v-file-input
+                    v-model="file"
+                    label="파일 등록하기"
+                    variant="outlined"
+                    density="dense"
+                    >{{ carInfo.performanceCheck }}</v-file-input
+                  >
+                  <BtnBlack :msg="'업로드'" @click="uploadFile"></BtnBlack>
+                </div>
+              </template>
           </v-card>
 
           <v-dialog
@@ -167,7 +166,6 @@ import { ref } from 'vue';
 import PerformanceCheckIcon from './PerformanceCheckIcon.vue';
 import BtnBlack from '@/components/common/BtnBlack.vue';
 import { addPerformanceCheck } from '@/apis/admin/products/productAPI';
-import { useArraySome } from '@vueuse/core';
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
