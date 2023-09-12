@@ -17,7 +17,9 @@
         variant="underlined"
         :readonly="true"
         v-model="targetRrnf"
-        class="w-25"
+        class="w-0"
+        single-line
+        hide-details
       ></v-text-field>
       <div class="align-self-center mx-4">-</div>
       <v-text-field
@@ -30,7 +32,7 @@
         variant="underlined"
         v-model="targetRrnb"
         @keypress="isNumber"
-        class="w-25"
+        class="w-13"
       ></v-text-field>
     </div>
     <v-divider></v-divider>
@@ -45,7 +47,7 @@
           v-bind="props"
           :disabled="radioReadOnly"
         >
-          개인 정보 수집 동의 약관 확인 하기
+          개인 정보 수집 동의 약관 확인하기
         </v-btn>
       </template>
 
@@ -62,7 +64,7 @@
     </v-dialog>
 
     <div class="d-flex justify-space-between align-content-center">
-      <div class="align-self-center">약관 동의</div>
+      <div class="align-self-center font-weight-medium">약관 동의</div>
       <div>
         <v-radio-group
           class="w-30 d-flex align-center"

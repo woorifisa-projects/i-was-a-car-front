@@ -2,7 +2,7 @@
   <div class="d-flex flex-column justify-space-around w-100 px-10">
     <v-card-text class="w-100 d-flex flex-column justify-space-between">
       <v-card-title
-        class="font-weight-bold h-50 text-h5 text-sm-h4 text-center mb-5 mb-sm-0"
+        class="font-weight-bold h-50 text-h5 text-sm-h4 text-left mb-5 mb-sm-0"
         style="white-space: pre-line"
         >{{ carInfo.brand }} {{ carInfo.name }} {{ carInfo.fuel }}
         {{ carInfo.displacement }}</v-card-title
@@ -57,6 +57,7 @@
         :width="xs ? 120 : 200"
         color="black"
         :size="xs ? 'large' : 'x-large'"
+        @click="selectedProduct"
         >구매하기</v-btn
       >
     </div>
@@ -78,7 +79,7 @@ const carInfo = ref(props.carInfo);
 
 const goBack = () => {
   router.go(-1);
-}
+};
 
 const purchaseStore = usePurchaseStore();
 const { setCarInfo } = purchaseStore;

@@ -78,7 +78,6 @@ const onClickNextBtnEmit = async () => {
 
   await createProduct()
     .then((resp) => {
-
       const response = resp.data.data;
       setResponse(response);
     })

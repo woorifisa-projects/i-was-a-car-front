@@ -372,7 +372,6 @@ const updateMemberHandler = async () => {
 
     const { data } = await updateMemberAPI(body);
     editable.value = false;
-    console.log('정보 업데이트 됨: ', data);
   } catch (e) {
     console.error('updateMemberHandler: ', e);
   }

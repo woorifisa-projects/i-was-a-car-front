@@ -179,7 +179,6 @@ const uploadFile = async () => {
     formData.append('performanceCheck', file.value[0]);
     try {
       const response = await addPerformanceCheck(carInfo.value.id, formData);
-      console.log('File uploaded successfully');
       carInfo.value.performanceCheck = response.data.data;
     } catch (error) {
       console.error(error);

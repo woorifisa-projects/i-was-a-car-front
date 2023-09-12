@@ -6,8 +6,8 @@
     ></v-app-bar-nav-icon>
 
     <v-container class="d-flex justify-space-between align-center">
-      <RouterLink to="/" class="nav-title font-weight-black text-sm-h5">
-        I was a car
+      <RouterLink to="/" class="nav-title font-weight-black text-sm-h6">
+        I WAS A CAR
       </RouterLink>
 
       <template v-if="isLogin">

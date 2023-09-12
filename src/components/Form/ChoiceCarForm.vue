@@ -96,7 +96,6 @@ onBeforeMount(async () => {
     );
 
     products.value = response.data.data;
-    console.log(response.data.data);
   } catch (e) {
     console.error(e);
   }

@@ -7,7 +7,7 @@
         variant="outlined"
         width="96%"
         style="cursor: pointer"
-        :class="target === item.name ? 'set' : 'set2'"
+        :class="target === item.id ? 'set' : 'set2'"
         @click="selectedItem(item)"
       >
         <div v-if="dataType === `loan`">
@@ -46,7 +46,7 @@ const dataType = ref(props.dataType);
 const target = ref();
 
 const selectedItem = (item) => {
-  target.value = item.name;
+  target.value = item.id;
   emit('targetFinance', item);
 };
 </script>
