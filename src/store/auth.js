@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const setRrnb = (value) => {
     authInfo.value.rrnb = value;
-  }
+  };
 
   return {
     authInfo,
@@ -44,6 +44,6 @@ export const useAuthStore = defineStore('auth', () => {
     verifiedAuth,
     initAuthInfo,
     setEmailAuthInfo,
-    setRrnb
+    setRrnb,
   };
 });

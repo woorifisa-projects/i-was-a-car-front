@@ -3,7 +3,6 @@ import { multipartFormDataFileList, multipartFormDataJson } from '@/utils';
 import { useSaleStore } from '@/store/sales/saleStore';
 import { storeToRefs } from 'pinia';
 
-
 const getCarInfo = (carNumber, name) => {
   return instance.get('/sales/car-info', {
     params: {

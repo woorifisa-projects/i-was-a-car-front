@@ -54,6 +54,6 @@ export const useSaleStore = defineStore('saleStore', () => {
     getRequestBody,
     setResponse,
     saleResponse,
-    carInfo
+    carInfo,
   };
 });
