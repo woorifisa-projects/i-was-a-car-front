@@ -120,7 +120,6 @@
               </div>
               <div style="font-size: 3em; margin-right: 0.2em">⇲</div>
             </div>
-            
               <template v-else>
                 <div>
                   <v-file-input

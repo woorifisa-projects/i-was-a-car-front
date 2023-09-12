@@ -80,6 +80,7 @@
 <script setup>
 import { logoutAPI } from '@/apis/service/auth/authApi';
 import { useAuthStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
