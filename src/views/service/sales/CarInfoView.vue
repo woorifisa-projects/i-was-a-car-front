@@ -156,7 +156,6 @@ if (carInfo.value.carName === undefined) {
       imgUrl.value = carInfo.value.images[0];
       carNumber.value = carInfo.value.info;
       addInfo(carInfo);
-      console.log(carInfo.value);
     })
     .catch((e) => console.error(e));
     
