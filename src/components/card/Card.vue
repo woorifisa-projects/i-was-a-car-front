@@ -16,6 +16,7 @@
         :nextUrl="nextUrl"
         :prev="prev"
         :prevUrl="prevUrl"
+        :type="props.type"
         @onClickNextBtnEmit="onClickNextBtnEmit"
         @alertTrue="alertTrue"
       ></CardBtn>
@@ -33,7 +34,14 @@ import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const { xs } = useDisplay();
 
-const props = defineProps(['cardTitle', 'next', 'nextUrl', 'prev', 'prevUrl']);
+const props = defineProps([
+  'cardTitle',
+  'next',
+  'nextUrl',
+  'prev',
+  'prevUrl',
+  'type',
+]);
 const emit = defineEmits(['onClickNextBtnEmit', 'alertTrue']);
 const cardTitle = ref(props.cardTitle);
 const next = ref(props.next);

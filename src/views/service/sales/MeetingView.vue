@@ -78,10 +78,9 @@ const onClickNextBtnEmit = async () => {
 
   await createProduct()
     .then((resp) => {
-      console.log(resp);
+
       const response = resp.data.data;
       setResponse(response);
-      isLoading.value = false;
     })
     .catch((e) => console.error(e));
 };

@@ -86,7 +86,7 @@ const headers = ref([
     title: '상품정보',
   },
   { align: 'center', title: '등록일자', sortable: false, key: 'createdAt' },
-  { align: 'center', title: '상품번호', sortable: false, key: 'saleHistoryNo' },
+  { align: 'center', title: '등록번호', sortable: false, key: 'saleHistoryNo' },
   { align: 'center', title: '등록상태', sortable: false, key: 'label' },
 ]);
 
@@ -125,7 +125,6 @@ const getColor = (label) => {
 const goToPage = () => {
   router.push('one-click-sale/1');
 };
-
 </script>
 
 <style lang="scss" scoped></style>

@@ -23,13 +23,19 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, defineProps } from 'vue';
+import { ref, defineEmits, defineProps, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import { useBtnStore } from '@/store/btnStore';
 import { useAuthStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
 import { getIdentification } from '@/apis/service/contracts/contractApi';
 import { useContractStore } from '@/store/contractStore';
+import { useSaleStore } from '@/store/sales/saleStore';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+
+onBeforeMount(() => {
+  setRadioReadOnly(false);
+});
 
 const contractStore = useContractStore();
 const { setRadioReadOnly } = contractStore;
@@ -42,11 +48,18 @@ const authStore = useAuthStore();
 const { authInfo } = storeToRefs(authStore);
 const { setRrnb } = authStore;
 
+const saleStore = useSaleStore();
+const { saleResponse } = storeToRefs(saleStore);
+
+const purchasestore = usePurchaseStore();
+const { purchaseResponse } = storeToRefs(purchasestore);
+
 const emit = defineEmits(['onClickNextBtnEmit', 'alertTrue']);
 const router = useRouter();
-const props = defineProps(['prev', 'prevUrl', 'next', 'nextUrl']);
+const props = defineProps(['prev', 'prevUrl', 'next', 'nextUrl', 'type']);
 
-const nextUrl = props.nextUrl;
+const type = ref(props.type);
+const nextUrl = ref(props.nextUrl);
 const next = ref(isBasicInfo.value ? '본인 인증 하기' : props.next);
 const prevUrl = ref(props.prevUrl == null ? -1 : props.prevUrl);
 const prev = ref(props.prev == null ? '이전' : props.prev);
@@ -61,8 +74,6 @@ const onClickNextBtn = async () => {
         authInfo.value.rrnb
       );
 
-      console.log(response.value);
-
       setisBasicInfo(false);
       next.value = '다음';
       setRadioReadOnly(true);
@@ -76,7 +87,34 @@ const onClickNextBtn = async () => {
 
     return;
   }
-  router.push(nextUrl);
+
+  if (next.value === '마이페이지로' && type.value === 'sale') {
+    
+    nextUrl.value = `/sale/${saleResponse.value.saleId}`;
+    router.push(nextUrl.value);
+    // router.push({
+    //   name: 'SaleHistoryDetail',
+    //   params: {
+    //     id: saleResponse.value.saleId,
+    //   },
+    // });
+    return;
+  }
+
+  if (next.value === '마이페이지로' && type.value === 'purchase') {
+    nextUrl.value = `/purchase/${purchaseResponse.value.id}`;
+    router.push(nextUrl.value);
+
+    // router.push({
+    //   name: 'PurchaseHistoryDetail',
+    //   params: {
+    //     id: purchaseResponse.value.id,
+    //   },
+    // });
+    return;
+  }
+
+  router.push(nextUrl.value);
 };
 
 const toPrev = () => {
