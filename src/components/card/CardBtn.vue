@@ -61,8 +61,6 @@ const onClickNextBtn = async () => {
         authInfo.value.rrnb
       );
 
-      console.log(response.value);
-
       setisBasicInfo(false);
       next.value = '다음';
       setRadioReadOnly(true);

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-10">
+  <v-container class="mt-5 mt-sm-16">
     <div class="d-flex flex-column flex-sm-row">
       <v-autocomplete
         :class="xs ? 'w-100' : 'cw-10'"

@@ -1,19 +1,32 @@
 <template>
   <v-container>
-    <v-sheet
-      class="d-flex justify-space-around flex-wrap align-content-stretch"
-    >
-      <ImageSlider :carImages="carImages"></ImageSlider>
-      <br />
-      <ImageAttach
-        ref="imageRef"
-        :images="imageList"
-        :attachName="attachName"
-        @changeFiles="addImages"
-        @deleteImage="deleteProductImage"
-      ></ImageAttach>
-      <BtnBlack :msg="'사진 업로드'" @click="uploadImageFiles"></BtnBlack>
+    <v-sheet class="d-flex justify-space-around flex-wrap align-end">
+      <div class="w-50">
+        <ImageSlider :carImages="carImages"></ImageSlider>
+      </div>
+      <div class="w-50 d-flex flex-column align-center justify-center">
+        <ImageAttach
+          ref="imageRef"
+          :images="imageList"
+          :attachName="attachName"
+          @changeFiles="addImages"
+          @deleteImage="deleteProductImage"
+        ></ImageAttach>
+        <div class="w-100 d-flex justify-space-around align-center">
+          <v-btn width="200" variant="outlined" size="x-large" @click="goBack"
+            >뒤로</v-btn
+          >
+          <v-btn
+            @click="uploadImageFiles"
+            width="200"
+            color="black"
+            size="x-large"
+            >사진 업로드</v-btn
+          >
+        </div>
+      </div>
     </v-sheet>
+    <br />
 
     <br />
 
@@ -38,9 +51,9 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onMounted, defineAsyncComponent } from 'vue';
+import { ref, onBeforeMount, defineAsyncComponent } from 'vue';
 import { findProductDetail } from '@/apis/service/products/productApi.js';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import {
   findProductHistory,
   uploadImages,
@@ -48,7 +61,8 @@ import {
 import { changeFiles, deleteImage } from '@/utils';
 
 import ImageAttach from '@/components/common/ImageAttach.vue';
-import BtnBlack from '@/components/common/BtnBlack.vue';
+
+const router = useRouter();
 
 const carImages = ref([]);
 const carInfo = ref({});
@@ -57,10 +71,8 @@ const imageRef = ref([]);
 const imageList = ref([]);
 const imageData = ref({});
 const attachName = ref('hello');
-const showImageSlider = ref(true);
 
 const addImages = (files) => {
-  console.log(imageRef.value.input.files);
   changeFiles(files, imageRef, imageList, imageData);
 };
 
@@ -107,13 +119,19 @@ onBeforeMount(async () => {
 const uploadImageFiles = async () => {
   try {
     const formData = new FormData();
+
     Array.from(imageRef.value.input.files).forEach((file) => {
       formData.append('images', file);
     });
-    const response = await uploadImages(carInfo.value.id, formData);
+
+    await uploadImages(carInfo.value.id, formData);
   } catch (e) {
-    console.log('No file selected');
+    console.error('uploadImageFiles: ', e);
   }
+};
+
+const goBack = () => {
+  router.go(-1);
 };
 </script>
 

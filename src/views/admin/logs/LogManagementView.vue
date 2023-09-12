@@ -1,19 +1,28 @@
 <template>
   <div class="center-container">
     <v-sheet>
-      <h2>로그 관리</h2>
+      <v-chip color="black" label size="large" class="px-10">
+        <h3 class="font-weight-bold">로그 관리</h3>
+      </v-chip>
+
       <v-data-table
-        height="500"
+        style="width: 1000px"
+        height="550"
         v-if="orderData.length"
         :page.sync="page"
         :headers="headers"
         :items="orderData"
         :items-per-page="itemsPerPage"
         hide-default-footer
-        class="mt-6"
+        class="mt-10 mx-auto text-center"
       >
+        <template v-slot:item.log="{ item }">
+          <v-chip :color="getColor(item.columns.log)" variant="outlined">
+            {{ item.columns.log }}
+          </v-chip>
+        </template>
         <template v-slot:bottom>
-          <div class="text-center pt-2">
+          <div class="text-center">
             <v-pagination
               v-model="page"
               :length="pageCount"
@@ -36,14 +45,14 @@ const itemsPerPage = 8;
 
 const headers = ref([
   {
-    align: 'start',
+    align: 'center',
     key: 'id',
     sortable: false,
     title: '로그번호',
   },
-  { title: '이메일', key: 'email' },
-  { title: '상태', key: 'log' },
-  { title: '발생 시간', key: 'createdAt' },
+  { align: 'center', title: '이메일', key: 'email', sortable: false },
+  { align: 'center', title: '상태', key: 'log', sortable: false },
+  { align: 'center', title: '발생 시간', key: 'createdAt', sortable: false },
 ]);
 
 const orderData = ref([]);
@@ -67,6 +76,16 @@ onBeforeMount(() => {
 const changePage = (newPage) => {
   page.value = newPage;
   fetchData();
+};
+
+const getColor = (label) => {
+  if (label === '로그인' || label === '탁송완료' || label === '판매완료')
+    return 'success';
+  else if (label === '로그아웃') {
+    return 'orange';
+  } else if (label === '심사중' || label === '심사대기중' || label === '탁송중')
+    return 'blue';
+  else return 'error';
 };
 </script>
 

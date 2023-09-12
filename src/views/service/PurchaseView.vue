@@ -30,13 +30,13 @@
 import { useRoute } from 'vue-router';
 import { useSaleStore } from '@/store/sales/saleStore';
 
-import BasicInfoView from '@/views/service/purchase/BasicInfoView.vue';
+import BasicInfoView from '@/views/service/common/BasicInfoView.vue';
 import SearchCarView from '@/views/service/purchase/SearchCarView.vue';
 import LoansView from '@/views/service/purchase/LoansView.vue';
 import InsurancesView from '@/views/service/purchase/InsurancesView.vue';
 import DeliveryView from '@/views/service/purchase/DeliveryView.vue';
 import ContractView from '@/views/service/purchase/ContractView.vue';
-import DoneView from '@/views/service/purchase/DoneView.vue';
+import DoneView from '@/views/service/common/DoneView.vue';
 import { storeToRefs } from 'pinia';
 
 const store = useSaleStore();
