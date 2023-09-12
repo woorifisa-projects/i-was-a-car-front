@@ -74,7 +74,7 @@ const cardTitle = ref('가격 및 계좌정보 입력');
 const next = ref('다음');
 const nextUrl = ref('6');
 
-const price = ref(request.value.price);
+const price = ref(request.value.price === undefined ? null : request.value.price / 10000);
 const accountHolder = ref(request.value.accountHolder);
 const accountNumber = ref(request.value.accountNumber);
 
