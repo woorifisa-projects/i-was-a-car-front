@@ -18,6 +18,7 @@
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { useSaleStore } from '@/store/sales/saleStore';
 
