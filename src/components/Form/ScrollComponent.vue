@@ -35,7 +35,14 @@
 </template>
 
 <script setup>
+import { onBeforeMount } from 'vue';
 import { ref, defineProps, defineEmits } from 'vue';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { storeToRefs } from 'pinia';
+import { useBtnStore } from '@/store/btnStore';
+
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
 
 const props = defineProps(['finance', 'dataType']);
 const emit = defineEmits(['targetFinance']);
@@ -45,6 +52,22 @@ const dataType = ref(props.dataType);
 
 const target = ref();
 
+onBeforeMount(() => {
+  setBtnCondition(false);
+
+  const purchaseStore = usePurchaseStore();
+  const { request } = storeToRefs(purchaseStore);
+
+  if (!!request.value.loanId && dataType.value === 'loan') {
+    target.value = request.value.loanId;
+    setBtnCondition(true);
+  }
+
+  if (!!request.value.insuranceId && dataType.value === 'insurance') {
+    target.value = request.value.insuranceId;
+    setBtnCondition(true);
+  }
+});
 const selectedItem = (item) => {
   target.value = item.id;
   emit('targetFinance', item);

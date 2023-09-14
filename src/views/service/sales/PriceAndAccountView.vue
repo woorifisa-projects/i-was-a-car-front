@@ -35,7 +35,7 @@
         variant="underlined"
         style="width: 30%; margin-right: 1em"
         density="compact"
-        v-model="selectedBank.id"
+        v-model="selectedBank"
       ></v-select>
 
       <v-text-field
@@ -74,12 +74,14 @@ const cardTitle = ref('가격 및 계좌정보 입력');
 const next = ref('다음');
 const nextUrl = ref('6');
 
-const price = ref(request.value.price === undefined ? undefined : request.value.price / 10000);
+const price = ref(
+  request.value.price === undefined ? undefined : request.value.price / 10000
+);
 
 const accountHolder = ref(request.value.accountHolder);
 const accountNumber = ref(request.value.accountNumber);
 
-const selectedBank = ref({ id: null });
+const selectedBank = ref();
 
 onBeforeMount(async () => {
   const { request } = storeToRefs(saleStore);
@@ -91,14 +93,14 @@ onBeforeMount(async () => {
   const obj = Array.from(bankList.value).filter(
     (b) => b.id === selectedBankId
   )[0];
-  selectedBank.value = obj === undefined ? { id: null } : obj;
+  selectedBank.value = obj === undefined ? undefined : obj;
 });
 
 const onClickNextBtnEmit = () => {
   setFinanceInfo(
     price.value * 10000,
     accountHolder.value,
-    selectedBank.value.id,
+    selectedBank.value,
     accountNumber.value
   );
 };

@@ -28,6 +28,8 @@
     :done="'원클릭 차량 구매가 완료 되었습니다'"
     :info="'구매 이력은 마이 페이지에서 확인 가능합니다'"
     :type="'purchase'"
+    :prevUrl="'/'"
+    :prev="'홈으로'"
   ></DoneView>
 </template>
 

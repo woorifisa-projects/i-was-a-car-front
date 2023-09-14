@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 export const useValidateSaleStore = defineStore('validateSaleStore', () => {
   // MeetingLocation.vue
@@ -19,7 +19,10 @@ export const useValidateSaleStore = defineStore('validateSaleStore', () => {
   const setFinanceInfoCheck = (bool) => (financeCheck.value = bool);
 
   const allValid = ref(
-    meetingCheck.value && carInfoCheck.value && imagesCheck.value && financeCheck.value
+    meetingCheck.value &&
+      carInfoCheck.value &&
+      imagesCheck.value &&
+      financeCheck.value
   );
 
   return {

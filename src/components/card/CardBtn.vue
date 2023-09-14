@@ -10,8 +10,9 @@
       {{ prev }}</v-btn
     >
     <v-btn
-      class="text-none bg-black ma-0"
+      :class="isBasicInfo ? 'text-none ma-0' : 'text-none bg-black ma-0'"
       :elevation="2"
+      :variant="isBasicInfo ? 'outlined' : 'none'"
       width="120"
       height="40"
       @click="onClickNextBtn(), $emit('onClickNextBtnEmit')"
@@ -32,6 +33,10 @@ import { getIdentification } from '@/apis/service/contracts/contractApi';
 import { useContractStore } from '@/store/contractStore';
 import { useSaleStore } from '@/store/sales/saleStore';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { useLoadingStore } from '@/store/loading';
+
+const loading = useLoadingStore();
+const { setLoading } = loading;
 
 onBeforeMount(() => {
   setRadioReadOnly(false);
@@ -75,8 +80,11 @@ const onClickNextBtn = async () => {
       );
 
       setisBasicInfo(false);
+      setLoading(true);
+
       next.value = '다음';
       setRadioReadOnly(true);
+      setLoading(false);
     } catch (e) {
       console.error(e);
 

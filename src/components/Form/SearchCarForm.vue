@@ -8,7 +8,7 @@
         </span>
         의 가격은
         <span style="font-size: large; font-weight: bold">
-          {{ (carInfo.price / 1000).toLocaleString() }}
+          {{ (carInfo.price / 10000).toLocaleString() }}
         </span>
         만원 입니다
       </div>
@@ -60,7 +60,8 @@ import { useBtnStore } from '@/store/btnStore';
 import { storeToRefs } from 'pinia';
 
 const purchaseStore = usePurchaseStore();
-const { request, carInfo } = storeToRefs(purchaseStore);
+const { carInfo } = storeToRefs(purchaseStore);
+const { resetCarInfo } = purchaseStore;
 
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
@@ -73,7 +74,8 @@ const targetPeriod = ref();
 watch([targetCapital, targetLoan, targetPeriod], () => {
   if (isCarInfoExist.value) {
     if (
-      targetCapital.value * 10000 + targetLoan.value * 10000 ===
+      parseInt(targetCapital.value) * 10000 +
+        parseInt(targetLoan.value) * 10000 ===
         carInfo.value.price &&
       !!targetPeriod.value
     ) {
@@ -83,7 +85,11 @@ watch([targetCapital, targetLoan, targetPeriod], () => {
     }
   } else {
     if (!!targetCapital.value && !!targetLoan.value && !!targetPeriod.value) {
-      setBtnCondition(true);
+      if (parseInt(targetCapital.value) + parseInt(targetLoan.value) < 10) {
+        setBtnCondition(false);
+      } else {
+        setBtnCondition(true);
+      }
     } else {
       setBtnCondition(false);
     }
@@ -103,7 +109,27 @@ const isCarInfoExist = ref(false);
 
 onBeforeMount(() => {
   setBtnCondition(false);
-  if (!!request.value.productId) {
+
+  if (Object.keys(carInfo.value).length > 0) {
+    resetCarInfo();
+  }
+
+  const purchaseStore = usePurchaseStore();
+  const { financeInfo } = storeToRefs(purchaseStore);
+
+  if (Object.keys(financeInfo.value).length > 0) {
+    console.log(financeInfo.value);
+    targetCapital.value = financeInfo.value.capital / 10000;
+    targetLoan.value = financeInfo.value.loan / 10000;
+
+    period.forEach((e) => {
+      if (e.id === financeInfo.value.period) {
+        targetPeriod.value = e.title;
+      }
+    });
+  }
+
+  if (Object.keys(carInfo.value).length > 0) {
     isCarInfoExist.value = true;
     customerText.value = '선수금';
   }
