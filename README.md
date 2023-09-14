@@ -1,57 +1,23 @@
-# essentials
+# I Was a car Frontend
 
-## Project setup
+## Tech Stack
 
-```
-# yarn
-yarn
+* HTML/CSS/Javascript
+* Vite 4.2.0
+* Vue 3.2.0
 
-# npm
+![tech_stack](https://user-images.githubusercontent.com/38150034/267864472-02690f55-5a66-4277-9d42-b07eb201193d.png)
+
+## CI/CD Pipeline
+
+![cicd](https://user-images.githubusercontent.com/38150034/267837763-b8fe0fe0-6737-4741-82f7-5627a81aa3d2.png)
+
+## Run
+
+```bash
 npm install
 
-# pnpm
-pnpm install
-```
-
-### Compiles and hot-reloads for development
-
-```
-# yarn
-yarn dev
-
-# npm
 npm run dev
 
-# pnpm
-pnpm dev
+dist/index.html
 ```
-
-### Compiles and minifies for production
-
-```
-# yarn
-yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
-```
-
-### Lints and fixes files
-
-```
-# yarn
-yarn lint
-
-# npm
-npm run lint
-
-# pnpm
-pnpm lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
