@@ -6,7 +6,7 @@
 * Vite 4.2.0
 * Vue 3.2.0
 
-![tech_stack](https://user-images.githubusercontent.com/38150034/267864472-02690f55-5a66-4277-9d42-b07eb201193d.png)
+![tech_stack](https://user-images.githubusercontent.com/38150034/267865254-9118c9a0-13c1-4caa-8e90-d8a6e3593b0d.png)
 
 ## CI/CD Pipeline
 
