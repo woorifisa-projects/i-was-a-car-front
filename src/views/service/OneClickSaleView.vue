@@ -14,6 +14,8 @@
     :done="'원클릭 차량 판매가 완료 되었습니다'"
     :info="'심사 결과는 마이 페이지에서 확인 가능합니다'"
     :type="'sale'"
+    :prevUrl="'/'"
+    :prev="'홈으로'"
   ></DoneView>
 </template>
 

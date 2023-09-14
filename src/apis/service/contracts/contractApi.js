@@ -34,7 +34,7 @@ const getIdentification = (name, rrnf, rrnb) => {
   });
 };
 
-const createConscent = async () => {
+const createConsent = async () => {
   const store = useContractStore();
   const { request } = storeToRefs(store);
 
@@ -51,5 +51,5 @@ export {
   findSpecificinsurance,
   getBanks,
   getIdentification,
-  createConscent,
+  createConsent,
 };
