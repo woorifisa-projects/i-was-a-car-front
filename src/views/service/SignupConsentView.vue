@@ -242,10 +242,12 @@ const toggleAllCheckboxes = () => {
     selected.value.one = true;
     selected.value.two = true;
     selected.value.three = true;
+    isVerifyAuthentication.value = false;
   } else {
     selected.value.one = false;
     selected.value.two = false;
     selected.value.three = false;
+    isVerifyAuthentication.value = true;
   }
 };
 

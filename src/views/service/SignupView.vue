@@ -18,7 +18,6 @@
             variant="underlined"
           >
             {{ form.email ? form.email : router.push('/email') }}
-            <!-- {{ form.email }} -->
           </v-text-field>
 
           <v-text-field
@@ -70,7 +69,7 @@
             class="mb-3"
             label="휴대폰 번호"
             density="compact"
-            placeholder="010-1234-5678"
+            placeholder="01012345678"
             variant="underlined"
             v-model="form.tel"
             :rules="[rules.required, rules.tel]"
@@ -222,7 +221,7 @@ const rules = {
   },
 
   tel: (value) => {
-    const pattern = /^01[0-9]-\d{3,4}-\d{4}$/;
+    const pattern = /^01[0-9]\d{4}\d{4}$/;
 
     validations.value.tel = pattern.test(value) ? true : false;
 
@@ -243,7 +242,6 @@ const signupHandler = async () => {
     const { data } = await signupAPI(form.value);
 
     verifiedAuth(data);
-    console.log(data);
 
     try {
       //문서 동의 항목 저장
@@ -257,10 +255,8 @@ const signupHandler = async () => {
 
       await createConscent()
         .then((resp) => {
-          console.log(resp);
           const response = resp.data.data;
           setResponse(response);
-          console.log(response);
         })
         .catch((e) => console.error(e));
 

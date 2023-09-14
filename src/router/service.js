@@ -39,32 +39,32 @@ const serviceRoutes = [
     component: () => import('@/layouts/service/myPage/Default.vue'),
     children: [
       {
-        path: '/purchase',
+        path: 'purchase',
         name: 'MyPagePurchase',
         component: () =>
           import('@/views/service/mypage/PurchaseHistoryView.vue'),
         meta: { requiresAuth: true },
       },
       {
-        path: '/sale',
+        path: 'sale',
         name: 'MyPageSale',
         component: () => import('@/views/service/mypage/SaleHistoryView.vue'),
         meta: { requiresAuth: true },
       },
       {
-        path: '/member',
+        path: 'member',
         name: 'MyPageMember',
         component: () => import('@/views/service/mypage/MemberInfoView.vue'),
         meta: { requiresAuth: true },
       },
       {
-        path: '/purchase/:id',
+        path: 'purchase/:id',
         name: 'PurchaseHistoryDetail',
         component: () =>
           import('@/views/service/mypage/PurchaseHistoryDetailView.vue'),
       },
       {
-        path: '/sale/:id',
+        path: 'sale/:id',
         name: 'SaleHistoryDetail',
         component: () =>
           import('@/views/service/mypage/SaleHistoryDetailView.vue'),
