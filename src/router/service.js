@@ -37,25 +37,23 @@ const serviceRoutes = [
   {
     path: '/mypage',
     component: () => import('@/layouts/service/myPage/Default.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: 'purchase',
         name: 'MyPagePurchase',
         component: () =>
           import('@/views/service/mypage/PurchaseHistoryView.vue'),
-        meta: { requiresAuth: true },
       },
       {
         path: 'sale',
         name: 'MyPageSale',
         component: () => import('@/views/service/mypage/SaleHistoryView.vue'),
-        meta: { requiresAuth: true },
       },
       {
         path: 'member',
         name: 'MyPageMember',
         component: () => import('@/views/service/mypage/MemberInfoView.vue'),
-        meta: { requiresAuth: true },
       },
       {
         path: 'purchase/:id',
@@ -68,7 +66,6 @@ const serviceRoutes = [
         name: 'SaleHistoryDetail',
         component: () =>
           import('@/views/service/mypage/SaleHistoryDetailView.vue'),
-        meta: { requiresAuth: true },
       },
     ],
   },
