@@ -32,8 +32,6 @@ export const useSaleStore = defineStore('saleStore', () => {
 
   const setFinanceInfo = (price, accountHolder, bankId, accountNumber) => {
     carInfo.value.price = price;
-    console.log(carInfo.value)
-
     request.value.price = price;
     request.value.accountHolder = accountHolder;
     request.value.bankId = bankId;
