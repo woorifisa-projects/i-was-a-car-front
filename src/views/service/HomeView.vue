@@ -55,7 +55,7 @@ const search = (child) => {
 
 const forceRender = () => {
   products.value.length = 0;
-  lastProductId.value = null;
+  lastProductId.value = undefined;
   renderKey.value += 1;
 };
 
