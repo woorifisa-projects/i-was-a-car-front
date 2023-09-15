@@ -1,7 +1,7 @@
 import { instance } from '@/apis';
 
 const membersAPI = async (page, size) => {
-  const res = await instance.get(`members`, {
+  const res = await instance.get(`/admin/members`, {
     params: {
       page,
       size,
@@ -10,6 +10,4 @@ const membersAPI = async (page, size) => {
 
   return res;
 };
-export {
-    membersAPI
-}
+export { membersAPI };

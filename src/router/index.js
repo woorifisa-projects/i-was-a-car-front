@@ -14,7 +14,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from) => {
   const auth = useAuthStore();
-  const { isLogin } = storeToRefs(auth);
+  const { isLogin, isAdmin } = storeToRefs(auth);
   const { verifiedAuth } = auth;
 
   const routeStore = useRouteStore();
@@ -34,6 +34,10 @@ router.beforeEach(async (to, from) => {
 
   if (to.meta.requiresAuth && !isLogin.value) {
     return '/login';
+  }
+
+  if (to.meta.requiresAuth && to.meta.requiredAdmin && !isAdmin.value) {
+    return '/';
   }
 });
 
