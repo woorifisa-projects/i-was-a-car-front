@@ -1,5 +1,5 @@
 <template>
-  <ProgressSprinner v-if="isLoading" />
+  <ProgressSprinner v-if="isLoading" :isHscreen="true" />
 
   <template v-else>
     <div :key="renderKey">
