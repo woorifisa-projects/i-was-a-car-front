@@ -135,7 +135,7 @@ import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 import { useContractStore } from '@/store/contractStore';
-import { createConscent } from '@/apis/service/contracts/contractApi';
+import { createConsent } from '@/apis/service/contracts/contractApi';
 
 const contractStore = useContractStore();
 const { setConsent, setResponse, resetRequest } = contractStore;
@@ -253,7 +253,7 @@ const signupHandler = async () => {
         setConsent(e.documentItemId, isConsentMarketing.value, data.id);
       });
 
-      await createConscent()
+      await createConsent()
         .then((resp) => {
           const response = resp.data.data;
           setResponse(response);
