@@ -25,13 +25,13 @@
 <script setup>
 import { ref, defineEmits, defineProps, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
-import { useBtnStore } from '@/store/btnStore';
-import { useAuthStore } from '@/store/auth';
+import { useBtnStore } from '@/store/btnStore.js';
+import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
-import { getIdentification } from '@/apis/service/contracts/contractApi';
-import { useContractStore } from '@/store/contractStore';
-import { useSaleStore } from '@/store/sales/saleStore';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { getIdentification } from '@/apis/service/contracts/contractApi.js';
+import { useContractStore } from '@/store/contractStore.js';
+import { useSaleStore } from '@/store/sales/saleStore.js';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 
 onBeforeMount(() => {
   setRadioReadOnly(false);

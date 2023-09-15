@@ -54,12 +54,12 @@
 
 <script setup>
 import Card from '@/components/card/Card.vue';
-import { getBanks } from '@/apis/service/contracts/contractApi';
+import { getBanks } from '@/apis/service/contracts/contractApi.js';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { onBeforeMount, ref, watch } from 'vue';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 import { storeToRefs } from 'pinia';
-import { useValidateSaleStore } from '@/store/sales/saleValidateStore';
+import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
 
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
@@ -74,7 +74,9 @@ const cardTitle = ref('가격 및 계좌정보 입력');
 const next = ref('다음');
 const nextUrl = ref('6');
 
-const price = ref(request.value.price === undefined ? undefined : request.value.price / 10000);
+const price = ref(
+  request.value.price === undefined ? undefined : request.value.price / 10000
+);
 
 const accountHolder = ref(request.value.accountHolder);
 const accountNumber = ref(request.value.accountNumber);
@@ -118,6 +120,7 @@ watch(
       sb != null;
     setBtnCondition(value);
     setFinanceInfoCheck(value);
+    console.log(p, sh, sb, an);
   }
 );
 </script>
