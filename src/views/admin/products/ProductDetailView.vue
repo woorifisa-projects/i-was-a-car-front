@@ -52,9 +52,9 @@
 
 <script setup>
 import { ref, onBeforeMount, defineAsyncComponent } from 'vue';
-import { findProductDetail } from '@/apis/service/products/productApi.js';
 import { useRoute, useRouter } from 'vue-router';
 import {
+  findProductDetail,
   findProductHistory,
   uploadImages,
 } from '@/apis/admin/products/productAPI.js';
