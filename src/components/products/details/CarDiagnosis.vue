@@ -120,18 +120,26 @@
               </div>
               <div style="font-size: 3em; margin-right: 0.2em">⇲</div>
             </div>
-              <template v-else>
-                <div>
-                  <v-file-input
-                    v-model="file"
-                    label="파일 등록하기"
-                    variant="outlined"
-                    density="dense"
-                    >{{ carInfo.performanceCheck }}</v-file-input
-                  >
-                  <BtnBlack :msg="'업로드'" @click="uploadFile"></BtnBlack>
-                </div>
-              </template>
+            <template v-else>
+              <div class="d-flex flex-column">
+                <v-file-input
+                  v-model="file"
+                  label="파일 등록하기"
+                  variant="outlined"
+                  density="dense"
+                  class="pr-3 pt-3"
+                  >{{ carInfo.performanceCheck }}</v-file-input
+                >
+                <v-btn
+                  @click="uploadFile"
+                  :width="btnWidth"
+                  size="x-large"
+                  class="bg-black font-weight-black mb-5 align-self-center"
+                  :disabled="isDisable"
+                  >업로드</v-btn
+                >
+              </div>
+            </template>
           </v-card>
 
           <v-dialog
@@ -162,17 +170,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import PerformanceCheckIcon from './PerformanceCheckIcon.vue';
-import BtnBlack from '@/components/common/BtnBlack.vue';
 import { addPerformanceCheck } from '@/apis/admin/products/productAPI';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
 
 const dialog = ref(false);
 
-const file = ref(null);
+const isDisable = ref(true);
+
+const file = ref([]);
 const uploadFile = async () => {
   if (file.value) {
     const formData = new FormData();
@@ -182,11 +192,43 @@ const uploadFile = async () => {
       carInfo.value.performanceCheck = response.data.data;
     } catch (error) {
       console.error(error);
+    } finally {
+      isDisable.value = true;
     }
   } else {
     console.log('No file selected');
   }
 };
+
+watch(
+  file,
+  () => {
+    console.log(file.value.length);
+    if (file.value.length > 0) {
+      isDisable.value = false;
+    } else {
+      isDisable.value = true;
+    }
+  },
+  { deep: true }
+);
+
+const { name } = useDisplay();
+
+const btnWidth = computed(() => {
+  switch (name.value) {
+    case 'xs':
+      return '150';
+    case 'sm':
+      return '250';
+    case 'md':
+      return '250';
+    case 'lg':
+      return '350';
+    default:
+      return '350';
+  }
+});
 </script>
 
 <style lang="scss" scoped>

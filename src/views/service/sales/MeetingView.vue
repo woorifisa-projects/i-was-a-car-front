@@ -75,6 +75,7 @@ const setAddressDetail = (emitAddressDetail) =>
   (addressDetail.value = emitAddressDetail);
 
 const onClickNextBtnEmit = async () => {
+  setBtnCondition(false);
   setMeetingInfo(
     meetingSchedule.value,
     zipCode.value,
@@ -82,16 +83,14 @@ const onClickNextBtnEmit = async () => {
     addressDetail.value
   );
 
-  console.log(request.value);
+  console.log(request);
   await Promise.all([createProduct(), createConsent()])
     .then(([saleResp, consentResp]) => {
-      console.log(saleResp);
-      console.log(consentResp);
-
       setSaleResponse(saleResp);
       setResponse(consentResp);
     })
-    .catch((e) => console.error(e));
+    .catch((e) => console.error(e))
+    .finally(setBtnCondition(true));
 
   resetRequest();
   resetSaleRequest();

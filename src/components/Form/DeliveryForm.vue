@@ -49,12 +49,12 @@
 
 <script setup>
 import { ref, onBeforeMount, defineEmits, watch } from 'vue';
-import { getBanks } from '@/apis/service/contracts/contractApi';
-import { useBtnStore } from '@/store/btnStore';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
-
+import { getBanks } from '@/apis/service/contracts/contractApi.js';
+import { useBtnStore } from '@/store/btnStore.js';
 import FindAddress from '@/components/FindAddress.vue';
-import { storeToRefs } from 'pinia';
+
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
 
 const emit = defineEmits(['targetDelivery']);
 const deliverySchedule = ref('');
@@ -89,9 +89,6 @@ const month = m < 10 ? '0' + m : m;
 const d = date.getDate() + 1;
 const day = d < 10 ? '0' + d : d;
 const minDate = ref(`${date.getFullYear()}-${month}-${day}T09:00`);
-
-const btnStore = useBtnStore();
-const { setBtnCondition } = btnStore;
 
 watch(
   [

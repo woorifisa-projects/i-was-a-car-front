@@ -124,23 +124,23 @@ const addInfo = (carInfo) => {
       },
       {
         contentName: '색상',
-        content: carInfo.value.color
+        content: carInfo.value.color,
       },
       {
         contentName: '배기량',
-        content: `${carInfo.value.displacement}`
+        content: `${carInfo.value.displacement}`,
       },
       {
         contentName: '연료',
-        content: carInfo.value.fuel
+        content: carInfo.value.fuel,
       },
       {
         contentName: '연비',
-        content: `${carInfo.value.fuelEfficiency} KM/l`
+        content: `${carInfo.value.fuelEfficiency} KM/l`,
       },
       {
         contentName: '구동방식',
-        content: carInfo.value.drivingMethod
+        content: carInfo.value.drivingMethod,
       },
     ]
   );
@@ -158,7 +158,6 @@ if (carInfo.value.carName === undefined) {
       addInfo(carInfo);
     })
     .catch((e) => console.error(e));
-    
 } else {
   addInfo(carInfo);
 }
