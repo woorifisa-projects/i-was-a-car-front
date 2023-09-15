@@ -1,8 +1,11 @@
 <template>
   <v-container>
-    <v-sheet class="d-flex justify-space-around flex-wrap align-end">
+    <v-sheet
+      :key="imgSliderRenderKey"
+      class="d-flex justify-space-around flex-wrap align-end"
+    >
       <div class="w-50">
-        <ImageSlider :carImages="carImages"></ImageSlider>
+        <Suspense><ImageSlider :carImages="carImages"></ImageSlider></Suspense>
       </div>
       <div class="w-50 d-flex flex-column align-center justify-center">
         <ImageAttach
@@ -21,6 +24,7 @@
             width="200"
             color="black"
             size="x-large"
+            :disabled="imgDisable"
             >사진 업로드</v-btn
           >
         </div>
@@ -33,12 +37,12 @@
     <v-divider></v-divider>
 
     <Suspense>
-      <FinancialService :productHistory="productHistory"></FinancialService>
+      <MemberInfo :productHistory="productHistory"></MemberInfo>
     </Suspense>
     <br />
-
-    <UpdateCarInfo :productHistory="productHistory"></UpdateCarInfo>
-
+    <Suspense>
+      <UpdateCarInfo :productHistory="productHistory"></UpdateCarInfo>
+    </Suspense>
     <Suspense>
       <CarDiagnosis :carInfo="carInfo"></CarDiagnosis>
     </Suspense>
@@ -61,6 +65,7 @@ import {
 import { changeFiles, deleteImage } from '@/utils';
 
 import ImageAttach from '@/components/common/ImageAttach.vue';
+import { watch } from 'vue';
 
 const router = useRouter();
 
@@ -72,17 +77,18 @@ const imageList = ref([]);
 const imageData = ref({});
 const attachName = ref('hello');
 
+const imgSliderRenderKey = ref(0);
+const imgDisable = ref(true);
+
 const addImages = (files) => {
-  console.log(files);
-  const newfiles = changeFiles(files, imageRef, imageList, imageData);
-  console.log(newfiles);
+  changeFiles(files, imageRef, imageList, imageData);
 };
 
 const deleteProductImage = (idx) =>
   deleteImage(idx, imageRef, imageList, imageData);
 
 let ImageSlider;
-let FinancialService;
+let MemberInfo;
 let UpdateCarInfo;
 let CarDiagnosis;
 let MileageAnalysis;
@@ -104,7 +110,7 @@ onBeforeMount(async () => {
     UpdateCarInfo = defineAsyncComponent(() =>
       import('@/components/admin/products/UpdateCarInfo.vue')
     );
-    FinancialService = defineAsyncComponent(() =>
+    MemberInfo = defineAsyncComponent(() =>
       import('@/components/admin/products/MemberInfo.vue')
     );
     CarDiagnosis = defineAsyncComponent(() =>
@@ -118,6 +124,7 @@ onBeforeMount(async () => {
   }
 });
 
+const route = useRoute();
 const uploadImageFiles = async () => {
   try {
     const formData = new FormData();
@@ -129,9 +136,22 @@ const uploadImageFiles = async () => {
     await uploadImages(carInfo.value.id, formData);
   } catch (e) {
     console.error('uploadImageFiles: ', e);
+  } finally {
+    const response = await findProductDetail(route.params.id);
+    const item = response.data.data;
+    carImages.value = item.images;
+    imageList.value = [];
+    imgSliderRenderKey.value += 1;
   }
 };
 
+watch([imageList], () => {
+  if (imageList.value.length > 0) {
+    imgDisable.value = false;
+  } else {
+    imgDisable.value = true;
+  }
+});
 const goBack = () => {
   router.go(-1);
 };

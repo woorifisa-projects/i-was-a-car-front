@@ -15,9 +15,7 @@
                 :value="item.id"
                 v-model="selected"
               />
-              <span class="font-weight-medium">
-                {{ item.name }}
-              </span>
+              <span class="font-weight-medium"> {{ item.name }}</span>
             </div>
           </v-card-item>
         </div>
@@ -40,12 +38,14 @@
             </div>
           </v-card-item>
 
-          <BtnBlack
-            class="align-self-end mr-4"
-            :msg="'정보수정'"
-            :destination="''"
+          <v-btn
             @click="uploadInfo"
-          ></BtnBlack>
+            :width="btnWidth"
+            size="x-large"
+            class="bg-black font-weight-black mb-5 align-self-center"
+            :disabled="isDisable"
+            >정보수정</v-btn
+          >
         </div>
       </div>
     </v-card-item>
@@ -53,27 +53,21 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue';
 import {
   findLabels,
   updatePriceAndLabel,
 } from '@/apis/admin/products/productAPI';
-import BtnBlack from '@/components/common/BtnBlack.vue';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const labels = ref([]);
 const selected = ref(null);
 const props = defineProps(['productHistory']);
 const productHistory = ref(props.productHistory);
-const month = ref('');
-const monthlyPrice = ref(0);
 
 const price = ref(productHistory.value.price / 10000);
 
-watch(month, (m) => {
-  const howLong = m.substring(0, 2);
-  monthlyPrice.value =
-    (installment.value + installment.value * 0.035) / howLong;
-});
+const isDisable = ref(true);
 
 const findLabelData = async () => {
   try {
@@ -97,6 +91,12 @@ onMounted(() => {
   findLabelData();
 });
 
+watch([price, selected], ([nextP, nextS], [prevP, prevS]) => {
+  if ((nextP != prevP && prevP != []) || (prevS != nextS && prevS != null)) {
+    isDisable.value = false;
+  }
+});
+
 const uploadInfo = async () => {
   const actualPrice = price.value * 10000;
   try {
@@ -107,10 +107,28 @@ const uploadInfo = async () => {
     );
     price.value = response.data.data.price / 10000;
     selected.value = response.data.data.labelId;
+    isDisable.value = true;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 };
+
+const { name } = useDisplay();
+
+const btnWidth = computed(() => {
+  switch (name.value) {
+    case 'xs':
+      return '150';
+    case 'sm':
+      return '250';
+    case 'md':
+      return '250';
+    case 'lg':
+      return '350';
+    default:
+      return '350';
+  }
+});
 </script>
 
 <style lang="scss" scoped>
