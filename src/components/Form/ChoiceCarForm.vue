@@ -141,7 +141,7 @@ a {
   font-weight: bold;
 }
 .set {
-  border: 5px solid black;
+  border: 3.5px dashed black;
 }
 
 .set2 {

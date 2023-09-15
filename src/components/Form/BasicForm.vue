@@ -21,14 +21,12 @@
           v-model="targetRrnf"
           class="w-0"
           single-line
-          hide-details
         ></v-text-field>
         <div class="align-self-center mx-4">-</div>
         <v-text-field
           :type="passwordVisible ? 'password' : 'text'"
           density="compact"
           label="주민등록번호 뒷자리"
-          :hide-details="passwordVisible"
           @click:append-inner="passwordVisible = !passwordVisible"
           :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
           variant="underlined"
