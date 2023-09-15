@@ -67,7 +67,6 @@ const deleteImage = () => {
       mainImageIndex.value >= carImages.value.length
         ? carImages.value.length - 1
         : mainImageIndex.value;
-    console.log(mainImageIndex.value);
     changeImage(newIndex);
   } else {
     // no more images left to show

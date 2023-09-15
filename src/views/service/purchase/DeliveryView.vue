@@ -12,11 +12,12 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
+import { useContractStore } from '@/store/contractStore';
 import { createPurchase } from '@/apis/service/histories/purchase/purchaseApi';
+import { createConsent } from '@/apis/service/contracts/contractApi';
 
 import Card from '@/components/card/Card.vue';
 import DeliveryForm from '@/components/Form/DeliveryForm.vue';
-import { storeToRefs } from 'pinia';
 
 const props = defineProps(['nextUrl']);
 
@@ -26,19 +27,24 @@ const nextUrl = ref(props.nextUrl);
 const targetDelivery = ref();
 
 const purchaseStore = usePurchaseStore();
-const { request } = storeToRefs(purchaseStore);
-const { setDeilveryInfo, setResponse } = purchaseStore;
+const { setDeilveryInfo, setPurchaseResponse, resetPurchaseRequest } =
+  purchaseStore;
+
+const contractStore = useContractStore();
+const { setResponse, resetRequest } = contractStore;
 
 const onClickNextBtnEmit = async () => {
-  console.log(targetDelivery.value);
-
   setDeilveryInfo(targetDelivery.value);
-  await createPurchase()
-    .then((resp) => {
-      const response = resp.data.data;
-      setResponse(response);
+
+  await Promise.all([createPurchase(), createConsent()])
+    .then(([purchaseResp, consentResp]) => {
+      setPurchaseResponse(purchaseResp);
+      setResponse(consentResp);
     })
     .catch((e) => console.error(e));
+
+  resetRequest();
+  resetPurchaseRequest();
 };
 
 const whichTargetDelivery = (child) => {

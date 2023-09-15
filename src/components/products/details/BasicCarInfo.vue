@@ -2,7 +2,7 @@
   <div class="d-flex flex-column justify-space-around w-100 px-10">
     <v-card-text class="w-100 d-flex flex-column justify-space-between">
       <v-card-title
-        class="font-weight-bold h-50 text-h5 text-sm-h4 text-center mb-5 mb-sm-0"
+        class="font-weight-bold h-50 text-h5 text-sm-h4 text-left mb-5 mb-sm-0"
         style="white-space: pre-line"
         >{{ carInfo.brand }} {{ carInfo.name }} {{ carInfo.fuel }}
         {{ carInfo.displacement }}</v-card-title
@@ -45,21 +45,36 @@
 
     <br />
 
-    <div class="d-flex justify-space-between align-center">
-      <v-btn
-        :width="xs ? 120 : 200"
-        variant="outlined"
-        :size="xs ? 'large' : 'x-large'"
-        @click="goBack"
-        >뒤로</v-btn
-      >
-      <v-btn
-        :width="xs ? 120 : 200"
-        color="black"
-        :size="xs ? 'large' : 'x-large'"
-        >구매하기</v-btn
-      >
-    </div>
+    <template v-if="isFromOneClickPage">
+      <div class="d-flex justify-center align-center">
+        <v-btn
+          :width="xs ? 200 : 350"
+          variant="outlined"
+          :size="xs ? 'large' : 'x-large'"
+          @click="goBack"
+          >뒤로</v-btn
+        >
+      </div>
+    </template>
+
+    <template v-else>
+      <div class="d-flex justify-space-between align-center">
+        <v-btn
+          :width="xs ? 120 : 200"
+          variant="outlined"
+          :size="xs ? 'large' : 'x-large'"
+          @click="goBack"
+          >뒤로</v-btn
+        >
+        <v-btn
+          :width="xs ? 120 : 200"
+          color="black"
+          :size="xs ? 'large' : 'x-large'"
+          @click="selectedProduct"
+          >구매하기</v-btn
+        >
+      </div>
+    </template>
   </div>
 </template>
 
@@ -68,6 +83,9 @@ import { ref } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 import { useRouter } from 'vue-router';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
+import { useRouteStore } from '@/store/route';
+import { storeToRefs } from 'pinia';
+import { onBeforeMount } from 'vue';
 
 const router = useRouter();
 
@@ -76,9 +94,11 @@ const { xs } = useDisplay();
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
 
+const isFromOneClickPage = ref(false);
+
 const goBack = () => {
   router.go(-1);
-}
+};
 
 const purchaseStore = usePurchaseStore();
 const { setCarInfo } = purchaseStore;
@@ -87,6 +107,15 @@ const selectedProduct = () => {
   setCarInfo(carInfo.value);
   router.push('/normal-purchase/1');
 };
+
+onBeforeMount(() => {
+  const routeStore = useRouteStore();
+  const { previousRoute } = storeToRefs(routeStore);
+
+  if (previousRoute.value === '/one-click-purchase/4') {
+    isFromOneClickPage.value = true;
+  }
+});
 </script>
 
 <style lang="scss" scoped>

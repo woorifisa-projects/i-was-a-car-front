@@ -11,6 +11,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isLogin = ref(false);
 
+  const isAdmin = ref(false);
+
   const initAuthInfo = () => {
     authInfo.value = {};
 
@@ -21,6 +23,12 @@ export const useAuthStore = defineStore('auth', () => {
     authInfo.value = { ...value };
 
     isLogin.value = true;
+
+    authInfo.value.roles.forEach((r) => {
+      if (r === 'ADMIN') {
+        isAdmin.value = true;
+      }
+    });
   };
 
   const setEmailAuthInfo = (code, email) => {
@@ -34,16 +42,17 @@ export const useAuthStore = defineStore('auth', () => {
 
   const setRrnb = (value) => {
     authInfo.value.rrnb = value;
-  }
+  };
 
   return {
     authInfo,
     emailAuthInfo,
     isLogin,
+    isAdmin,
     setLogout,
     verifiedAuth,
     initAuthInfo,
     setEmailAuthInfo,
-    setRrnb
+    setRrnb,
   };
 });

@@ -54,15 +54,16 @@ const search = (child) => {
 };
 
 const forceRender = () => {
-  products.value.length = 0;
+  products.value = [];
   lastProductId.value = null;
   renderKey.value += 1;
+  stdProduct.value.push(1);
 };
 
 const load = async ({ done }) => {
   try {
     if (stdProduct.value.length < 1) done('empty');
-    else if (category.value != null && keyword.value != null) {
+    else {
       const response = await findProducts(
         category.value,
         keyword.value,
@@ -74,22 +75,6 @@ const load = async ({ done }) => {
       stdProduct.value.push(...response.data.data);
 
       products.value.push(...response.data.data);
-      lastProductId.value = products.value[products.value.length - 1].id;
-
-      done('ok');
-    } else {
-      const response = await findProducts(
-        category.value,
-        keyword.value,
-        lastProductId.value
-      );
-
-      stdProduct.value.length = 0;
-
-      stdProduct.value.push(...response.data.data);
-
-      products.value.push(...response.data.data);
-
       lastProductId.value = products.value[products.value.length - 1].id;
 
       done('ok');

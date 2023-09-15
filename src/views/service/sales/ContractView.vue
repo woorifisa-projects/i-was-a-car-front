@@ -39,7 +39,6 @@ import { useAuthStore } from '@/store/auth.js';
 
 import Card from '@/components/card/Card.vue';
 import { useContractStore } from '@/store/contractStore';
-import { createConscent } from '@/apis/service/contracts/contractApi';
 
 const authStore = useAuthStore();
 const { authInfo } = storeToRefs(authStore);
@@ -48,8 +47,8 @@ const saleStore = useSaleStore();
 const { carInfo } = storeToRefs(saleStore);
 
 const contractStore = useContractStore();
-const { setConsent, setResponse, resetRequest } = contractStore;
-const { request, documentItems, isConsent } = storeToRefs(contractStore);
+const { setConsent } = contractStore;
+const { documentItems, isConsent } = storeToRefs(contractStore);
 
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
@@ -68,15 +67,6 @@ const onClickNextBtnEmit = async () => {
   documentItems.value.forEach((e) => {
     setConsent(e.documentItemId, isConsent.value, authInfo.value.id);
   });
-
-  await createConscent()
-    .then((resp) => {
-      const response = resp.data.data;
-      setResponse(response);
-    })
-    .catch((e) => console.error(e));
-
-  resetRequest();
 };
 </script>
 

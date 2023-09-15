@@ -10,8 +10,9 @@
       {{ prev }}</v-btn
     >
     <v-btn
-      class="text-none bg-black ma-0"
+      :class="isBasicInfo ? 'text-none ma-0' : 'text-none bg-black ma-0'"
       :elevation="2"
+      :variant="isBasicInfo ? 'outlined' : 'none'"
       width="120"
       height="40"
       @click="onClickNextBtn(), $emit('onClickNextBtnEmit')"
@@ -28,10 +29,15 @@ import { useRouter } from 'vue-router';
 import { useBtnStore } from '@/store/btnStore.js';
 import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
-import { getIdentification } from '@/apis/service/contracts/contractApi.js';
-import { useContractStore } from '@/store/contractStore.js';
-import { useSaleStore } from '@/store/sales/saleStore.js';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
+import { getIdentification } from '@/apis/service/contracts/contractApi';
+import { useContractStore } from '@/store/contractStore';
+import { useSaleStore } from '@/store/sales/saleStore';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { useLoadingStore } from '@/store/loading';
+
+const loading = useLoadingStore();
+const { setLoading } = loading;
+
 
 onBeforeMount(() => {
   setRadioReadOnly(false);
@@ -75,8 +81,11 @@ const onClickNextBtn = async () => {
       );
 
       setisBasicInfo(false);
+      setLoading(true);
+
       next.value = '다음';
       setRadioReadOnly(true);
+      setLoading(false);
     } catch (e) {
       console.error(e);
 
@@ -89,7 +98,6 @@ const onClickNextBtn = async () => {
   }
 
   if (next.value === '마이페이지로' && type.value === 'sale') {
-    
     nextUrl.value = `/sale/${saleResponse.value.saleId}`;
     router.push(nextUrl.value);
     // router.push({

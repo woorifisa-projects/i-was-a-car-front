@@ -49,7 +49,9 @@
       </template>
     </v-virtual-scroll>
   </suspense>
-  <template v-if="products.length === 0">
+  <ProgressSprinner v-if="isLoading" />
+
+  <template v-else-if="products.length === 0">
     <div style="text-align: center; margin-top: 5rem">
       입력하신 최대 자본금
       <span style="font-size: large; font-weight: bold">
@@ -63,7 +65,7 @@
     </div>
     <div style="text-align: center; margin-top: 1rem">
       <span style="font-size: large; font-weight: bold"
-        >구매 가능 한 상품이 없습니다</span
+        >구매 가능 한 {{ carTypeName }} 상품이 없습니다</span
       ><br /><br />
       이전으로 돌아가 <br /><span style="font-size: large; font-weight: bold"
         >자본금 또는 대출금의 금액을 늘려 </span
@@ -77,6 +79,14 @@ import { ref, onBeforeMount, defineEmits } from 'vue';
 import { RecommendationProducts } from '@/apis/service/products/productApi.js';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore';
 import { storeToRefs } from 'pinia';
+import { useLoadingStore } from '@/store/loading';
+import { useBtnStore } from '@/store/btnStore';
+import { useContractStore } from '@/store/contractStore';
+
+const btnStore = useBtnStore();
+const { setBtnCondition } = btnStore;
+const loading = useLoadingStore();
+const { isLoading } = storeToRefs(loading);
 
 const emit = defineEmits(['targetProduct']);
 
@@ -84,9 +94,17 @@ const lastProductId = ref();
 const products = ref([]);
 
 const purchaseStore = usePurchaseStore();
-const { carType, financeInfo } = storeToRefs(purchaseStore);
+const { carType, carTypeName, financeInfo } = storeToRefs(purchaseStore);
+const { setCarInfo } = purchaseStore;
+
+const contractStore = useContractStore();
+const { setProductId } = contractStore;
 
 onBeforeMount(async () => {
+  const purchaseStore = usePurchaseStore();
+  const { carInfo } = storeToRefs(purchaseStore);
+  setBtnCondition(false);
+
   try {
     const response = await RecommendationProducts(
       carType.value,
@@ -96,19 +114,26 @@ onBeforeMount(async () => {
     );
 
     products.value = response.data.data;
-    console.log(response.data.data);
   } catch (e) {
     console.error(e);
+  }
+
+  if (Object.keys(carInfo.value).length > 0) {
+    selectedProduct.value = carInfo.value.id;
+    setBtnCondition(true);
   }
 });
 
 const selectedProduct = ref();
+
 const whichTargetProduct = (product) => {
+  console.log(product);
   selectedProduct.value = product.id;
-  emit('targetProduct', product);
+  setCarInfo(product);
+  setBtnCondition(true);
+  setProductId(product.id);
 };
 </script>
-
 <style lang="scss" scoped>
 a {
   text-decoration: none;

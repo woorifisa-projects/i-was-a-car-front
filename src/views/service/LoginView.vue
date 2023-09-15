@@ -6,11 +6,11 @@
       class="mt-2 rounded-xl"
       :elevation="xs ? 0 : 4"
     >
-      <v-card-title class="text-center text-h5 font-weight-black ma-8"
-        >로그인</v-card-title
+      <v-card-title class="text-center text-h4 font-weight-black ma-12 mb-16"
+        >I WAS A CAR</v-card-title
       >
-      <v-sheet width="350" class="mx-auto" max-width="320">
-        <v-form @submit.prevent>
+      <v-sheet width="320" class="mt-16 mx-auto" max-width="320" height="320">
+        <v-form @submit.prevent class="d-flex flex-column">
           <v-text-field
             density="compact"
             v-model="form.email"
@@ -21,6 +21,7 @@
 
           <v-text-field
             v-model="form.password"
+            class="mt-5"
             :type="passwordVisible ? 'text' : 'password'"
             density="compact"
             label="비밀번호"
@@ -30,68 +31,28 @@
             @keyup.enter="loginHandler"
           ></v-text-field>
 
-          <p v-show="error.loginError" class="text-subtitle-2 error-msg">
+          <p v-if="error.loginError" class="text-subtitle-2" style="color: red">
             {{ error.loginErrorMsg }}
           </p>
+          <p v-else class="text-subtitle-2">ㅤ</p>
 
           <v-btn
-            class="mt-10"
-            height="40"
-            width="400"
+            size="x-large"
+            class="mt-10 w-100 font-weight-medium"
             color="black"
-            density="compact"
+            density="comfortable"
             @click="loginHandler"
           >
             로그인
           </v-btn>
         </v-form>
 
-        <div class="d-flex justify-space-between mt-2 mb-15">
+        <div class="d-flex justify-space-between mt-5">
           <div class="text-sm">회원이 아니신가요?</div>
           <RouterLink class="text-sm text-color-black" to="/signup"
             >회원가입</RouterLink
           >
         </div>
-        <div class="d-flex justify-center">
-          <v-divider
-            mx-auto
-            length="400"
-            thickness="3"
-            align-center
-          ></v-divider>
-        </div>
-
-        <div class="d-flex justify-center mt-5 mb-5">
-          <div class="text-sm">다른 방법으로 로그인</div>
-        </div>
-
-        <v-sheet>
-          <v-btn
-            prepend-icon="mdi-chat"
-            height="40"
-            width="400"
-            color="yellow"
-            density="compact"
-            class="mb-5"
-            elevation="0"
-          >
-            카카오로 시작하기
-          </v-btn>
-
-          <v-btn
-            prepend-icon="mdi-alpha-n"
-            height="40"
-            width="400"
-            color="green"
-            density="compact"
-            elevation="0"
-          >
-            <template v-slot:prepend>
-              <v-icon size="32"></v-icon>
-            </template>
-            네이버로 시작하기
-          </v-btn>
-        </v-sheet>
       </v-sheet>
     </v-sheet>
   </v-container>
@@ -155,15 +116,10 @@ const loginHandler = async () => {
 
 <style scoped>
 .text-sm {
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .text-color-black {
   color: black;
-}
-
-.error-msg {
-  color: tomato;
-  position: absolute;
 }
 </style>

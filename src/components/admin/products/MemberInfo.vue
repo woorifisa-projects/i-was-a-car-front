@@ -1,12 +1,16 @@
 <template>
-  <v-card>
-    <v-card-title>사용자 정보</v-card-title>
+  <v-card
+    ><v-card-title class="font-weight-bold text-h5 py-5"
+      >사용자 정보</v-card-title
+    >
+    <v-divider></v-divider>
+
     <v-card-item>
       <div class="d-flex">
         <div style="width: 30%">
           <v-card-item>
-            <v-card-text class="font-bold"> 판매자 </v-card-text>
-            <v-text-field readonly="true"
+            <v-card-text class="font-bold pl-0"> 판매자 </v-card-text>
+            <v-text-field readonly="true" variant="outlined"
               >{{ productHistory.memberName }}
             </v-text-field>
           </v-card-item>
@@ -14,8 +18,8 @@
 
         <div style="width: 30%">
           <v-card-item>
-            <v-card-text class="font-bold">미팅 날짜</v-card-text>
-            <v-text-field readonly="true"
+            <v-card-text class="font-bold pl-0">미팅 날짜</v-card-text>
+            <v-text-field readonly="true" variant="outlined"
               >{{ productHistory.saleMeeting }}
             </v-text-field>
           </v-card-item>
@@ -23,8 +27,8 @@
 
         <div style="width: 40%">
           <v-card-item>
-            <v-card-text class="font-bold"> 미팅 주소 </v-card-text>
-            <v-text-field readonly="true"
+            <v-card-text class="font-bold pl-0"> 미팅 주소 </v-card-text>
+            <v-text-field readonly="true" variant="outlined"
               >{{ productHistory.address }}
               {{ productHistory.addressDetail }}</v-text-field
             >

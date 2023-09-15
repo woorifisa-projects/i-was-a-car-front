@@ -10,7 +10,12 @@
     <!-- 자동차 사진들 -->
     <div class="w-100 mt-2">
       <v-card class="mx-auto" elevation="1">
-        <v-slide-group v-model="model" selected-class="bg-success" show-arrows>
+        <v-slide-group
+          class="w-100"
+          v-model="model"
+          selected-class="bg-success"
+          show-arrows
+        >
           <v-slide-group-item
             v-for="(carImage, index) in carImages"
             :key="index"

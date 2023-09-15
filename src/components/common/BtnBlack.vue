@@ -37,8 +37,6 @@ const btnWidth = computed(() => {
   }
 });
 
-console.log(destination);
-
 const goTo = () => router.push(destination);
 </script>
 

@@ -1,38 +1,52 @@
 <template>
   <v-card>
-    <v-card-title>수정 사항</v-card-title>
+    <v-card-title class="font-weight-bold text-h5 py-5">수정 사항</v-card-title>
+    <v-divider></v-divider>
+
     <v-card-item>
       <div class="d-flex">
-        <div style="width: 30%">
+        <div style="width: 50%">
           <v-card-item>
-            <v-card-text class="font-bold"> 판매 가격 </v-card-text>
-            <div style="display: flex; align-items: center">
-              <v-text-field v-model="price" suffix="만원" autofocus>
-              </v-text-field>
-            </div>
-          </v-card-item>
-        </div>
-
-        <div style="width: 30%">
-          <v-card-item>
-            <v-card-text class="font-bold">심사 단계</v-card-text>
+            <v-card-text class="font-bold pl-0">심사 단계</v-card-text>
             <div v-for="(item, index) in labels" :key="index">
               <input
+                class="mr-2 mb-5"
                 type="radio"
                 :value="item.id"
                 v-model="selected"
-                @change="handleSelection"
               />
-              {{ item.name }}
+              <span class="font-weight-medium">
+                {{ item.name }}
+              </span>
             </div>
           </v-card-item>
         </div>
 
-        <BtnBlack
-          :msg="'정보수정'"
-          :destination="''"
-          @click="uploadInfo"
-        ></BtnBlack>
+        <div
+          style="width: 50%"
+          class="d-flex flex-column justify-space-between"
+        >
+          <v-card-item>
+            <v-card-text class="font-bold pl-0"> 판매 가격 </v-card-text>
+            <div style="display: flex; align-items: center">
+              <v-text-field
+                v-model="price"
+                suffix="만원"
+                autofocus
+                variant="outlined"
+                style="font-weight: 900"
+              >
+              </v-text-field>
+            </div>
+          </v-card-item>
+
+          <BtnBlack
+            class="align-self-end mr-4"
+            :msg="'정보수정'"
+            :destination="''"
+            @click="uploadInfo"
+          ></BtnBlack>
+        </div>
       </div>
     </v-card-item>
   </v-card>
@@ -82,14 +96,6 @@ const findLabelData = async () => {
 onMounted(() => {
   findLabelData();
 });
-
-function handleSelection() {
-  if (selected.value) {
-    console.log(`Selected item ID: ${selected.value}`);
-  } else {
-    console.log('No item selected.');
-  }
-}
 
 const uploadInfo = async () => {
   const actualPrice = price.value * 10000;

@@ -35,7 +35,7 @@
         variant="underlined"
         style="width: 30%; margin-right: 1em"
         density="compact"
-        v-model="selectedBank.id"
+        v-model="selectedBank"
       ></v-select>
 
       <v-text-field
@@ -81,7 +81,7 @@ const price = ref(
 const accountHolder = ref(request.value.accountHolder);
 const accountNumber = ref(request.value.accountNumber);
 
-const selectedBank = ref({ id: null });
+const selectedBank = ref();
 
 onBeforeMount(async () => {
   const { request } = storeToRefs(saleStore);
@@ -93,14 +93,14 @@ onBeforeMount(async () => {
   const obj = Array.from(bankList.value).filter(
     (b) => b.id === selectedBankId
   )[0];
-  selectedBank.value = obj === undefined ? { id: null } : obj;
+  selectedBank.value = obj === undefined ? undefined : obj;
 });
 
 const onClickNextBtnEmit = () => {
   setFinanceInfo(
     price.value * 10000,
     accountHolder.value,
-    selectedBank.value.id,
+    selectedBank.value,
     accountNumber.value
   );
 };

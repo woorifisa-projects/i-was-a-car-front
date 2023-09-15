@@ -23,8 +23,8 @@ export const useSaleStore = defineStore('saleStore', () => {
 
   const combineResponse = (c) => {
     Object.assign(request.value, c);
-    carInfo.value = c
-  }
+    carInfo.value = c;
+  };
 
   const addStoreImages = (imgs) => {
     images.value = imgs;
@@ -32,6 +32,7 @@ export const useSaleStore = defineStore('saleStore', () => {
 
   const setFinanceInfo = (price, accountHolder, bankId, accountNumber) => {
     carInfo.value.price = price;
+
     request.value.price = price;
     request.value.accountHolder = accountHolder;
     request.value.bankId = bankId;
@@ -39,8 +40,11 @@ export const useSaleStore = defineStore('saleStore', () => {
   };
 
   const getRequestBody = () => {};
-  const setResponse = (resp) => (saleResponse.value = resp);
+  const setSaleResponse = (resp) => (saleResponse.value = resp);
 
+  const resetSaleRequest = () => {
+    request.value = {};
+  };
   return {
     request,
     images,
@@ -51,8 +55,9 @@ export const useSaleStore = defineStore('saleStore', () => {
     addStoreImages,
     setFinanceInfo,
     getRequestBody,
-    setResponse,
+    setSaleResponse,
     saleResponse,
-    carInfo
+    carInfo,
+    resetSaleRequest,
   };
 });
