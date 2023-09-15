@@ -73,7 +73,9 @@ const imageData = ref({});
 const attachName = ref('hello');
 
 const addImages = (files) => {
-  changeFiles(files, imageRef, imageList, imageData);
+  console.log(files);
+  const newfiles = changeFiles(files, imageRef, imageList, imageData);
+  console.log(newfiles);
 };
 
 const deleteProductImage = (idx) =>
