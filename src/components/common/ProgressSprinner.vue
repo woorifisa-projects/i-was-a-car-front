@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex justify-center align-center h-screen">
+  <div
+    class="d-flex justify-center align-center"
+    :class="{ 'h-screen': props.isHscreen, 'h-400': !props.isHscreen }"
+  >
     <v-progress-circular
       indeterminate
       :size="45"
@@ -8,6 +11,17 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  isHscreen: {
+    type: Boolean,
+    default: false,
+  },
+});
+</script>
 
-<style scoped></style>
+<style scoped>
+.h-400 {
+  height: 400px;
+}
+</style>

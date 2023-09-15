@@ -20,7 +20,9 @@ router.beforeEach(async (to, from) => {
   const routeStore = useRouteStore();
   const { setPreviousRoute } = routeStore;
 
-  setPreviousRoute(from.path);
+  if (from.path !== '/') {
+    setPreviousRoute(from.path);
+  }
 
   try {
     const { data } = await authAPI();
