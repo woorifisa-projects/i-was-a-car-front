@@ -71,6 +71,7 @@ const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
 
 onBeforeMount(async () => {
+  setBtnCondition(false);
   try {
     ScrollComponent = defineAsyncComponent(() =>
       import('@/components/Form/ScrollComponent.vue')

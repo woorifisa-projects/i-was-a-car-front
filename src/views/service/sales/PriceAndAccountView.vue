@@ -110,7 +110,6 @@ watch(
   ([p, ah, sb, an]) => {
     const accountHolderRegex = /[가-힣]{2,10}$/;
     const accountNumberRegex = /[0-9]{10,14}$/;
-
     const value =
       p != null &&
       p > 10 &&

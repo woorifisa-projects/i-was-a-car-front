@@ -242,6 +242,7 @@ const signupHandler = async () => {
     const { data } = await signupAPI(form.value);
 
     verifiedAuth(data);
+    console.log(data);
 
     try {
       //문서 동의 항목 저장
