@@ -35,7 +35,7 @@
         variant="underlined"
         style="width: 30%; margin-right: 1em"
         density="compact"
-        v-model="selectedBank.id"
+        v-model="selectedBank"
       ></v-select>
 
       <v-text-field
@@ -54,12 +54,12 @@
 
 <script setup>
 import Card from '@/components/card/Card.vue';
-import { getBanks } from '@/apis/service/contracts/contractApi';
+import { getBanks } from '@/apis/service/contracts/contractApi.js';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { onBeforeMount, ref, watch } from 'vue';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 import { storeToRefs } from 'pinia';
-import { useValidateSaleStore } from '@/store/sales/saleValidateStore';
+import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
 
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
@@ -74,12 +74,14 @@ const cardTitle = ref('가격 및 계좌정보 입력');
 const next = ref('다음');
 const nextUrl = ref('6');
 
-const price = ref(request.value.price === undefined ? undefined : request.value.price / 10000);
+const price = ref(
+  request.value.price === undefined ? undefined : request.value.price / 10000
+);
 
 const accountHolder = ref(request.value.accountHolder);
 const accountNumber = ref(request.value.accountNumber);
 
-const selectedBank = ref({ id: null });
+const selectedBank = ref();
 
 onBeforeMount(async () => {
   const { request } = storeToRefs(saleStore);
@@ -91,14 +93,14 @@ onBeforeMount(async () => {
   const obj = Array.from(bankList.value).filter(
     (b) => b.id === selectedBankId
   )[0];
-  selectedBank.value = obj === undefined ? { id: null } : obj;
+  selectedBank.value = obj === undefined ? undefined : obj;
 });
 
 const onClickNextBtnEmit = () => {
   setFinanceInfo(
     price.value * 10000,
     accountHolder.value,
-    selectedBank.value.id,
+    selectedBank.value,
     accountNumber.value
   );
 };
@@ -115,10 +117,11 @@ watch(
       accountHolderRegex.test(ah) &&
       an != null &&
       accountNumberRegex.test(an) &&
-      sb != null;
+      sb.id != null;
     setBtnCondition(value);
     setFinanceInfoCheck(value);
-  }
+  },
+  { deep: true }
 );
 </script>
 

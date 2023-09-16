@@ -53,6 +53,10 @@ const uploadImages = async (productId, formData) => {
   });
 };
 
+const findProductDetail = (productId) => {
+  return instance.get(`/admin/products/${productId}`);
+};
+
 export {
   productsAPI,
   waitingProductsAPI,
@@ -61,4 +65,5 @@ export {
   updatePriceAndLabel,
   addPerformanceCheck,
   uploadImages,
+  findProductDetail,
 };

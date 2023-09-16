@@ -6,7 +6,7 @@
     :personal="false"
     @onClickNextBtnEmit="onClickNextBtnEmit"
   >
-    <CarTypeForm @targetCarType="whichCarType"></CarTypeForm>
+    <CarTypeForm></CarTypeForm>
   </Card>
 </template>
 

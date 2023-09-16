@@ -22,13 +22,14 @@
         color="black"
         theme="light"
         variant="outlined"
-        label="원하는 차종 또는 제조사를 입력해주세요."
+        label="차명 또는 브랜드를 왼쪽에서 선택 후 원하는 키워드를 입력해주세요."
         clearable
         :density="xs ? 'compact' : 'comfortable'"
         single-line
         @click:append-inner="onClick"
         @keydown.enter.prevent="onClick"
         v-model="keyword"
+        :disabled="isDisable"
       ></v-text-field>
     </div>
   </v-container>
@@ -38,6 +39,7 @@
 import { ref, defineEmits } from 'vue';
 import { category } from '@/components/data/searchCategory.js';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { watch } from 'vue';
 
 const { xs } = useDisplay();
 
@@ -46,6 +48,15 @@ const emit = defineEmits(['search']);
 const loading = ref(false);
 const selectedCategory = ref();
 const keyword = ref();
+const isDisable = ref(true);
+
+watch([selectedCategory], () => {
+  if (!!selectedCategory.value) {
+    isDisable.value = false;
+  } else {
+    isDisable.value = true;
+  }
+});
 
 const onClick = () => {
   loading.value = true;

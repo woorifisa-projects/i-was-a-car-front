@@ -18,7 +18,6 @@
             variant="underlined"
           >
             {{ form.email ? form.email : router.push('/email') }}
-            <!-- {{ form.email }} -->
           </v-text-field>
 
           <v-text-field
@@ -70,7 +69,7 @@
             class="mb-3"
             label="휴대폰 번호"
             density="compact"
-            placeholder="010-1234-5678"
+            placeholder="01012345678"
             variant="underlined"
             v-model="form.tel"
             :rules="[rules.required, rules.tel]"
@@ -136,7 +135,7 @@ import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 import { useContractStore } from '@/store/contractStore';
-import { createConscent } from '@/apis/service/contracts/contractApi';
+import { createConsent } from '@/apis/service/contracts/contractApi';
 
 const contractStore = useContractStore();
 const { setConsent, setResponse, resetRequest } = contractStore;
@@ -222,7 +221,7 @@ const rules = {
   },
 
   tel: (value) => {
-    const pattern = /^01[0-9]-\d{3,4}-\d{4}$/;
+    const pattern = /^01[0-9]\d{4}\d{4}$/;
 
     validations.value.tel = pattern.test(value) ? true : false;
 
@@ -255,12 +254,10 @@ const signupHandler = async () => {
         setConsent(e.documentItemId, isConsentMarketing.value, data.id);
       });
 
-      await createConscent()
+      await createConsent()
         .then((resp) => {
-          console.log(resp);
           const response = resp.data.data;
           setResponse(response);
-          console.log(response);
         })
         .catch((e) => console.error(e));
 

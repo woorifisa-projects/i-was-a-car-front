@@ -4,6 +4,8 @@
     :next="next"
     :nextUrl="props.nextUrl"
     :type="props.type"
+    :prevUrl="props.prevUrl"
+    :prev="props.prev"
   >
     <CompleteForm :done="props.done" :info="props.info"></CompleteForm>
   </Card>
@@ -15,7 +17,15 @@ import { ref, defineProps } from 'vue';
 import Card from '@/components/card/Card.vue';
 import CompleteForm from '@/components/Form/CompleteForm.vue';
 
-const props = defineProps(['nextUrl', 'cardTitle', 'done', 'info', 'type']);
+const props = defineProps([
+  'nextUrl',
+  'cardTitle',
+  'done',
+  'info',
+  'type',
+  'prevUrl',
+  'prev',
+]);
 
 const next = ref('마이페이지로');
 </script>

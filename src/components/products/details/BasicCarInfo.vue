@@ -45,22 +45,36 @@
 
     <br />
 
-    <div class="d-flex justify-space-between align-center">
-      <v-btn
-        :width="xs ? 120 : 200"
-        variant="outlined"
-        :size="xs ? 'large' : 'x-large'"
-        @click="goBack"
-        >뒤로</v-btn
-      >
-      <v-btn
-        :width="xs ? 120 : 200"
-        color="black"
-        :size="xs ? 'large' : 'x-large'"
-        @click="selectedProduct"
-        >구매하기</v-btn
-      >
-    </div>
+    <template v-if="isFromOneClickPage">
+      <div class="d-flex justify-center align-center">
+        <v-btn
+          :width="xs ? 200 : 350"
+          variant="outlined"
+          :size="xs ? 'large' : 'x-large'"
+          @click="goBack"
+          >뒤로</v-btn
+        >
+      </div>
+    </template>
+
+    <template v-else>
+      <div class="d-flex justify-space-between align-center">
+        <v-btn
+          :width="xs ? 120 : 200"
+          variant="outlined"
+          :size="xs ? 'large' : 'x-large'"
+          @click="goBack"
+          >뒤로</v-btn
+        >
+        <v-btn
+          :width="xs ? 120 : 200"
+          color="black"
+          :size="xs ? 'large' : 'x-large'"
+          @click="selectedProduct"
+          >구매하기</v-btn
+        >
+      </div>
+    </template>
   </div>
 </template>
 
@@ -69,6 +83,9 @@ import { ref } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 import { useRouter } from 'vue-router';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
+import { useRouteStore } from '@/store/route';
+import { storeToRefs } from 'pinia';
+import { onBeforeMount } from 'vue';
 
 const router = useRouter();
 
@@ -76,6 +93,8 @@ const { xs } = useDisplay();
 
 const props = defineProps(['carInfo']);
 const carInfo = ref(props.carInfo);
+
+const isFromOneClickPage = ref(false);
 
 const goBack = () => {
   router.go(-1);
@@ -88,6 +107,15 @@ const selectedProduct = () => {
   setCarInfo(carInfo.value);
   router.push('/normal-purchase/1');
 };
+
+onBeforeMount(() => {
+  const routeStore = useRouteStore();
+  const { previousRoute } = storeToRefs(routeStore);
+
+  if (previousRoute.value === '/one-click-purchase/4') {
+    isFromOneClickPage.value = true;
+  }
+});
 </script>
 
 <style lang="scss" scoped>

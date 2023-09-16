@@ -8,7 +8,7 @@
         </span>
         의 가격은
         <span style="font-size: medium; font-weight: bold">
-          {{ (carInfo.price / 1000).toLocaleString() }}
+          {{ (carInfo.price / 10000).toLocaleString() }}
         </span>
         만원 입니다
       </div>

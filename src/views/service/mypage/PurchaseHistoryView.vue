@@ -1,5 +1,5 @@
 <template>
-  <ProgressSpinner v-if="isLoading" />
+  <ProgressSpinner v-if="isLoading" :isHscreen="true" />
 
   <template v-else>
     <v-data-table

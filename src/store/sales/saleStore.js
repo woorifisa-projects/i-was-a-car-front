@@ -40,8 +40,11 @@ export const useSaleStore = defineStore('saleStore', () => {
   };
 
   const getRequestBody = () => {};
-  const setResponse = (resp) => (saleResponse.value = resp);
+  const setSaleResponse = (resp) => (saleResponse.value = resp);
 
+  const resetSaleRequest = () => {
+    request.value = {};
+  };
   return {
     request,
     images,
@@ -52,8 +55,9 @@ export const useSaleStore = defineStore('saleStore', () => {
     addStoreImages,
     setFinanceInfo,
     getRequestBody,
-    setResponse,
+    setSaleResponse,
     saleResponse,
     carInfo,
+    resetSaleRequest,
   };
 });

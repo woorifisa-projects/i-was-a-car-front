@@ -33,8 +33,11 @@ import { onBeforeMount, ref, watch } from 'vue';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
 import { useBtnStore } from '@/store/btnStore.js';
+import { useContractStore } from '@/store/contractStore';
+
 import { storeToRefs } from 'pinia';
 import { createProduct } from '@/apis/service/histories/sales/saleApi';
+import { createConsent } from '@/apis/service/contracts/contractApi';
 
 const validateSaleStore = useValidateSaleStore();
 const { setMeetingCheck } = validateSaleStore;
@@ -47,8 +50,11 @@ const next = ref('다음');
 const nextUrl = ref('8');
 
 const store = useSaleStore();
-const { setMeetingInfo, setResponse } = store;
+const { setMeetingInfo, setSaleResponse, resetSaleRequest } = store;
 const { request } = storeToRefs(store);
+
+const contractStore = useContractStore();
+const { setResponse, resetRequest } = contractStore;
 
 const meetingSchedule = ref('');
 const zipCode = ref('');
@@ -69,6 +75,7 @@ const setAddressDetail = (emitAddressDetail) =>
   (addressDetail.value = emitAddressDetail);
 
 const onClickNextBtnEmit = async () => {
+  setBtnCondition(false);
   setMeetingInfo(
     meetingSchedule.value,
     zipCode.value,
@@ -76,12 +83,17 @@ const onClickNextBtnEmit = async () => {
     addressDetail.value
   );
 
-  await createProduct()
-    .then((resp) => {
-      const response = resp.data.data;
-      setResponse(response);
+  console.log(request);
+  await Promise.all([createProduct(), createConsent()])
+    .then(([saleResp, consentResp]) => {
+      setSaleResponse(saleResp);
+      setResponse(consentResp);
     })
-    .catch((e) => console.error(e));
+    .catch((e) => console.error(e))
+    .finally(setBtnCondition(true));
+
+  resetRequest();
+  resetSaleRequest();
 };
 
 const date = new Date();

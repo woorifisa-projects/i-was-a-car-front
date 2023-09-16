@@ -10,8 +10,9 @@
       {{ prev }}</v-btn
     >
     <v-btn
-      class="text-none bg-black ma-0"
+      :class="isBasicInfo ? 'text-none ma-0' : 'text-none bg-black ma-0'"
       :elevation="2"
+      :variant="isBasicInfo ? 'outlined' : 'none'"
       width="120"
       height="40"
       @click="onClickNextBtn(), $emit('onClickNextBtnEmit')"
@@ -25,13 +26,17 @@
 <script setup>
 import { ref, defineEmits, defineProps, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
-import { useBtnStore } from '@/store/btnStore';
-import { useAuthStore } from '@/store/auth';
+import { useBtnStore } from '@/store/btnStore.js';
+import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
 import { getIdentification } from '@/apis/service/contracts/contractApi';
 import { useContractStore } from '@/store/contractStore';
 import { useSaleStore } from '@/store/sales/saleStore';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { useLoadingStore } from '@/store/loading';
+
+const loading = useLoadingStore();
+const { setLoading } = loading;
 
 onBeforeMount(() => {
   setRadioReadOnly(false);
@@ -42,14 +47,14 @@ const { setRadioReadOnly } = contractStore;
 
 const btnStore = useBtnStore();
 const { isBasicInfo, computedBtnCondition } = storeToRefs(btnStore);
-const { setisBasicInfo } = btnStore;
+const { setisBasicInfo, setBtnCondition } = btnStore;
 
 const authStore = useAuthStore();
 const { authInfo } = storeToRefs(authStore);
 const { setRrnb } = authStore;
 
 const saleStore = useSaleStore();
-const { saleResponse } = storeToRefs(saleStore);
+const { request, saleResponse } = storeToRefs(saleStore);
 
 const purchasestore = usePurchaseStore();
 const { purchaseResponse } = storeToRefs(purchasestore);
@@ -65,6 +70,7 @@ const prevUrl = ref(props.prevUrl == null ? -1 : props.prevUrl);
 const prev = ref(props.prev == null ? '이전' : props.prev);
 
 const onClickNextBtn = async () => {
+  setBtnCondition(false);
   if (next.value === '본인 인증 하기') {
     // api 보내기
     try {
@@ -75,8 +81,11 @@ const onClickNextBtn = async () => {
       );
 
       setisBasicInfo(false);
+      setLoading(true);
+
       next.value = '다음';
       setRadioReadOnly(true);
+      setLoading(false);
     } catch (e) {
       console.error(e);
 
@@ -84,32 +93,33 @@ const onClickNextBtn = async () => {
       setRrnb('');
       emit('alertTrue', true);
     }
-
+    setBtnCondition(true);
     return;
   }
 
   if (next.value === '마이페이지로' && type.value === 'sale') {
-    nextUrl.value = `/sale/${saleResponse.value.saleId}`;
-    router.push(nextUrl.value);
-    // router.push({
-    //   name: 'SaleHistoryDetail',
-    //   params: {
-    //     id: saleResponse.value.saleId,
-    //   },
-    // });
+    // console.log(saleResponse.value);
+    // nextUrl.value = `mypage/sale/${saleResponse.value.saleId}`;
+    // router.push(nextUrl.value);
+    router.push({
+      name: 'SaleHistoryDetail',
+      params: {
+        id: saleResponse.value.saleId,
+      },
+    });
     return;
   }
 
   if (next.value === '마이페이지로' && type.value === 'purchase') {
-    nextUrl.value = `/purchase/${purchaseResponse.value.id}`;
-    router.push(nextUrl.value);
+    // console.log(purchaseResponse.value);
+    // nextUrl.value = `mypage/purchase/${purchaseResponse.value.id}`;
 
-    // router.push({
-    //   name: 'PurchaseHistoryDetail',
-    //   params: {
-    //     id: purchaseResponse.value.id,
-    //   },
-    // });
+    router.push({
+      name: 'PurchaseHistoryDetail',
+      params: {
+        id: purchaseResponse.value.id,
+      },
+    });
     return;
   }
 
