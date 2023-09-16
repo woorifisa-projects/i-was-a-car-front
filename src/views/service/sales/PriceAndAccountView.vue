@@ -54,12 +54,12 @@
 
 <script setup>
 import Card from '@/components/card/Card.vue';
-import { getBanks } from '@/apis/service/contracts/contractApi';
+import { getBanks } from '@/apis/service/contracts/contractApi.js';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { onBeforeMount, ref, watch } from 'vue';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 import { storeToRefs } from 'pinia';
-import { useValidateSaleStore } from '@/store/sales/saleValidateStore';
+import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
 
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;
@@ -110,6 +110,7 @@ watch(
   ([p, ah, sb, an]) => {
     const accountHolderRegex = /[가-힣]{2,10}$/;
     const accountNumberRegex = /[0-9]{10,14}$/;
+
     const value =
       p != null &&
       p > 10 &&
@@ -117,10 +118,11 @@ watch(
       accountHolderRegex.test(ah) &&
       an != null &&
       accountNumberRegex.test(an) &&
-      sb != null;
+      sb.id != null;
     setBtnCondition(value);
     setFinanceInfoCheck(value);
-  }
+  },
+  { deep: true }
 );
 </script>
 
