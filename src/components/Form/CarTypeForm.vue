@@ -17,13 +17,14 @@
             :label="item.name"
             :value="item.name"
             class="mb-3"
+            @click="whichCarType(item.name, item.id)"
           ></v-radio> </v-col></v-row
     ></v-radio-group>
   </v-form>
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, defineEmits } from 'vue';
 import { findCarTpyes } from '@/apis/service/products/productApi.js';
 import { useBtnStore } from '@/store/btnStore';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore';
@@ -77,6 +78,14 @@ watch(selectedCarType, () => {
 
   setCarType(targetCarType.value);
 });
+
+const whichCarType = (name, id) => {
+  const targetCarType = {
+    name: name,
+    id: id,
+  };
+  emit('targetCarType', targetCarType);
+};
 </script>
 
 <style lang="scss" scoped></style>

@@ -38,7 +38,6 @@ import { useLoadingStore } from '@/store/loading';
 const loading = useLoadingStore();
 const { setLoading } = loading;
 
-
 onBeforeMount(() => {
   setRadioReadOnly(false);
 });

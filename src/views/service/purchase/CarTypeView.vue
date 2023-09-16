@@ -22,6 +22,18 @@ const props = defineProps(['nextUrl']);
 const cardTitle = ref('차종 선택');
 const next = ref('다음');
 const nextUrl = ref(props.nextUrl);
+const targetCarType = ref();
+
+const whichCarType = (child) => {
+  targetCarType.value = child.id;
+};
+
+const purchaseStore = usePurchaseStore();
+const { setCarType } = purchaseStore;
+
+const onClickNextBtnEmit = () => {
+  setCarType(targetCarType.value);
+};
 </script>
 
 <style lang="scss" scoped></style>
