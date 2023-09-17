@@ -32,8 +32,8 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useSaleStore } from '@/store/sales/saleStore';
-import { useBtnStore } from '@/store/btnStore';
+import { useSaleStore } from '@/store/sales/saleStore.js';
+import { useBtnStore } from '@/store/btnStore.js';
 import ContractForm from '@/components/Form/ContractForm.vue';
 import { useAuthStore } from '@/store/auth.js';
 

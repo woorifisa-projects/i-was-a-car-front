@@ -53,9 +53,9 @@
 
 <script setup>
 import { ref, watch, defineEmits, onBeforeMount } from 'vue';
-import { period } from '@/components/data/period';
+import { period } from '@/components/data/period.js';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 
 import { storeToRefs } from 'pinia';
 

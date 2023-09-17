@@ -71,7 +71,7 @@ import { useRetrieveCarStore } from '@/store/retrieveCar/retrieveCar.js';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { findProductByNameAndCarNumber } from '@/apis/service/products/productApi.js';
 import { storeToRefs } from 'pinia';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 
 import Card from '@/components/card/Card.vue';
 

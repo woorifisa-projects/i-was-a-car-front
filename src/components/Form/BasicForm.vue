@@ -86,13 +86,13 @@ import { findContractById } from '@/apis/service/contracts/contractApi.js';
 import Dialog from '@/components/service/Dialog.vue';
 import ProgressSprinner from '../common/ProgressSprinner.vue';
 
-import { useBtnStore } from '@/store/btnStore';
-import { useAuthStore } from '@/store/auth';
-import { useContractStore } from '@/store/contractStore';
+import { useBtnStore } from '@/store/btnStore.js';
+import { useAuthStore } from '@/store/auth.js';
+import { useContractStore } from '@/store/contractStore.js';
 import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
-import { useLoadingStore } from '@/store/loading';
+import { useLoadingStore } from '@/store/loading.js';
 
 const loading = useLoadingStore();
 const { isLoading } = storeToRefs(loading);

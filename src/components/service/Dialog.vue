@@ -16,7 +16,8 @@
         <template v-for="(item, idx) in items" :key="idx">
           <v-card-text
             v-if="item.documentName == `자동차 매매 계약서` && item.order > 3"
-            >{{ item.content }}
+          >
+            {{ item.content }}
           </v-card-text>
           <v-card-text v-if="item.documentName != `자동차 매매 계약서`"
             >{{ item.content }}

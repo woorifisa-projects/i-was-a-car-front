@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref, defineProps } from 'vue';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 
 import Card from '@/components/card/Card.vue';
 import CarTypeForm from '@/components/Form/CarTypeForm.vue';

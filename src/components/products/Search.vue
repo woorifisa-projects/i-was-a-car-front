@@ -36,10 +36,9 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { watch, ref, defineEmits } from 'vue';
 import { category } from '@/components/data/searchCategory.js';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
-import { watch } from 'vue';
 
 const { xs } = useDisplay();
 

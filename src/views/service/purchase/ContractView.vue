@@ -25,8 +25,8 @@ import { ref, defineProps } from 'vue';
 import Card from '@/components/card/Card.vue';
 import ContractForm from '@/components/Form/ContractForm.vue';
 import { useAuthStore } from '@/store/auth.js';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
-import { useContractStore } from '@/store/contractStore';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
+import { useContractStore } from '@/store/contractStore.js';
 import { storeToRefs } from 'pinia';
 
 const contractStore = useContractStore();

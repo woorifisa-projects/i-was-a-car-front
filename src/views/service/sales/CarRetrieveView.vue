@@ -40,9 +40,9 @@
 <script setup>
 import Card from '@/components/card/Card.vue';
 import { useRetrieveCarStore } from '@/store/retrieveCar/retrieveCar.js';
-import { useSaleStore } from '@/store/sales/saleStore';
-import { useValidateSaleStore } from '@/store/sales/saleValidateStore';
-import { useBtnStore } from '@/store/btnStore';
+import { useSaleStore } from '@/store/sales/saleStore.js';
+import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
+import { useBtnStore } from '@/store/btnStore.js';
 import { onBeforeMount, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 

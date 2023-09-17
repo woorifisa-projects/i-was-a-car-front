@@ -24,7 +24,7 @@
 
 <script setup>
 import { ref, defineProps } from 'vue';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 import { useRouter } from 'vue-router';
 
 import Card from '@/components/card/Card.vue';
