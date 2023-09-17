@@ -19,7 +19,6 @@ import { useBtnStore } from '@/store/btnStore.js';
 
 import Card from '@/components/card/Card.vue';
 import DeliveryForm from '@/components/Form/DeliveryForm.vue';
-import { storeToRefs } from 'pinia';
 
 const props = defineProps(['nextUrl']);
 

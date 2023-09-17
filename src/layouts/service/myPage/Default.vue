@@ -33,8 +33,6 @@
 
 <script setup>
 import DefaultBar from '@/layouts/common/AppBar.vue';
-import { useLoadingStore } from '@/store/loading';
-import { storeToRefs } from 'pinia';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify/lib/framework.mjs';

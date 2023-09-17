@@ -95,8 +95,8 @@
 import {
   sendEmailCodeAPI,
   verifyEmailCodeAPI,
-} from '@/apis/service/auth/authApi';
-import { useAuthStore } from '@/store/auth';
+} from '@/apis/service/auth/authApi.js';
+import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';

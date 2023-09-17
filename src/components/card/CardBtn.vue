@@ -29,11 +29,11 @@ import { useRouter } from 'vue-router';
 import { useBtnStore } from '@/store/btnStore.js';
 import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
-import { getIdentification } from '@/apis/service/contracts/contractApi';
-import { useContractStore } from '@/store/contractStore';
-import { useSaleStore } from '@/store/sales/saleStore';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
-import { useLoadingStore } from '@/store/loading';
+import { getIdentification } from '@/apis/service/contracts/contractApi.js';
+import { useContractStore } from '@/store/contractStore.js';
+import { useSaleStore } from '@/store/sales/saleStore.js';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
+import { useLoadingStore } from '@/store/loading.js';
 
 const loading = useLoadingStore();
 const { setLoading } = loading;

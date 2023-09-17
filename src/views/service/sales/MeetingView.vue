@@ -33,11 +33,11 @@ import { onBeforeMount, ref, watch } from 'vue';
 import { useSaleStore } from '@/store/sales/saleStore.js';
 import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
 import { useBtnStore } from '@/store/btnStore.js';
-import { useContractStore } from '@/store/contractStore';
+import { useContractStore } from '@/store/contractStore.js';
 
 import { storeToRefs } from 'pinia';
-import { createProduct } from '@/apis/service/histories/sales/saleApi';
-import { createConsent } from '@/apis/service/contracts/contractApi';
+import { createProduct } from '@/apis/service/histories/sales/saleApi.js';
+import { createConsent } from '@/apis/service/contracts/contractApi.js';
 
 const validateSaleStore = useValidateSaleStore();
 const { setMeetingCheck } = validateSaleStore;

@@ -127,15 +127,15 @@
 </template>
 
 <script setup>
-import { signupAPI } from '@/apis/service/auth/authApi';
-import { useAuthStore } from '@/store/auth';
+import { signupAPI } from '@/apis/service/auth/authApi.js';
+import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
-import { useContractStore } from '@/store/contractStore';
-import { createConsent } from '@/apis/service/contracts/contractApi';
+import { useContractStore } from '@/store/contractStore.js';
+import { createConsent } from '@/apis/service/contracts/contractApi.js';
 
 const contractStore = useContractStore();
 const { setConsent, setResponse, resetRequest } = contractStore;

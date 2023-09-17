@@ -57,7 +57,7 @@ import { ref, watch, onMounted, computed } from 'vue';
 import {
   findLabels,
   updatePriceAndLabel,
-} from '@/apis/admin/products/productAPI';
+} from '@/apis/admin/products/productAPI.js';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const labels = ref([]);

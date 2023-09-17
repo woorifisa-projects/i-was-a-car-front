@@ -61,8 +61,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { loginAPI } from '@/apis/service/auth/authApi';
-import { useAuthStore } from '@/store/auth';
+import { loginAPI } from '@/apis/service/auth/authApi.js';
+import { useAuthStore } from '@/store/auth.js';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const { xs } = useDisplay();

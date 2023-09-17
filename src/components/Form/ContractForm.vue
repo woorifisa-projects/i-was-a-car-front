@@ -122,9 +122,9 @@
 <script setup>
 import { ref, onBeforeMount, watch } from 'vue';
 import { findContractById } from '@/apis/service/contracts/contractApi.js';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
-import { useContractStore } from '@/store/contractStore';
+import { useContractStore } from '@/store/contractStore.js';
 
 import Dialog from '@/components/service/Dialog.vue';
 import { storeToRefs } from 'pinia';

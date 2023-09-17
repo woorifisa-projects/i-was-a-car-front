@@ -28,7 +28,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
-import { useSaleStore } from '@/store/sales/saleStore';
+import { useSaleStore } from '@/store/sales/saleStore.js';
 
 import BasicInfoView from '@/views/service/common/BasicInfoView.vue';
 import SearchCarView from '@/views/service/purchase/SearchCarView.vue';

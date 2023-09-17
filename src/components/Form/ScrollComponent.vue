@@ -35,11 +35,10 @@
 </template>
 
 <script setup>
-import { onBeforeMount } from 'vue';
-import { ref, defineProps, defineEmits } from 'vue';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { onBeforeMount, ref, defineProps, defineEmits } from 'vue';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 import { storeToRefs } from 'pinia';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;

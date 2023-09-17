@@ -47,8 +47,8 @@
 </template>
 
 <script setup>
-import { logoutAPI } from '@/apis/service/auth/authApi';
-import { useAuthStore } from '@/store/auth';
+import { logoutAPI } from '@/apis/service/auth/authApi.js';
+import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';

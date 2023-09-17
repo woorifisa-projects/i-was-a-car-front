@@ -23,7 +23,7 @@ import { useValidateSaleStore } from '@/store/sales/saleValidateStore.js';
 
 import Card from '@/components/card/Card.vue';
 import ImageAttach from '@/components/common/ImageAttach.vue';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 import { storeToRefs } from 'pinia';
 
 const btnStore = useBtnStore();

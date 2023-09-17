@@ -83,7 +83,7 @@ import { ref } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 import { useRouter } from 'vue-router';
 import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
-import { useRouteStore } from '@/store/route';
+import { useRouteStore } from '@/store/route.js';
 import { storeToRefs } from 'pinia';
 import { onBeforeMount } from 'vue';
 
