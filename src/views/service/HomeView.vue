@@ -62,8 +62,9 @@ const forceRender = () => {
 
 const load = async ({ done }) => {
   try {
-    if (stdProduct.value.length < 1) done('empty');
-    else {
+    if (stdProduct.value.length < 1) {
+      done('empty');
+    } else {
       const response = await findProducts(
         category.value,
         keyword.value,
@@ -75,6 +76,8 @@ const load = async ({ done }) => {
       stdProduct.value.push(...response.data.data);
 
       products.value.push(...response.data.data);
+      console.log('========');
+      console.log(products.value[products.value.length - 1]);
       lastProductId.value = products.value[products.value.length - 1].id;
 
       done('ok');
