@@ -77,7 +77,7 @@ const load = async ({ done }) => {
 
       products.value.push(...response.data.data);
       console.log('========');
-      console.log(products.value[products.value.length - 1]);
+      console.log(response);
       lastProductId.value = products.value[products.value.length - 1].id;
 
       done('ok');
