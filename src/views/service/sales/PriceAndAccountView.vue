@@ -117,7 +117,8 @@ watch(
       accountHolderRegex.test(ah) &&
       an != null &&
       accountNumberRegex.test(an) &&
-      sb.id != null;
+      sb != undefined;
+
     setBtnCondition(value);
     setFinanceInfoCheck(value);
   },
