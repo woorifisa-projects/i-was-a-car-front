@@ -49,9 +49,9 @@
 
 <script setup>
 import { ref, defineProps, onBeforeMount, defineAsyncComponent } from 'vue';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 import { storeToRefs } from 'pinia';
-import { useBtnStore } from '@/store/btnStore';
+import { useBtnStore } from '@/store/btnStore.js';
 
 const props = defineProps(['finance', 'wantMoney', 'installment', 'dataType']);
 const finance = ref(props.finance);

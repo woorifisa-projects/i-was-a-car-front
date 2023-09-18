@@ -54,11 +54,11 @@
 <script setup>
 import { ref, onBeforeMount, defineEmits } from 'vue';
 import { purchaseHistoryAPI } from '@/apis/service/histories/historyApi.js';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import ProgressSpinner from '@/components/common/ProgressSprinner.vue';
-import { useLoadingStore } from '@/store/loading';
+import { useLoadingStore } from '@/store/loading.js';
 
 const auth = useAuthStore();
 const { authInfo } = storeToRefs(auth);

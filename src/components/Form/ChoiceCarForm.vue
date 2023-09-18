@@ -77,11 +77,11 @@
 <script setup>
 import { ref, onBeforeMount, defineEmits } from 'vue';
 import { RecommendationProducts } from '@/apis/service/products/productApi.js';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 import { storeToRefs } from 'pinia';
-import { useLoadingStore } from '@/store/loading';
-import { useBtnStore } from '@/store/btnStore';
-import { useContractStore } from '@/store/contractStore';
+import { useLoadingStore } from '@/store/loading.js';
+import { useBtnStore } from '@/store/btnStore.js';
+import { useContractStore } from '@/store/contractStore.js';
 
 const btnStore = useBtnStore();
 const { setBtnCondition } = btnStore;

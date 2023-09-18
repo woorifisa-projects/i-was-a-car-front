@@ -172,7 +172,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import PerformanceCheckIcon from './PerformanceCheckIcon.vue';
-import { addPerformanceCheck } from '@/apis/admin/products/productAPI';
+import { addPerformanceCheck } from '@/apis/admin/products/productAPI.js';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const props = defineProps(['carInfo']);

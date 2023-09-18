@@ -26,8 +26,8 @@
 <script setup>
 import { ref, onBeforeMount, defineEmits } from 'vue';
 import { findCarTpyes } from '@/apis/service/products/productApi.js';
-import { useBtnStore } from '@/store/btnStore';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { useBtnStore } from '@/store/btnStore.js';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 import { storeToRefs } from 'pinia';
 import { watch } from 'vue';
 

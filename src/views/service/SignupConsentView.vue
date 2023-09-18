@@ -156,11 +156,10 @@
 
 <script setup>
 import Dialog from '@/components/service/Dialog.vue';
-import { findContractById } from '@/apis/service/contracts/contractApi';
-import { onBeforeMount } from 'vue';
-import { ref, watch } from 'vue';
+import { findContractById } from '@/apis/service/contracts/contractApi.js';
+import { ref, watch, onBeforeMount } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
-import { useContractStore } from '@/store/contractStore';
+import { useContractStore } from '@/store/contractStore.js';
 
 const contractStore = useContractStore();
 const {

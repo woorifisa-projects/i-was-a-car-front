@@ -125,9 +125,9 @@
 
 <script setup>
 import { ref, onBeforeMount, defineEmits } from 'vue';
-import { purchaseHistoryDetailAPI } from '@/apis/service/histories/historyApi';
+import { purchaseHistoryDetailAPI } from '@/apis/service/histories/historyApi.js';
 import { useRoute } from 'vue-router';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
 
 const auth = useAuthStore();

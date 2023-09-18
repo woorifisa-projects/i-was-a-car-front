@@ -56,10 +56,10 @@
 <script setup>
 import { ref, onBeforeMount, defineEmits } from 'vue';
 import { saleHistoryAPI } from '@/apis/service/histories/historyApi.js';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { useLoadingStore } from '@/store/loading';
+import { useLoadingStore } from '@/store/loading.js';
 
 const router = useRouter();
 

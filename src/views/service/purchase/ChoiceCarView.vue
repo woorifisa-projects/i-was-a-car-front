@@ -11,8 +11,8 @@
 
 <script setup>
 import { ref, defineProps } from 'vue';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
-import { useContractStore } from '@/store/contractStore';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
+import { useContractStore } from '@/store/contractStore.js';
 
 import Card from '@/components/card/Card.vue';
 import ChoiceCarForm from '@/components/Form/ChoiceCarForm.vue';

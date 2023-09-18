@@ -33,10 +33,10 @@
 
 <script setup>
 import { ref, onBeforeMount, defineAsyncComponent } from 'vue';
-import { findProductDetail } from '@/apis/service/products/productApi.js';
 import { useRoute } from 'vue-router';
-import { useLoadingStore } from '@/store/loading';
 import { storeToRefs } from 'pinia';
+import { findProductDetail } from '@/apis/service/products/productApi.js';
+import { useLoadingStore } from '@/store/loading.js';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const { xs } = useDisplay();

@@ -211,12 +211,12 @@
 <script setup>
 import { ref, onBeforeMount, nextTick, defineProps, watch } from 'vue';
 import { memberDetailApi } from '@/apis/service/histories/memberInfoApi.js';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/auth.js';
 import { storeToRefs } from 'pinia';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 import ProgressSprinner from '@/components/common/ProgressSprinner.vue';
-import { useLoadingStore } from '@/store/loading';
-import { updateMemberAPI } from '@/apis/service/auth/authApi';
+import { useLoadingStore } from '@/store/loading.js';
+import { updateMemberAPI } from '@/apis/service/auth/authApi.js';
 
 const { xs } = useDisplay();
 

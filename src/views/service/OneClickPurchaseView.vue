@@ -35,7 +35,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
-import { usePurchaseStore } from '@/store/purchase/purchaseStore';
+import { usePurchaseStore } from '@/store/purchase/purchaseStore.js';
 
 import BasicInfoView from '@/views/service/common/BasicInfoView.vue';
 import CarTypeView from '@/views/service/purchase/CarTypeView.vue';
